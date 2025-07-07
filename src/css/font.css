@@ -1,0 +1,114 @@
+.font-10{
+	font-size: calc(10rpx);
+	line-height: calc(10rpx);
+}
+.font-12{
+	font-size: calc(12rpx);
+	line-height: calc(12rpx);
+}
+.font-14{
+	font-size: calc(14rpx);
+	line-height: calc(14rpx);
+}
+.font-16{
+	font-size: calc(16rpx);
+	line-height: calc(16rpx);
+}
+.font-18{
+	font-size: calc(18rpx);
+	line-height: calc(18rpx);
+}
+.font-20{
+	font-size: calc(20rpx);
+	line-height: calc(20rpx);
+}
+.font-22{
+	font-size: calc(22rpx);
+	line-height: calc(22rpx);
+}
+.font-24{
+	font-size: calc(24rpx);
+	line-height: calc(24rpx);
+}
+.font-26{
+	font-size: calc(26rpx);
+	line-height: calc(26rpx);
+}
+.font-28{
+	font-size: calc(28rpx);
+	line-height: calc(28rpx);
+}
+.font-30{
+	font-size: calc(30rpx);
+	line-height: calc(30rpx);
+}
+.font-32{
+	font-size: calc(32rpx);
+	line-height: calc(32rpx);
+}
+.font-34{
+	font-size: calc(34rpx);
+	line-height: calc(34rpx);
+}
+.font-36{
+	font-size: calc(36rpx);
+	line-height: calc(36rpx);
+}
+.font-38{
+	font-size: calc(38rpx);
+	line-height: calc(38rpx);
+}
+.font-40{
+	font-size: calc(40rpx);
+	line-height: calc(40rpx);
+}
+.font-42{
+	font-size: calc(42rpx);
+	line-height: calc(42rpx);
+}
+.font-44{
+	font-size: calc(44rpx);
+	line-height: calc(44rpx);
+}
+.font-46{
+	font-size: calc(46rpx);
+	line-height: calc(46rpx);
+}
+.font-48{
+	font-size: calc(48rpx);
+	line-height: calc(48rpx);
+}
+.font-50{
+	font-size: calc(50rpx);
+	line-height: calc(50rpx);
+}
+.font-52{
+	font-size: calc(52rpx);
+	line-height: calc(52rpx);
+}
+.font-60{
+	font-size: calc(60rpx);
+	line-height: calc(60rpx);
+}
+.font-B{
+	font-weight: bold;
+}
+
+.font-w3{
+	font-weight: 300;
+}
+.font-w4{
+	font-weight: 400;
+}
+.font-B{
+	font-weight: bold;
+}
+.font-w6{
+	font-weight: 600;
+}
+.font-w7{
+	font-weight: 700;
+}
+.font-w8{
+	font-weight: 800;
+}

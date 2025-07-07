@@ -1,0 +1,27 @@
+.bg-c{
+	background-color: #ccc;
+}
+.bg-f{
+	background-color: #fff;
+}
+.bg-f7f8fa{
+	background-color: #F7F8FA;
+}
+.bg-g{
+	background-color: #21cc5b;
+}
+.bg-r{
+	background-color: #eb3c39;
+}
+.bg-y{
+	background-color: #E6B13D;
+}
+.bg-b{
+	background-color: #4CD6DC;
+}
+.bg-{
+	background: linear-gradient(219deg, #03968F 0%, #055552 100%);
+}
+.bg-s1{
+	background-size: 100% 100%;
+}

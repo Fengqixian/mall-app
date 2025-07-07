@@ -1,0 +1,143 @@
+{
+	"pages": [ 
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/self/self",
+			"style" : 
+			{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/class/class",
+			"style" : 
+			{
+				"navigationStyle":"custom",
+				"disableScroll": true
+			}
+		},
+		{
+			"path" : "pages/cart/cart",
+			"style" : 
+			{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/index/search",
+			"style" : 
+			{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/index/getWarehouse",
+			"style" : 
+			{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/self/address/address",
+			"style" : 
+			{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/index/goodsDetails",
+			"style" : 
+			{
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path" : "pages/login/login",
+			"style" : 
+			{
+				"navigationBarTitleText" : "登录"
+			}
+		},
+		{
+			"path" : "pages/cart/submitOrder",
+			"style" : 
+			{
+				"navigationBarTitleText" : "提交订单"
+			}
+		},
+		{
+			"path" : "pages/cart/addressList",
+			"style" : 
+			{
+				"navigationBarTitleText" : "选择地址",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path" : "pages/cart/setAddress",
+			"style" : 
+			{
+				"navigationBarTitleText" : "收货地址",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
+		},
+		{
+			"path" : "pages/self/orderList",
+			"style" : 
+			{
+				"navigationBarTitleText" : "我的订单",
+				"navigationBarBackgroundColor": "#ffffff",
+				"disableScroll": true
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#21cc5b",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "%tabBar.home%",
+				"iconPath": "static/img/home0.png",
+				"selectedIconPath": "static/img/home1.png"
+			},
+			{
+				"pagePath": "pages/class/class",
+				"text": "%tabBar.class%",
+				"iconPath": "static/img/type0.png",
+				"selectedIconPath": "static/img/type1.png"
+			}, {
+				"pagePath": "pages/cart/cart",
+				"text": "%tabBar.cart%",
+				"iconPath": "static/img/car0.png",
+				"selectedIconPath": "static/img/car1.png"
+			}, {
+				"pagePath": "pages/self/self",
+				"text": "%tabBar.self%",
+				"iconPath": "static/img/self0.png",
+				"selectedIconPath": "static/img/self1.png"
+			}
+		]
+	},
+	"uniIdRouter": {},
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+			"^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
+		}
+	}
+}

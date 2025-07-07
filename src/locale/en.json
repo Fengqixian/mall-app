@@ -1,0 +1,37 @@
+{
+	"tabBar.home": "e首页",
+	"tabBar.class": "e分类",
+	"tabBar.cart": "e购物车",
+	"tabBar.self": "e我的",
+	"home": {
+		"title": "e首页",
+		"getSite": "e获取当前地址",
+		"search": "e搜索",
+		"tabbleLength": "6",
+		"tabble": [{
+				"title": "e全部",
+				"text": "e精选好物"
+			},
+			{
+				"title": "e收藏",
+				"text": "e收藏"
+			},
+			{
+				"title": "e新鲜蔬菜",
+				"text": "e时时新鲜"
+			},
+			{
+				"title": "e调味料",
+				"text": "e调味料"
+			},
+			{
+				"title": "e干货",
+				"text": "e精选好物"
+			},
+			{
+				"title": "e直播",
+				"text": "e直播"
+			}
+		]
+	}
+}

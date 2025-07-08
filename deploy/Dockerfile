@@ -14,7 +14,7 @@ WORKDIR /app
 COPY . /app
 
 # 安装依赖
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 RUN pnpm run build:h5
 
 RUN echo "Builder Success 🎉"

@@ -40,7 +40,7 @@
 				<view class=" flex flex-ac cor-8 font-28" style="width: 160rpx;height: 100rpx;">
 					收货地址
 				</view>
-				<view class="font-28 cor-4  flex-g flex flex-ac flex-jb">
+				<view @click="navMap" class="font-28 cor-4  flex-g flex flex-ac flex-jb">
 					点击选择收货地址
 					<up-icon style="display: inline-block;" name="arrow-right" color="#444" size="32rpx"></up-icon>
 					
@@ -100,6 +100,12 @@
 	const switchValue= ref(false)
 	function changeSwitchValue(){
 		
+	}
+	
+	function navMap(){
+		uni.navigateTo({
+			url:'/pages/webview/webview'
+		})
 	}
 </script>
 

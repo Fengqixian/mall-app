@@ -94,6 +94,13 @@
 				"navigationBarBackgroundColor": "#ffffff",
 				"disableScroll": true
 			}
+		},
+		{
+			"path" : "pages/webview/webview",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 	"globalStyle": {

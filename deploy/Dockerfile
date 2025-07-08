@@ -22,6 +22,7 @@ FROM nginx:stable-alpine AS production
 # 配置 nginx
 RUN echo "types { application/javascript js mjs; }" > /etc/nginx/conf.d/mjs.conf \
     && rm -rf /etc/nginx/conf.d/default.conf
+    
 
 # 复制构建产物
 COPY --from=builder /app/dist/build/h5 /usr/share/nginx/html

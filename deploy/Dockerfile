@@ -24,7 +24,7 @@ RUN echo "types { application/javascript js mjs; }" > /etc/nginx/conf.d/mjs.conf
     && rm -rf /etc/nginx/conf.d/default.conf
 
 # 复制构建产物
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist/build/h5 /usr/share/nginx/html
 
 # 复制 nginx 配置
 COPY --from=builder /app/deploy/nginx.conf /etc/nginx/nginx.conf

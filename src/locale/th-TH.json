@@ -3,6 +3,14 @@
 	"tabBar.class": "t分类",
 	"tabBar.cart": "t购物车",
 	"tabBar.self": "t我的",
+	
+	"pages.login":"t登录",
+	"pages.submitOrder":"t提交订单",
+	"pages.addressList":"t选择地址",
+	"pages.setAddress":"t收货地址",
+	"pages.orderList":"t我的订单",
+	
+	
 	"home": {
 		"title": "t首页",
 		"getSite": "t获取当前地址",
@@ -33,5 +41,19 @@
 				"text": "t直播"
 			}
 		]
+	},
+	"search":{
+		"button":"t搜索",
+		"history":"t历史搜索",
+		"hot":"t热门搜索",
+		"placeholder":"t搜索商品"
+	},
+	"class":{
+		"all":"t综合",
+		"sales":"t销量",
+		"price":"t价格",
+		"stock":"t库存",
+		"self":"t自营",
+		"select":"t选规格"
 	}
 }

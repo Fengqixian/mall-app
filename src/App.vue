@@ -9,6 +9,10 @@ export default {
   onHide: function () {
     console.log('App Hide')
   },
+    
+  globalData: {
+		addressInfo:''
+    }
 }
 </script>
 

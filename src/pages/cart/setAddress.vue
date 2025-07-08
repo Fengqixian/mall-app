@@ -36,12 +36,14 @@
 				</view>
 			</view>
 			
-			<view class=" flex flex-ac bor-b2sf0" style="width: 700rpx;height: 100rpx;">
+			<view class=" flex flex-ac bor-b2sf0" style="width: 700rpx;min-height: 100rpx;">
 				<view class=" flex flex-ac cor-8 font-28" style="width: 160rpx;height: 100rpx;">
 					收货地址
 				</view>
-				<view @click="navMap" class="font-28 cor-4  flex-g flex flex-ac flex-jb">
-					点击选择收货地址
+				<view @click="navMap" class=" font-28 cor-4  flex-g flex flex-ac flex-jb">
+					<view class="" style="width: 500rpx;padding: 20rpx 0;">
+						{{addressInfo?addressInfo.address:'点击选择收货地址'}}
+					</view>
 					<up-icon style="display: inline-block;" name="arrow-right" color="#444" size="32rpx"></up-icon>
 					
 				</view>
@@ -58,7 +60,7 @@
 			
 			<view class=" flex flex-ac bor-b2sf0" style="width: 700rpx;height: 100rpx;padding: 20rpx 0;">
 				<view class=" flex flex-ac cor-8 font-28" style="max-width: 160rpx;min-width: 160rpx;height: 100rpx;">
-					详细地址
+					标签
 				</view>
 				<view class=" flex-g h-100- flex flex-ac flex-ww">
 					<view v-for="i in 10" class="bor-box font-22 cor-g"
@@ -94,7 +96,7 @@
 <script setup>
 	
 	import {ref} from 'vue'
-	
+	import { onShow } from '@dcloudio/uni-app'
 	const radioStatus = ref(false)
 	
 	const switchValue= ref(false)
@@ -107,6 +109,11 @@
 			url:'/pages/webview/webview'
 		})
 	}
+	const addressInfo = ref()
+	onShow(()=>{
+		console.log(getApp().globalData.addressInfo);
+		addressInfo.value = getApp().globalData.addressInfo
+	})
 </script>
 
 <style>

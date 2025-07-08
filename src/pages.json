@@ -60,21 +60,21 @@
 			"path" : "pages/login/login",
 			"style" : 
 			{
-				"navigationBarTitleText" : "登录"
+				"navigationBarTitleText" : "%pages.login%"
 			}
 		},
 		{
 			"path" : "pages/cart/submitOrder",
 			"style" : 
 			{
-				"navigationBarTitleText" : "提交订单"
+				"navigationBarTitleText" : "%pages.submitOrder%"
 			}
 		},
 		{
 			"path" : "pages/cart/addressList",
 			"style" : 
 			{
-				"navigationBarTitleText" : "选择地址",
+				"navigationBarTitleText" : "%pages.addressList%",
 				"navigationBarBackgroundColor": "#ffffff"
 			}
 		},
@@ -82,7 +82,7 @@
 			"path" : "pages/cart/setAddress",
 			"style" : 
 			{
-				"navigationBarTitleText" : "收货地址",
+				"navigationBarTitleText" : "%pages.setAddress%",
 				"navigationBarBackgroundColor": "#ffffff"
 			}
 		},
@@ -90,7 +90,7 @@
 			"path" : "pages/self/orderList",
 			"style" : 
 			{
-				"navigationBarTitleText" : "我的订单",
+				"navigationBarTitleText" : "%pages.orderList%",
 				"navigationBarBackgroundColor": "#ffffff",
 				"disableScroll": true
 			}
@@ -99,7 +99,7 @@
 			"path" : "pages/webview/webview",
 			"style" : 
 			{
-				"navigationBarTitleText" : ""
+				"navigationBarTitleText" : "webview"
 			}
 		}
 	],

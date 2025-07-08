@@ -46,18 +46,18 @@
 					style="height: 70rpx; box-sizing: border-box; border-bottom: 2rpx solid #f5f5f5;">
 					<view @tap="changeRightTabble(rightTable.current==2?3:2)" :class="rightTable.current>=2?'cor-g':''"
 						class=" flex flex-ac flex-jc font-26 cor-4" style="width: 134rpx;height: 68rpx;">
-						价格
+						{{ t('class.price') }}
 						<up-icon v-show='rightTable.current>=2' class="tst-3"
 							:class="rightTable.current==2?'rotate-180':'rotate-0'" style="margin-left: 6rpx;"
 							name="arrow-down-fill" color="#21cc5b" size="30rpx"></up-icon>
 					</view>
 					<view @tap="changeRightTabble(1)" :class="rightTable.current===1?'cor-g':''"
 						class=" flex flex-ac flex-jc font-26 cor-4" style="width: 104rpx;height: 68rpx;">
-						销量
+						{{ t('class.sales') }}
 					</view>
 					<view @tap="changeRightTabble(0)" :class="rightTable.current===0?'cor-g':''"
 						class=" flex flex-ac flex-jc font-26 cor-4" style="width: 104rpx;height: 68rpx;">
-						综合
+						{{ t('class.all') }}
 					</view>
 				</view>
 				<scroll-view scroll-y="true" class="flex flex-dc" style="height: calc(100% - 70rpx);">
@@ -80,10 +80,10 @@
 									<text class="font-26">￥</text>00.00-00.00
 								</view>
 								<view class=" cor-8 font-22 text-d" style="margin-top: 8rpx;">
-									库存 99999
+									{{ t('class.stock') }} 99999
 								</view>
 								<view  class=" flex flex-ac flex-jb cor-8 font-22 text-d" style="margin-top: 8rpx;">
-									<text>自营</text>
+									<text>{{ t('class.self') }}</text>
 									
 									<view v-if='item%2==0' class=" bor-50- flex flex-ac flex-jc"
 										style="width: 56rpx;height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
@@ -92,7 +92,7 @@
 									
 									<view v-else class="flex flex-ac flex-jc cor-f font-28"
 									style="width: 148rpx; border-radius: 27rpx; height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
-										选规格
+										{{ t('class.select') }}
 										<up-icon class="" style="margin-left: 6rpx;" name="arrow-down" color="#fff" size="32rpx"></up-icon>
 									</view>
 								</view>

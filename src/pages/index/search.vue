@@ -7,11 +7,11 @@
 					style="background: #f7f7f7; border: 1rpx solid var(--cor-g); width: 500rpx;height: 60rpx;border-radius: 30rpx;">
 					<up-icon style="margin-left: 10rpx;" name="search" color="#21cc5b" size="50rpx"></up-icon>
 					<input class="" style="width: 400rpx; margin-left: 8rpx; font-size: 26rpx;line-height: 26rpx;"
-						type="text" placeholder="搜索商品">
+						type="text" :placeholder="t('search.placeholder')">
 				</view>
 				<view class=" font-30 flex flex-ac flex-jc cor-f bg-g"
 					style="border-radius: 30rpx; width: 100rpx;height: 60rpx;">
-					<text>搜索</text>
+					<text>{{ t('search.button') }}</text>
 				</view>
 			</view>
 		</view>
@@ -19,7 +19,7 @@
 
 		<view class="bg-f flex flex-dc flex-ac" style="width: 750rpx; padding-top: 20rpx;">
 			<view class=" flex flex-jb flex-ac" style="width: 700rpx;">
-				<view style="color: #444;text-shadow: 0 0 1.2rpx #374050;">历史搜索</view>
+				<view style="color: #444;text-shadow: 0 0 1.2rpx #374050;">{{ t('search.history') }}</view>
 				<up-icon style="" name="trash" color="#666" size="38rpx"></up-icon>
 			</view>
 			<view class="flex flex-ww" style="width: 700rpx;margin-bottom: 20rpx;margin-top: 20rpx;">
@@ -31,7 +31,7 @@
 		
 		<view class="bg-f flex flex-dc flex-ac" style="width: 750rpx; padding-top: 20rpx;">
 			<view class=" flex flex-jb flex-ac" style="width: 700rpx;">
-				<view style="color: #444;text-shadow: 0 0 1.2rpx #374050;">热门搜索</view>
+				<view style="color: #444;text-shadow: 0 0 1.2rpx #374050;">{{ t('search.hot') }}</view>
 				<!-- <up-icon style="" name="trash" color="#666" size="38rpx"></up-icon> -->
 			</view>
 			<view class="flex flex-ww" style="width: 700rpx;margin-bottom: 20rpx;margin-top: 20rpx;">
@@ -46,7 +46,7 @@
 			</view>
 		</view>
 		<view class="" style="font-size: 30rpx;color: #444; font-weight: 700; margin: 20rpx;">
-			<text style="color: #999;font-weight: 500;">—</text>  热门搜索 <text style="color: #999;font-weight: 500;">—</text>
+			<text style="color: #999;font-weight: 500;">—</text>  {{ t('search.hot') }} <text style="color: #999;font-weight: 500;">—</text>
 		</view>
 		<image-flow></image-flow>
 	</view>

@@ -4,7 +4,7 @@
 		<view class="flex flex-ac" style="width: 750rpx;height: 300rpx;background: #21b5a6;">
 			<view class="flex flex-ac" style="">
 				<image class=" bor-50-" style="margin-left: 30rpx;margin-right: 20rpx; width: 125rpx;height: 125rpx;" src="/src/static/img/per0.png" mode="scaleToFill" />
-				<view class="cor-f font-34 font-w7">点击登录用户</view>
+				<view @tap="goLogin" class="cor-f font-34 font-w7">点击登录用户</view>
 			</view>
 		</view>
 		<view class=" bg-f" style="margin-bottom: 24rpx; box-sizing: border-box; padding: 30rpx 20rpx; width: 700rpx; margin-top: 24rpx;height: 300rpx;border-radius: 10rpx;">
@@ -65,6 +65,13 @@ function goOrderList(){
 		url:'/pages/self/orderList'
 	})
 }
+
+
+function goLogin() {
+		uni.navigateTo({
+			url: '/pages/login/login'
+		})
+	}
 </script>
 
 <style></style>

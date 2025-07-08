@@ -18,7 +18,7 @@ jobs:
           image: fengqixian1996/mall-app
           tags: latest
           registry: docker.io
-          dockerfile: ./Dockerfile
+          dockerfile: ./deploy/Dockerfile
           username: ${{ secrets.DOCKER_USER_NAME }}
           password: ${{ secrets.DOCKER_USER_PASSWORD }}
         

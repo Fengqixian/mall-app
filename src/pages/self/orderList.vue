@@ -1,5 +1,5 @@
 <template>
-	<view class="flex flex-dc flex-ac">
+	<view class="flex flex-dc flex-ac ov-h bodyH" style="">
 		<view class="" style="height: 88rpx;"></view>
 		<view class=" pos-f w-100- bg-f order-tabble-top z-5" style="height: 88rpx;">
 			<up-tabs @click="changeTabs" class="" :current='tabsCurrent' :list="tabsList" lineWidth="14"
@@ -14,47 +14,47 @@
 				}" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;width: 25%;">
 			</up-tabs>
 		</view>
-
-		<swiper class=" pos-r z-1" @change="changeSwiper" :current='tabsCurrent'
+		<swiper class=" pos-r z-1" @change="changeSwiper" :current='tabsCurrent' :disable-touch="scrollStatus"
 			style="width: 100%;height: calc(100svh - 88rpx);" :duration="500">
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
 					<orderListCom   v-for="(item, index) in 40" style="margin-top: 20rpx;"></orderListCom>
 
-					<view class="" style="height: 40rpx;">
+					<view class="" style="height: 140rpx;">
 
 					</view>
 					<!-- <view v-for="(item,index) in 40">123</view> -->
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
 					<orderListCom v-for="(item, index) in 30" style="margin-top: 20rpx;"></orderListCom>
 
-					<view class="" style="height: 40rpx;">
+					<view class="" style="height: 140rpx;">
 
 					</view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
 					<orderListCom v-for="(item, index) in 20" style="margin-top: 20rpx;"></orderListCom>
 
-					<view class="" style="height: 40rpx;">
+					<view class="" style="height: 140rpx;">
 
 					</view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
 					<orderListCom v-for="(item, index) in 10" style="margin-top: 20rpx;"></orderListCom>
 
-					<view class="" style="height: 40rpx;">
+					<view class="" style="height: 140rpx;">
 
 					</view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+
 	</view>
 </template>
 
@@ -80,14 +80,25 @@ const tabsList = reactive([{
 ]);
 const tabsCurrent = ref(0)
 const scrollStatus =ref(false)
+const scrolltouchStatus =ref(false)
 function changeTabs(item, index) {
 	console.log(item)
 	tabsCurrent.value = index
 	console.log(tabsCurrent.value)
 }
 function changeSwiper(e) {
-	console.log(e.detail.current)
 	tabsCurrent.value = e.detail.current
+}
+
+// 监听滚动事件
+let scrollTime = null
+const inScroll = () => {
+	if(scrolltouchStatus.value){return}
+	scrollStatus.value = true
+}
+let scrollTouchEnd =()=>{
+	scrollStatus.value = false
+
 }
 </script>
 
@@ -98,6 +109,12 @@ function changeSwiper(e) {
 	/* #endif */
 	/* #ifdef H5  */
 	top: 88rpx;
+	/* #endif */
+}
+.bodyH{
+	
+	/* #ifdef H5  */
+	height: calc(100svh - 88rpx);
 	/* #endif */
 }
 </style>

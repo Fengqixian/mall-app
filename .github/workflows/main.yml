@@ -39,6 +39,6 @@ jobs:
             docker rm mall-app || true &&
             docker rmi fengqixian1996/mall-app:latest || true &&
             docker pull fengqixian1996/mall-app:latest &&
-            docker run -dit --restart=always --name mall-app -v /logs/mall-app/:/data/app/storage/logs -p 8080:8080 fengqixian1996/mall-app:latest
+            docker run -dit --restart=always --name mall-app -v /logs/mall-app/:/data/app/storage/logs -p 8081:8081 fengqixian1996/mall-app:latest
             echo "$LASTSSH"
       

@@ -22,23 +22,23 @@ jobs:
           username: ${{ secrets.DOCKER_USER_NAME }}
           password: ${{ secrets.DOCKER_USER_PASSWORD }}
         
-      - uses: cross-the-world/ssh-scp-ssh-pipelines@latest
-        name: ssh scp ssh pipelines
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@v1.2.2
         env:
           WELCOME: "ssh scp ssh pipelines"
           LASTSSH: "Doing something after copying"
         with:
           host: ${{ secrets.DC_HOST }}
-          user: ${{ secrets.DC_USER }}
-          pass: ${{ secrets.DC_PASS }}
+          username: ${{ secrets.DC_USER }}
+          password: ${{ secrets.DC_PASS }}
           port: ${{ secrets.DC_PORT }}
-          connect_timeout: 10s
-          first_ssh: |-
-            echo $WELCOME  &&
-          #scp: |-
-          last_ssh: |-
-            docker stop mall-app &&  
-            docker rm mall-app &&
-            docker rmi fengqixian1996/mall-app:latest &&
+          debug: true
+          script: |
+            echo "$WELCOME"
+            docker stop mall-app || true &&
+            docker rm mall-app || true &&
+            docker rmi fengqixian1996/mall-app:latest || true &&
             docker pull fengqixian1996/mall-app:latest &&
-            docker run -dit --restart=always  --name mall-app -p 8081:8081 fengqixian1996/mall-app:latest &&
+            docker run -dit --restart=always --name mall-app -v /logs/mall-app/:/data/app/storage/logs -p 8080:8080 fengqixian1996/mall-app:latest
+            echo "$LASTSSH"
+      

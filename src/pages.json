@@ -101,6 +101,14 @@
 			{
 				"navigationBarTitleText" : "webview"
 			}
+		},
+		{
+			"path" : "pages/self/orderDetail",
+			"style" : 
+			{
+				"navigationBarTitleText" : "%pages.orderDetail%",
+				"navigationBarBackgroundColor": "#ffffff"
+			}
 		}
 	],
 	"globalStyle": {

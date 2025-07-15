@@ -35,6 +35,12 @@
 		uni.setLocale(locale.value);
 	    // 保存当前语言到本地存储
 	    uni.setStorageSync('appLanguage', locale.value)
+
+		    // 重新加载页面
+    uni.reLaunch({
+        url: '/' 
+    });
+
 	}
 	
 	function goNav(e){

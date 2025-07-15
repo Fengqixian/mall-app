@@ -1,23 +1,30 @@
-{
+{	
+	"tips": {
+		"loginOut": "e已登录，是否退出登录",
+		"confirm": "e确认",
+		"cancel": "e取消"
+	},
+	"copy":"e复制",
+	"nullMsg": "e暂无数据~",
+	"guessLike": "e猜你喜欢",
+	"money": "e￥",
 	"tabBar.home": "e首页",
 	"tabBar.class": "e分类",
 	"tabBar.cart": "e购物车",
 	"tabBar.self": "e我的",
-	
-	
-	"pages.login":"e登录",
-	"pages.submitOrder":"e提交订单",
-	"pages.addressList":"e选择地址",
-	"pages.setAddress":"e收货地址",
-	"pages.orderList":"e我的订单",
-	
-	
+	"pages.login": "e登录",
+	"pages.submitOrder": "e提交订单",
+	"pages.addressList": "e选择地址",
+	"pages.setAddress": "e收货地址",
+	"pages.orderList": "e我的订单",
+	"pages.orderDetail": "e订单详情",
 	"home": {
 		"title": "e首页",
 		"getSite": "e获取当前地址",
 		"search": "e搜索",
 		"tabbleLength": "6",
-		"tabble": [{
+		"tabble": [
+			{
 				"title": "e全部",
 				"text": "e精选好物"
 			},
@@ -43,18 +50,144 @@
 			}
 		]
 	},
-	"search":{
-		"button":"e搜索",
-		"history":"e历史搜索",
-		"hot":"e热门搜索",
-		"placeholder":"e搜索商品"
+	"search": {
+		"button": "e搜索",
+		"history": "e历史搜索",
+		"hot": "e热门搜索",
+		"placeholder": "e搜索商品"
 	},
-	"class":{
-		"all":"e综合",
-		"sales":"e销量",
-		"price":"e价格",
-		"stock":"e库存",
-		"self":"e自营",
-		"select":"e选规格"
+	"class": {
+		"all": "e综合",
+		"sales": "e销量",
+		"price": "e价格",
+		"stock": "e库存",
+		"self": "e自营",
+		"select": "e选规格"
+	},
+	"goodsDetails": {
+		"self": "e自营",
+		"select": "e选规格",
+		"price": "e￥",
+		"sales": "e销量",
+		"stock": "e库存",
+		"delivery": "e配送",
+		"service": "e服务",
+		"goodsDetail": "e商品详情",
+		"buyRecord": "e购买记录",
+		"home": "e首页",
+		"customerService": "e客服",
+		"shoppingCart": "e购物车",
+		"addToCart": "e加入购物车"
+	},
+	"cart": {
+		"goodsCart": "e购物车",
+		"delete": "e删除",
+		"empty": "e购物车空空如也",
+		"goLogin": "e去登陆",
+		"goSettle": "e去结算",
+		"settle": "e结算",
+		"notes": "e填写商品备注",
+		"allSelect": "e全选",
+		"amountTo": "e不含运费 合计:"
+	},
+	"submitOrder": {
+		"submitOrder": "e提交订单",
+		"address": "e选择地址",
+		"delivery": "e配送方式",
+		"time": "e选择时间",
+		"goodsNotes": "e填写商品备注",
+		"notes": "e填写订单备注",
+		"goodsAmount": "e商品金额",
+		"deliveryAmount": "e配送费",
+		"waitPay": "e待支付"
+	},
+	"addressList":{
+		"botton":"e新增地址"
+	},
+	"setAddress":{
+		"name":"e收货人",
+		"namePlaceholder":"e请输入收货人",
+		"man":"e先生",
+		"woman":"e女士",
+		"phone":"e手机号",
+		"phonePlaceholder":"e请输入手机号",
+		"address":"e收货地址",
+		"addressPlaceholder":"e点击选择收货地址",
+		"addressDetail":"e详细地址",
+		"label":"e标签",
+		"addressDetailPlaceholder":"e请输入详细地址和门牌号",
+		"default":"e设为默认地址",
+		"defaultDesc":"e每次购物时会优先定位该地址，方便您轻松购物",
+		"delete":"e删除收货地址",
+		"save":"e保存收货地址"
+	},
+	"login":{
+		"phonePlaceholder":"e请输入手机号",
+		"codePlaceholder":"e请输入验证码",
+		"getCode":"e获取验证码",
+		"againGet":"e重新获取",
+		"login":"e登录"
+	},
+	"self":{
+		"title":"e点击登录用户",
+		"myOrder":"e我的订单",
+		"orderList":[
+			{
+				"title":"e待付款"
+			},
+			{
+				"title":"e进行中"
+			},
+			{
+				"title":"e待评价"
+			},
+			{
+				"title":"e退货/售后"
+			},
+			{
+				"title":"e收货地址"
+			}
+		]
+	},
+	"orderList":{
+		"tabble":["e全部","e待付款","e进行中","e待评价"],
+		"orderListCom":{
+			"status":["e已取消","e待付款","e进行中","e待评价","e已完成"],
+			"storeDelivery":"e商家配送",
+			"orderID":"e订单ID",
+			"deliveryTime":"e配送时间",
+			"number":"e数量",
+			"realPay":"e实付",
+			"button":{
+				"cancelOrder":"e取消订单",
+				"comeAgain":"e再来一单",
+				"goPay":"e去付款"
+			}
+		}
+	},
+	"orderDetail": {
+		"headStatus": [
+			{
+				"title": "e已取消",
+				"desc": "e订单超时未支付"
+			}
+		],
+		"button": {
+			"cancelOrder": "e取消订单",
+			"comeAgain": "e再来一单",
+			"goPay": "e去付款"
+		},
+		"address":"e收货地址",
+		"delivery":"e配送方式",
+		"time":"e预约时间",
+		"goodsList":"e购物清单",
+		"unitPrice":"e单价",
+		"number":"e数量",
+		"goodsPrice":"e商品价格",
+		"deliveryPrice":"e配送费",
+		"orderMessage":"e订单信息",
+		"orderID":"e订单ID",
+		"orderTime":"e下单时间",
+		"orderNumber":"e订单编号"
 	}
 }

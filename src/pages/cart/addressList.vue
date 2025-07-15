@@ -22,16 +22,16 @@
 
 		<view class=" flex flex-dc flex-ac" style="margin-top: 200rpx;">
 			<nullMsg></nullMsg>
-			<view class="bor-box flex flex-ac flex-jc cor-g"
+			<view @click="goSetAddress" class=" bor-box flex flex-ac flex-jc cor-g"
 				style="margin-top: 60rpx; border: 2rpx solid var(--cor-g); width: 300rpx;height: 100rpx;border-radius: 24rpx;">
-				新增地址
+				{{ t('addressList.botton') }}
 			</view>
 		</view>
 		
 		<view class="" style="height: 140rpx;"></view>
 		<view class=" w-100- pos-f bottom-0 bg-f flex flex-ac flex-jc box-s8" style="height: 100rpx;">
-			<view class=" font-30 flex flex-ac flex-jc bg-g cor-f" style="width: 700rpx;height: 80rpx;border-radius: 10rpx;">
-				新增地址
+			<view @click="goSetAddress" class=" font-30 flex flex-ac flex-jc bg-g cor-f" style="width: 700rpx;height: 80rpx;border-radius: 10rpx;">
+				{{ t('addressList.botton') }}
 			</view>
 		</view>
 	</view>
@@ -39,12 +39,19 @@
 
 <script setup>
 	import nullMsg from "@/components/nullMsg.vue"
+	import {
+		useI18n
+	} from 'vue-i18n'
+	const {
+		t
+	} = useI18n()
 	const radioStatus=false
 	function goSetAddress(){
 		uni.navigateTo({
 			url:'/pages/cart/setAddress'
 		})
 	}
+	
 </script>
 
 <style>

@@ -246,6 +246,7 @@
 					let div = document.createElement('div');
 					div.className = 'result-item';
 					div.textContent = pred.description;
+					console.log(pred);
 					div.onclick = function () {
 						selectPlace(pred.place_id, pred.description);
 					};

@@ -119,8 +119,8 @@ import tabbar from "@/components/tabbar.vue"
 import imageFlow from "@/components/imageFlow.vue"
 import statusHeight from '@/components/statusHeight.vue'
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
-
+const { t,tm } = useI18n()
+console.log(tm('home.tabble'))
 const swiperIndex = ref(0)
 function swiperChange(e) {
 	swiperIndex.value = e.detail.current
@@ -130,14 +130,18 @@ const state = reactive({
 	hometabble: [],
 	homeIndex: 0
 })
-for (let index = 0; index < t('home.tabbleLength')-0; index++) {
-	let obj = {
-		title: t('home.tabble.' + index + '.title'),
-		text: t('home.tabble.' + index + '.text'),
-	}
-	state.hometabble.push(obj)
-	// state.hometabble.push(obj)
-}
+setTimeout(()=>{
+	state.hometabble = tm('home.tabble')
+	// for (let index = 0; index < t('home.tabbleLength')-0; index++) {
+	// 	let obj = {
+	// 		title: t('home.tabble.' + index + '.title'),
+	// 		text: t('home.tabble.' + index + '.text'),
+	// 	}
+	// 	state.hometabble.push(obj)
+	// }
+})
+
+
 function changetabble(index) {
 	state.homeIndex = index
 }

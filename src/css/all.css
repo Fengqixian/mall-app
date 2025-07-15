@@ -23,6 +23,9 @@
 .bor-20{
     border-radius: 20rpx;
 }
+.bor-24{
+    border-radius: 24rpx;
+}
 .bor-50-{
     border-radius: 50%;
 }
@@ -131,7 +134,27 @@ input[type="number"]{
 .mar-t24{
 	margin-top: 24rpx;
 }
+.mar-t30{
+	margin-top: 30rpx;
+}
+
+.mar-b20{
+	margin-bottom: 20rpx;
+}
+.mar-b24{
+	margin-bottom: 24rpx;
+}
+.mar-b30{
+	margin-bottom: 30rpx;
+}
 
 .bor-box{
 	box-sizing: border-box;
+}
+
+.w700{
+	width: 700rpx;
+}
+.w650{
+	width: 650rpx;
 }

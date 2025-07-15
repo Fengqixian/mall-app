@@ -14,11 +14,11 @@
 				}" itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;width: 25%;">
 			</up-tabs>
 		</view>
-		<swiper class=" pos-r z-1" @change="changeSwiper" :current='tabsCurrent' :disable-touch="scrollStatus"
+		<swiper class=" pos-r z-1" @change="changeSwiper" :current='tabsCurrent' :acceleration="false"
 			style="width: 100%;height: calc(100svh - 88rpx);" :duration="500">
 			<swiper-item>
-				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
-					<orderListCom   v-for="(item, index) in 40" style="margin-top: 20rpx;"></orderListCom>
+				<scroll-view  scroll-y="true" style="height: calc(100svh - 88rpx);">
+					<orderListCom  v-for="(item, index) in 40" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
 
@@ -27,7 +27,7 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view  scroll-y="true" style="height: calc(100svh - 88rpx);">
 					<orderListCom v-for="(item, index) in 30" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
@@ -36,7 +36,7 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view  scroll-y="true" style="height: calc(100svh - 88rpx);">
 					<orderListCom v-for="(item, index) in 20" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
@@ -45,7 +45,7 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view @scroll="inScroll" @touchend="scrollTouchEnd" scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view  scroll-y="true" style="height: calc(100svh - 88rpx);">
 					<orderListCom v-for="(item, index) in 10" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
@@ -64,6 +64,9 @@ import {
 	reactive
 } from 'vue';
 import orderListCom from '@/components/orderListCom.vue';
+import { useI18n } from 'vue-i18n'
+const { t,tm } = useI18n()
+
 // 创建响应式数据  
 const tabsList = reactive([{
 	name: '全部'
@@ -78,9 +81,11 @@ const tabsList = reactive([{
 	name: '待评价'
 },
 ]);
+tabsList.forEach((item,index)=>{
+	item.name = tm('orderList.tabble')[index]
+})
 const tabsCurrent = ref(0)
-const scrollStatus =ref(false)
-const scrolltouchStatus =ref(false)
+
 function changeTabs(item, index) {
 	console.log(item)
 	tabsCurrent.value = index
@@ -90,16 +95,19 @@ function changeSwiper(e) {
 	tabsCurrent.value = e.detail.current
 }
 
-// 监听滚动事件
-let scrollTime = null
-const inScroll = () => {
-	if(scrolltouchStatus.value){return}
-	scrollStatus.value = true
-}
-let scrollTouchEnd =()=>{
-	scrollStatus.value = false
 
-}
+// 监听滚动事件
+// const scrollStatus =ref(false)
+// const scrolltouchStatus =ref(false)
+// let scrollTime = null
+// const inScroll = () => {
+// 	if(scrolltouchStatus.value){return}
+// 	scrollStatus.value = true
+// }
+// let scrollTouchEnd =()=>{
+// 	scrollStatus.value = false
+// }
+
 </script>
 
 <style>

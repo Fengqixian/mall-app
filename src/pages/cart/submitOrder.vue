@@ -6,7 +6,7 @@
 					mode=""></image>
 				<view @tap='goaDdressList' class="font-B cor-4 font-30 flex flex-dc flex-jc"
 					style="width: calc(650rpx - 38rpx - 44rpx - 40rpx);height: 120rpx;">
-					选择地址
+					{{ t('submitOrder.address') }}
 
 				</view>
 				<view v-if="false" class=" flex flex-dc flex-jc"
@@ -37,7 +37,7 @@
 
 				<view class="cor-4 flex flex-jb font-26 flex-ac" style="height: 80rpx;">
 					<view class=" font-B">
-						配送方式
+						{{ t('submitOrder.delivery') }}
 					</view>
 					<view class="flex flex-ac">
 						平台配送
@@ -46,7 +46,7 @@
 				</view>
 				<view class=" flex flex-jb font-26 flex-ac bor-b2sf0 bor-box" style="height: 80rpx;">
 					<view class="">
-						选择时间
+						{{ t('submitOrder.time') }}
 					</view>
 					<view class="flex flex-ac font-B">
 						次日 07:00-12:00 送达
@@ -80,33 +80,33 @@
 						</view>
 						<input type="text" class="font-26"
 							style=" margin-top: 20rpx; border-radius: 8rpx; height: 50rpx;padding: 0 12rpx;background: #f5f5f5;"
-							placeholder="填写商品备注" />
+							:placeholder="t('submitOrder.goodsNotes')" />
 					</view>
 				</view>
 				<view class="" style="margin-bottom: 30rpx;">
 					<view class=" flex flex-jb flex-ac font-26" style="height: 66rpx;">
 						<view class="">
-							商品金额
+							{{ t('submitOrder.goodsAmount') }}
 						</view>
 						<view class="">
-							￥16.00
+							{{t("money")}}16.00
 						</view>
 					</view>
 
 					<view class=" flex flex-jb flex-ac font-26" style="height: 66rpx;">
 						<view class="">
-							配送费
+							{{ t('submitOrder.deliveryAmount') }}
 						</view>
 						<view class="">
-							￥16.00
+							{{t("money")}}16.00
 						</view>
 					</view>
 					<view class=" flex flex-jb flex-ac font-26" style="height: 66rpx;">
 						<view class="">
-							订单备注
+							{{ t('submitOrder.notes') }}
 						</view>
 						<view class="flex flex-ac">
-							<input type="text" class=" font-26" style="text-align: right;" placeholder="填写备注" />
+							<input type="text" class=" font-26" style="text-align: right;" :placeholder="t('submitOrder.notes')" />
 							<up-icon style="display: inline-block;" name="arrow-right" color="#444"
 								size="32rpx"></up-icon>
 
@@ -125,11 +125,11 @@
 
 				<view class="  cor-8 font-24 flex flex-ac "
 					style=" height: 88rpx; width: 300rpx; overflow-x: scroll;white-space: nowrap;">
-					待支付:<text class="cor-r font-22">￥</text><text class="cor-r font-28 font-B">822.00</text>
+					{{ t('submitOrder.waitPay') }}:<text class="cor-r font-22">￥</text><text class="cor-r font-28 font-B">822.00</text>
 				</view>
-				<view @click="goOrder" class=" font-30  bg-g cor-f flex flex-ac flex-jc"
+				<view @click="" class=" font-30  bg-g cor-f flex flex-ac flex-jc"
 					style="height: 88rpx;width: 240rpx; border-radius: 8rpx;">
-					提交订单
+					{{ t('submitOrder.submitOrder') }}
 				</view>
 
 			</view>
@@ -140,6 +140,12 @@
 </template>
 
 <script setup>
+	import {
+		useI18n
+	} from 'vue-i18n'
+	const {
+		t
+	} = useI18n()
 	function goaDdressList() {
 		uni.navigateTo({
 			url: '/pages/cart/addressList'

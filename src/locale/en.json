@@ -2,7 +2,9 @@
 	"tips": {
 		"loginOut": "e已登录，是否退出登录",
 		"confirm": "e确认",
-		"cancel": "e取消"
+		"cancel": "e取消",
+		"prompt":"e提示",
+		"clickBack":"e保存成功，点击返回！！！"
 	},
 	"copy":"e复制",
 	"nullMsg": "e暂无数据~",

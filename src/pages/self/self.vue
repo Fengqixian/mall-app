@@ -26,7 +26,8 @@
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
-		<imageFlow></imageFlow>
+		
+		<imageFlow v-if="likeList.length>0" :listF="likeList"></imageFlow>
 		
 		<up-modal :show="modalShow" :content='t("tips.loginOut")' @confirm="loginOut" @cancel="modalShow=false" showCancelButton :confirmText="t('tips.confirm')" :cancelText="t('tips.cancel')"></up-modal>
 
@@ -40,8 +41,10 @@
 		nextTick
 	} from 'vue'
 	import {
-		onShow
+		onShow,
+		onLoad
 	} from '@dcloudio/uni-app'
+	import {post} from '@/utils/request.js'
 	import statusHeight from '@/components/statusHeight.vue'
 	import imageFlow from "@/components/imageFlow.vue"
 	import nullMsg from "@/components/nullMsg.vue"
@@ -102,6 +105,22 @@
 			url: '/pages/login/login'
 		})
 	}
+
+	const likeList=ref([])
+	async function getLikeList(){
+		const res=await post('/goods/search/info')
+		console.log(res);
+		if(res.code==200){
+			likeList.value=[]
+			setTimeout(()=>{
+				likeList.value=res.data.list
+			})
+		}
+	}
+	onLoad(()=>{
+		getLikeList()
+	})
+
 	// onShow(() => {
 	// 	let userInfo = uni.getStorageSync('userInfo')
 	// 	userInfo.value = userInfo

@@ -58,8 +58,11 @@ export function post(url, params) {
 				console.log(res.data.code)
 				if(res.data.code===401){
 					loginOut()
-				}else{
-					
+				}else if(res.data.code===500){
+					uni.showToast({
+						title:res.data.message,
+						icon:"none"
+					})
 				}
 				resolve(res.data)
 				

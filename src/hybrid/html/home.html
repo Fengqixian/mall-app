@@ -11,6 +11,11 @@
             padding: 0;
         }
 
+        /* 添加 v-cloak 样式 */
+        [v-cloak] {
+            display: none;
+        }
+
         .aaa {
             border: 1px solid red;
             box-sizing: border-box;
@@ -85,10 +90,10 @@
         <div style="width: 100svw;height: 40svh;">
             <div class="search-container" style="height: 44px;display: flex;">
                 <input @input="debounceSearch" v-model="addressValue" type="text" class="search-input"
-                    placeholder="请输入地址">
-                <div @click="completeSelection" class="search-button">完成</div>
+                    :placeholder="i18nText.placeholder">
+                <div @click="completeSelection" class="search-button">{{ i18nText.done }}</div>
             </div>
-            <div v-if="predictions.length" id="predictions" style="height: calc(100% - 44px);overflow-y: scroll;padding: 0 10px;">
+            <div v-cloak v-if="predictions.length" id="predictions" style="height: calc(100% - 44px);overflow-y: scroll;padding: 0 10px;">
                 <div v-for="(prediction, index) in predictions" :key="index" class="prediction-item"
                     @click="selectPrediction(prediction)">
                     {{ prediction.description }}
@@ -114,7 +119,26 @@
         if (r != null) return decodeURIComponent(r[2]);
         return null;
     }
+    const i18n = {
+			zh: {
+				placeholder: '搜索位置',
+				done: '完成'
+			},
+			en: {
+				placeholder: 'Search location',
+				done: 'Done'
+			},
+			th: {
+				placeholder: 'ค้นหาตำแหน่ง',
+				done: 'สำเร็จ'
+			},
+			// 可继续扩展更多语言
+		};
 
+		function getLang() {
+			const lang = getQueryParam('lang');
+			return (lang && i18n[lang]) ? lang : 'zh';
+		}
     // 动态加载Google Maps API
     function loadGoogleMapsAPI() {
         const lang = getQueryParam('lang') || 'zh-CN'; // 默认中文
@@ -142,18 +166,23 @@
             data() {
                 return {
                     addressValue: "",
-                    center: {
+                    center: { 
                         lat: parseFloat(getQueryParam('lat')) || 35.86166,
                         lng: parseFloat(getQueryParam('lng')) || 104.195397
                     },
-                    zoom: 16, // 设置更大的缩放级别以显示更详细的信息
+                    zoom: 16,
                     map: null,
                     autocompleteService: null,
                     predictions: [],
                     placesService: null,
                     selectedPlace: null,
                     mapMarker: null,
-                    currentLanguage: getQueryParam('lang') || 'zh-CN'
+                    currentLang: getLang() // 获取当前语言
+                }
+            },
+            computed: {
+                i18nText() {
+                    return i18n[this.currentLang] || i18n.zh;
                 }
             },
             mounted() {
@@ -170,7 +199,7 @@
                         center: this.center,
                         disableDefaultUI: true,
                         mapTypeId: google.maps.MapTypeId.ROADMAP,
-                        language: this.currentLanguage
+                        language: this.currentLang
                     });
 
                     // 创建初始标记

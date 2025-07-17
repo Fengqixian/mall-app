@@ -24,10 +24,10 @@
 			<scroll-view scroll-y="true" :scroll-top="leftTable.scrollTop" scroll-with-animation
 				class="pos-r flex flex-dc"
 				style=" box-sizing: border-box; border-right: 2rpx solid #f5f5f5; width: 180rpx;height: 100%;">
-				<view v-for="(item,index) in 20" @tap="changeLeftTabble(index)"
-					class="tst-3 pos-r font-26 flex flex-ac flex-jc cor-4 z-5"
+				<view v-for="(item,index) in state.classList" @tap="changeLeftTabble(index)"
+					class="tst-3 pos-r font-26 flex flex-ac flex-jc cor-4 z-5 "
 					:class="leftTable.current == index?'cor-g':''" style="width: 100%;height: 100rpx;">
-					<text>全部{{item}}</text>
+					<text style="width: 80%;text-align: center;" class="text-d">{{item.name}}</text>
 				</view>
 
 				<view :style="'top: '+(100*leftTable.current)+'rpx;'"
@@ -82,33 +82,35 @@
 								<view class=" cor-8 font-22 text-d" style="margin-top: 8rpx;">
 									{{ t('class.stock') }} 99999
 								</view>
-								<view  class=" flex flex-ac flex-jb cor-8 font-22 text-d" style="margin-top: 8rpx;">
+								<view class=" flex flex-ac flex-jb cor-8 font-22 text-d" style="margin-top: 8rpx;">
 									<text>{{ t('class.self') }}</text>
-									
+
 									<view v-if='item%2==0' class=" bor-50- flex flex-ac flex-jc"
 										style="width: 56rpx;height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 										<up-icon class="" name="shopping-cart" color="#fff" size="50rpx"></up-icon>
 									</view>
-									
+
 									<view v-else class="flex flex-ac flex-jc cor-f font-28"
-									style="width: 148rpx; border-radius: 27rpx; height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
+										style="width: 148rpx; border-radius: 27rpx; height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 										{{ t('class.select') }}
-										<up-icon class="" style="margin-left: 6rpx;" name="arrow-down" color="#fff" size="32rpx"></up-icon>
+										<up-icon class="" style="margin-left: 6rpx;" name="arrow-down" color="#fff"
+											size="32rpx"></up-icon>
 									</view>
 								</view>
-								
+
 							</view>
 						</view>
 						<view v-if='item%2!==0' class="flex flex-dc flex-ac" style="width: 570rpx;">
 							<view v-for="ite in 3" class="" style="width: 534rpx;margin-top: 20rpx;">
 								<view class=" flex">
 									<view class="flex flex-g">
-										<view class="cor-r flex flex-ac flex-drr" style="width: 50%; text-align: right;">
+										<view class="cor-r flex flex-ac flex-drr"
+											style="width: 50%; text-align: right;">
 											<text class="font-36 font-w7">5.00</text>
 											<text class="font-26">￥</text>
 										</view>
 										<view class="font-26 flex flex-ac cor-4" style="width: 50%;margin-left: 10rpx;">
-											精品 
+											精品
 										</view>
 									</view>
 									<view class=" bor-50- flex flex-ac flex-jc"
@@ -137,13 +139,23 @@
 	} from 'vue'
 	import statusHeight from '@/components/statusHeight.vue'
 	import imageFlow from "@/components/imageFlow.vue"
+	import {
+		post
+	} from '@/utils/request'
 	import nullMsg from "@/components/nullMsg.vue"
 	import {
 		useI18n
 	} from 'vue-i18n'
+	import {
+		onLoad
+	} from '@dcloudio/uni-app'
 	const {
 		t
 	} = useI18n()
+
+	const state = reactive({
+		classList: []
+	})
 
 	// 获取系统信息
 	const systemInfo = uni.getSystemInfoSync()
@@ -160,6 +172,8 @@
 	function changeLeftTabble(index) {
 		leftTable.current = index
 		leftTable.scrollTop = (index * 50) - (usableHeight / 4 - 44)
+		
+		getGoodsList(state.classList[index].id)
 	}
 	const rightTable = reactive({
 		current: 0,
@@ -169,6 +183,27 @@
 		console.log(index)
 		rightTable.current = index
 	}
+
+	async function getGoodsList(id) {
+		let params = {
+			"classId": id,
+			"page": 1,
+			"pageSize": 10
+		}
+		let data = await post('/goods/list', params)
+		console.log(data)
+	}
+	async function getClassList() {
+		let data = await post('/goods/class/list')
+		if (data.code === 200) {
+			state.classList = data.data
+			getGoodsList(state.classList[0].id)
+		}
+		console.log(data)
+	}
+	onLoad(() => {
+		getClassList()
+	})
 </script>
 
 <style scoped>

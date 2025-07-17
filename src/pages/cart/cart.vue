@@ -139,7 +139,7 @@
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
-		<image-flow></image-flow>
+		<image-flow v-if="likeList.length>0" :listF="likeList"></image-flow>
 
 		<view class="" style="height: 100rpx;"></view>
 		<view class=" flex flex-ac flex-jc pos-f  bg-f w-100- z-10 left-0 bottom box-s8 bor-box" style="height: 100rpx;border-bottom: 2rpx solid #f5f5f5;">
@@ -165,7 +165,7 @@
 <script setup>
 	import statusHeight from '@/components/statusHeight.vue'
 	import imageFlow from "@/components/imageFlow.vue"
-
+	import {post} from '@/utils/request'
 	import {
 		useI18n
 	} from 'vue-i18n'
@@ -181,6 +181,7 @@
 	import {
 		ref
 	} from 'vue'
+import { onShow ,onLoad } from '@dcloudio/uni-app'
 	const systemInfo = uni.getSystemInfoSync();
 	const statusBarHeight = ref(systemInfo.statusBarHeight || 0); // 单位：px
 	console.log('状态栏高度:', statusBarHeight.value);
@@ -191,11 +192,25 @@
 		console.log('当前值为: ' + numberBox.value);
 	}
 	
+	const likeList=ref([])
 	function goOrder(){
 		uni.navigateTo({
 			url:'/pages/cart/submitOrder'
 		})
 	}
+	async function getLikeList(){
+		const res=await post('/goods/search/info')
+		console.log(res);
+		if(res.code==200){
+			likeList.value=[]
+			setTimeout(()=>{
+				likeList.value=res.data.list
+			})
+		}
+	}
+	onLoad(()=>{
+		getLikeList()
+	})
 </script>
 
 <style lang="scss" scoped>

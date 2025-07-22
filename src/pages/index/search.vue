@@ -129,21 +129,27 @@ function handleHistory(item) {
 }
 
 const hotList = ref([])
-async function getHotList() {
-	let res = await post('/goods/search/info')
-	if (res.code == 200) {
-		hotList.value = res.data.searchList
+function getHotList() {
+	let {value:searchJSON}=uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
+	try{
+		hotList.value = JSON.parse(searchJSON)
+	}catch(err){
+		console.log(err)
 	}
+	
 }
 
 const searchInputEl = ref(null)
 onShow(() => {
-	nextTick(() => {
-		console.log(searchInputEl.value)
-		searchInputEl?.value?.focus()
-	})
+	// nextTick(() => {
+	// 	console.log(searchInputEl.value)
+	// 	// searchInputEl?.value?.focus()
+	// })
 })
-onLoad(() => {
+onLoad((options) => {
+	if(options.name){
+		searchParams.name = options.name
+	}
 	searchHistory.value = uni.getStorageSync('searchHistory') || []
 	getSearchList()
 	getHotList()

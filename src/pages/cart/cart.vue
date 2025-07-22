@@ -43,7 +43,7 @@
 						我的常购
 					</view> -->
 				</view>
-				<view class="cor-8 font-30">
+				<view @tap="deleteSelectGoods" class="cor-8 font-30">
 
 					{{ t('cart.delete') }}
 				</view>
@@ -71,6 +71,8 @@
 					</view>
 				</view>
 
+
+				<nullMsg v-if="goodsInfoArray.length === 0" style=" margin: 100rpx 0;"></nullMsg>
 				<view v-for='item in goodsInfoArray' :key='item.id' class=" flex flex-dc bor-b2sf0"
 					style="height: 300rpx;">
 					<view class="flex flex-ac " style="height: 220rpx;">
@@ -144,7 +146,7 @@
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
-		<image-flow v-if="likeList.length > 0" :listF="likeList"></image-flow>
+		<image-flow v-if="likeList.length > 0" :listF="likeList" @updataGoodsCart="getGoodsInfoArray"></image-flow>
 
 		<view class="" style="height: 100rpx;"></view>
 		<view class=" flex flex-ac flex-jc pos-f  bg-f w-100- z-10 left-0 bottom box-s8 bor-box"
@@ -175,6 +177,7 @@
 <script setup>
 import statusHeight from '@/components/statusHeight.vue'
 import imageFlow from "@/components/imageFlow.vue"
+import nullMsg from "@/components/nullMsg.vue"
 import { post } from '@/utils/request'
 import {
 	useI18n
@@ -226,13 +229,28 @@ async function getLikeList() {
 	}
 }
 
-function changeStatus() {
 
-}
-function changeNumber() {
-
-}
-function changeDesc() {
+function deleteSelectGoods() {
+	uni.showModal({
+		title: '提示',
+		content: '确定要删除选中商品吗？',
+		success: (res) => {
+			if (res.confirm) {
+				if(goodsInfoObj.value.status === 1){
+					goodsInfoArray.value = []
+					uni.setStorageSync('goodsInfo',goodsInfoArray.value)
+				}else{
+					goodsInfoArray.value = goodsInfoArray.value.filter(item => item.status === 0)
+					uni.setStorageSync('goodsInfo',goodsInfoArray.value)
+				}
+				uni.showToast({
+					title: '删除成功',
+					icon: 'success'
+				})
+			}
+		}
+	})
+	
 
 }
 
@@ -270,6 +288,7 @@ function getGoodsInfoArray(){
 	const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 	goodsInfoArray.value = goodsInfoStorage
 }
+
 
 onLoad(() => {
 	getLikeList()

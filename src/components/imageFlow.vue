@@ -3,9 +3,11 @@
 		<!-- <up-button @click="clear">清空列表</up-button> -->
 		<up-waterfall v-model="list" ref="uWaterfallRef">
 			<template v-slot:left="{ leftList }">
-				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in leftList" :key="item.goodsInfo.id">
+				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in leftList"
+					:key="item.goodsInfo.id">
 					<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
-					<up-lazy-load threshold="0" border-radius="10" :image="item.goodsInfo.coverImage" :index="index"></up-lazy-load>
+					<up-lazy-load threshold="0" border-radius="10" :image="item.goodsInfo.coverImage"
+						:index="index"></up-lazy-load>
 					<view class="demo-title text-2d font-B">
 						{{ item.goodsInfo.name }}
 					</view>
@@ -14,7 +16,8 @@
 					</view>
 					<view class="demo-price">
 						<text>{{ item.goodsInfo.priceUnitName }}</text>
-						<text style="font-size: 36rpx;font-weight: 600;">{{ (item.goodsInfo.price/100).toFixed(2) }}</text>
+						<text style="font-size: 36rpx;font-weight: 600;">{{ (item.goodsInfo.price / 100).toFixed(2)
+							}}</text>
 						<text style="color: #000;">/{{ item.goodsInfo.unitName }}</text>
 					</view>
 					<!-- <view class="demo-tag">
@@ -26,10 +29,11 @@
 						</view>
 					</view> -->
 					<view class="flex flex-jb flex-ac">
-						<view class="demo-shop  text-d" style="width: 230rpx;">
+						<view class="demo-shop  text-d op-0" style="width: 230rpx;">
 							{{ item.goodsInfo.name }}
 						</view>
-						<view class="flex flex-ac flex-jc" style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
+						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc"
+							style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 							<up-icon name="shopping-cart" color="#fff" size="28"></up-icon>
 						</view>
 					</view>
@@ -38,8 +42,10 @@
 				</view>
 			</template>
 			<template v-slot:right="{ rightList }">
-				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in rightList" :key="item.goodsInfo.id">
-					<up-lazy-load threshold="-450" border-radius="10" :image="item.goodsInfo.coverImage" :index="index"></up-lazy-load>
+				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in rightList"
+					:key="item.goodsInfo.id">
+					<up-lazy-load threshold="-450" border-radius="10" :image="item.goodsInfo.coverImage"
+						:index="index"></up-lazy-load>
 					<view class="demo-title text-2d font-B">
 						{{ item.goodsInfo.name }}
 					</view>
@@ -48,7 +54,8 @@
 					</view>
 					<view class="demo-price">
 						<text>{{ item.goodsInfo.priceUnitName }}</text>
-						<text style="font-size: 36rpx;font-weight: 600;">{{ (item.goodsInfo.price/100).toFixed(2) }}</text>
+						<text style="font-size: 36rpx;font-weight: 600;">{{ (item.goodsInfo.price / 100).toFixed(2)
+							}}</text>
 						<text style="color: #000;">/{{ item.goodsInfo.unitName }}</text>
 					</view>
 					<!-- <view class="demo-tag">
@@ -60,14 +67,15 @@
 						</view>
 					</view> -->
 					<view class="flex flex-jb flex-ac">
-						<view class="demo-shop  text-d" style="width: 230rpx;">
+						<view class="demo-shop  text-d op-0" style="width: 230rpx;">
 							{{ item.goodsInfo.name }}
 						</view>
-						<view class="flex flex-ac flex-jc" style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
+						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc"
+							style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 							<up-icon name="shopping-cart" color="#fff" size="28"></up-icon>
 						</view>
 					</view>
-					
+
 				</view>
 			</template>
 		</up-waterfall>
@@ -76,15 +84,22 @@
 </template>
 
 <script>
+import {
+	useI18n
+} from 'vue-i18n'
+
+
+
 export default {
-	props:{
-		listF:{
-			type:Array,
-			default:()=>[]
+	props: {
+		listF: {
+			type: Array,
+			default: () => []
 		}
 	},
 	data() {
 		return {
+			addSuccess: '',
 			loadStatus: 'loadmore',
 			flowList: [],
 			list: [] // 初始化为空数组
@@ -102,6 +117,11 @@ export default {
 	onLoad() {
 		this.addRandomData();
 	},
+	mounted(){
+		let {t} = useI18n()
+		console.log(t('tips.addSuccess'),1111111111)
+		this.addSuccess = t('tips.addSuccess')
+	},
 	onReachBottom() {
 		this.loadStatus = 'loading';
 		// 模拟数据加载
@@ -111,9 +131,34 @@ export default {
 		}, 1000)
 	},
 	methods: {
-		navDetails(id){
+		$t(key){
+			const {t} = useI18n()
+			console.log(t(key))
+			// return t(key)
+		},
+		addGoodsInfo(goodsInfo) {
+			// goodsInfo.number = 1
+			const _goodsInfo = { ...goodsInfo, number: 1, status: 1, notes: '' }
+			const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
+			let findIndex = this.findIndexById(goodsInfoStorage, goodsInfo.id)
+			if (findIndex == -1) {
+				goodsInfoStorage.push(_goodsInfo)
+			} else {
+				goodsInfoStorage[findIndex].number++
+			}
+			uni.setStorageSync('goodsInfo', goodsInfoStorage)
+			this.$emit('updataGoodsCart')
+			uni.showToast({
+				title: this.addSuccess,
+				icon: 'none'
+			})
+		},
+		findIndexById(array, id) {
+			return array.findIndex(item => item.id === id);
+		},
+		navDetails(id) {
 			uni.navigateTo({
-				url:'/pages/index/goodsDetails?id='+id
+				url: '/pages/index/goodsDetails?id=' + id
 			})
 		},
 		addRandomData() {
@@ -144,9 +189,10 @@ page {
 </style>
 
 <style lang="scss" scoped>
-	.wrap{
-		width: 730rpx;
-	}
+.wrap {
+	width: 730rpx;
+}
+
 .demo-warter {
 	border-radius: 8px;
 	margin: 5px;

@@ -1,5 +1,6 @@
 {	
 	"tips": {
+		"addSuccess": "e添加成功",
 		"loginOut": "e已登录，是否退出登录",
 		"confirm": "e确认",
 		"cancel": "e取消",

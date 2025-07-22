@@ -3,7 +3,7 @@
 	<view style="" class="bg-f flex flex-dc flex-ac">
 
 		<view class="flex flex-ac flex-jc" style="width: 750rpx;height: 750rpx;">
-			<image class="pos-f  " :class="{ 'myfirstClass z-10': animationStatus }" :src="list1[0]" style="width: 80rpx;height: 80rpx;"></image>
+			<image class="pos-f " :class="{ 'myfirstClass z-10': animationStatus }" v-show="animationStatus" :src="list1[0]" style="width: 80rpx;height: 80rpx;"></image>
 			<view class="" style="width: 750rpx;height: 750rpx;">
 				<up-swiper height="375" circular :list="list1"></up-swiper>
 			</view>
@@ -205,10 +205,9 @@ function addGoodsInfo(goodsInfo) {
 	uni.setStorageSync('goodsInfo', goodsInfoStorage)
 
 	uni.showToast({
-		title: '添加成功',
+		title: t('tips.addSuccess'),
 		icon: 'none'
 	})
-	console.log(goodsInfoStorage)
 }
 function findIndexById(array, id) {
     return array.findIndex(item => item.id === id);

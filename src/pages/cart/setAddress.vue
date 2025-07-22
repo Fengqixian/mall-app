@@ -183,31 +183,39 @@
 		"lng": 104.06651,
 		"formatted_address": "中国四川省成都市武侯区锦悦西路2号 邮政编码: 610094"
 	})
+	const pushParams = reactive({})
 	function changeSwitchValue() {
 
 	}
 	// ---------------------------------------
-	let componentsLen = addressInfo.value?.address_components.length||0
-	//最后一位是邮编
-	if((addressInfo.value.address_components[componentsLen-1].long_name)-0!=NaN){
-		addressInfo.value.address_components.pop()
+	function initAddress(){
+		let componentsLen = addressInfo.value?.address_components.length||0
+		//最后一位是邮编
+		if((addressInfo.value.address_components[componentsLen-1].long_name)-0!=NaN){
+			addressInfo.value.address_components.pop()
+		}
+		console.log(addressInfo.value.address_components);
+		let componentsLenReal = addressInfo.value?.address_components.length||0
+		console.log()
+		addressInfo.value.formatted_address = addressInfo.value.formatted_address.split(' 邮政编码:')[0]
+		const _pushParams = {
+			"city": addressInfo.value.address_components[componentsLenReal-3].long_name||'',
+			"country": addressInfo.value.address_components[componentsLenReal-1].long_name||'',
+			"detailedAddress": addressInfo.value.formatted_address,
+			"district": addressInfo.value.address_components[componentsLenReal-4].long_name||'',
+			"id": 1,
+			"isDefault": Boolean(0),
+			"province": addressInfo.value.address_components[componentsLenReal-2].long_name||'',
+			"receiverName": "张三",
+			"receiverPhone": "13800138000",
+			"userId": uni.getStorageSync('userInfo').userId
+		}
+		for (var key in _pushParams) {
+			pushParams[key]=_pushParams[key]
+		}
+		
 	}
-	console.log(addressInfo.value.address_components);
-	let componentsLenReal = addressInfo.value?.address_components.length||0
-	console.log()
-	addressInfo.value.formatted_address = addressInfo.value.formatted_address.split(' 邮政编码:')[0]
-	const pushParams = reactive({
-		"city": addressInfo.value.address_components[componentsLenReal-3].long_name||'',
-		"country": addressInfo.value.address_components[componentsLenReal-1].long_name||'',
-		"detailedAddress": addressInfo.value.formatted_address,
-		"district": addressInfo.value.address_components[componentsLenReal-4].long_name||'',
-		"id": 1,
-		"isDefault": Boolean(0),
-		"province": addressInfo.value.address_components[componentsLenReal-2].long_name||'',
-		"receiverName": "张三",
-		"receiverPhone": "13800138000",
-		"userId": uni.getStorageSync('userInfo').userId
-	})
+	initAddress()
 
 
 	async function submitBtn() {
@@ -241,7 +249,8 @@
 	
 	onShow(() => {
 		console.log(getApp().globalData.addressInfo);
-		// addressInfo.value = getApp().globalData.addressInfo
+		addressInfo.value = getApp().globalData.addressInfo
+		initAddress()
 	})
 	onHide(() => {
 		getApp().globalData.addressInfo = null

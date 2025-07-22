@@ -17,13 +17,13 @@
 				<up-icon style="position: relative;top: 2rpx;" class="" name="arrow-down-fill" color="#fff"
 					size="22rpx"></up-icon>
 			</view>
-			<view @tap="navSearch" class="flex flex-ac flex-jb"
+			<view @tap="navSearch(textSwiper.searchArr[swiperSearchIndex])" class="flex flex-ac flex-jb"
 				style="margin-top: 20rpx; height: 88rpx;width: 100%;background-color: #fff;border-radius: 44rpx;">
 				<view class="flex flex-ac" style="padding-left: 20rpx;">
 					<up-icon name="search" color="#ccc" size="50rpx"></up-icon>
 					<view class="" style="margin-left: 10rpx; width: 400rpx;height: 80rpx;">
-						<swiper style="height: 80rpx;" class="" autoplay circular vertical interval="2000"
-							duration="1000">
+						<swiper style="height: 80rpx;" :current='swiperSearchIndex' class="" autoplay circular vertical interval="2000"
+							duration="1000" @change="swiperSearchChange">
 							<swiper-item v-for="(item,index) in textSwiper.searchArr" :key="index">
 								<text style="width: 400rpx;height: 80rpx;color: #aaa;" class="text-d font-28  flex flex-ac">{{ item }}</text>
 							</swiper-item>
@@ -87,7 +87,7 @@
 
 			<view style="width: 700rpx;height: 600rpx;overflow-x: scroll;" class="grid-container bg-f">
 				<view @tap="navClass(index)" v-for="(item,index) in state.classList" :key="item.id" style="width: 140rpx;min-height: 174rpx;margin: 4rpx 0;"
-					class="aaa flex flex-dc flex-jc flex-ac">
+					class=" flex flex-dc flex-jc flex-ac">
 					<image class="" style="width: 112rpx;min-height: 112rpx;max-height: 112rpx;" :src="item.coverImage"
 						mode="scaleToFill" />
 					<view class=" text-d" style="width: 120rpx; font-size: 26rpx;color: #444;margin-top: 10rpx;text-align: center;">{{item.name}}</view>
@@ -125,9 +125,14 @@ import { onLoad } from '@dcloudio/uni-app'
 const { t,tm } = useI18n()
 console.log(tm('home.tabble'))
 const swiperIndex = ref(0)
+const swiperSearchIndex = ref(0)
 function swiperChange(e) {
 	swiperIndex.value = e.detail.current
 }
+function swiperSearchChange(e){
+	swiperSearchIndex.value = e.detail.current
+}
+
 
 const state = reactive({
 	hometabble: [],
@@ -150,9 +155,9 @@ function changetabble(index) {
 	state.homeIndex = index
 }
 
-function navSearch(){
+function navSearch(name){
 	uni.navigateTo({
-		url:'/pages/index/search'
+		url:'/pages/index/search?name='+name
 	})
 }
 function navWarehouse(){

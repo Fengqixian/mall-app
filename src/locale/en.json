@@ -4,8 +4,11 @@
 		"confirm": "e确认",
 		"cancel": "e取消",
 		"prompt":"e提示",
-		"clickBack":"e保存成功，点击返回！！！"
+		"clickBack":"e保存成功，点击返回！！！",
+		"sureClearSearch":"e确定要清空搜索历史吗？"
 	},
+	"uni.showModal.cancel": "e取消",
+	"uni.showModal.confirm": "e确定",
 	"copy":"e复制",
 	"nullMsg": "e暂无数据~",
 	"guessLike": "e猜你喜欢",

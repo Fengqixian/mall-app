@@ -147,7 +147,8 @@
 		useI18n
 	} from 'vue-i18n'
 	import {
-		onLoad
+		onLoad,
+		onShow
 	} from '@dcloudio/uni-app'
 	const {
 		t
@@ -171,7 +172,9 @@
 
 	function changeLeftTabble(index) {
 		leftTable.current = index
-		leftTable.scrollTop = (index * 50) - (usableHeight / 4 - 44)
+		setTimeout(() => {
+			leftTable.scrollTop = (index * 50) - (usableHeight / 4 - 44)
+		}, 100)
 		
 		getGoodsList(state.classList[index].id)
 	}
@@ -203,6 +206,14 @@
 	}
 	onLoad(() => {
 		getClassList()
+	})
+	const classIndexRef = ref(-1)
+	onShow(() => {
+		let classIndex = uni.getStorageSync('classIndex')
+		if (classIndex) {
+			classIndexRef.value = classIndex-1
+			changeLeftTabble(classIndexRef.value)
+		}
 	})
 </script>
 

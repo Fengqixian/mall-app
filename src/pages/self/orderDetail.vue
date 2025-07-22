@@ -155,8 +155,18 @@
 </template>
 
 <script setup>
+import {ref} from 'vue'	
+import {
+		onShow,
+		onLoad
+	} from '@dcloudio/uni-app'
 import {useI18n} from 'vue-i18n'
+
 const {t, tm} = useI18n()
+
+
+
+
 </script>
 
 <style></style>

@@ -2,10 +2,11 @@
 	<statusHeight></statusHeight>
 	<view class=" pos-r flex flex-dc flex-ac ov-h" style="width: 750rpx;">
 		<view class="pos-a top-0 left-0 z-0" style="height: 470rpx;width: 750rpx;">
-			<image class="pos-a trt-5" src="/src/static/img/DM_20250619214345_002.png"
-				:class="swiperIndex === 0 ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;" mode=""></image>
-			<image class="pos-a trt-5" src="/src/static/img/DM_20250619214345_003.png"
-				:class="swiperIndex === 1 ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;" mode=""></image>
+			<image v-for="(item,index) in  bannerList" :key='item.id' class="pos-a trt-5" :src="item.url"
+				:class="swiperIndex === index ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;" mode="aspectFill"></image>
+				
+<!-- 			<image class="pos-a trt-5" src="/src/static/img/DM_20250619214345_003.png"
+				:class="swiperIndex === 1 ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;" mode=""></image> -->
 		</view>
 		<view class="pos-r z-1 " style="height: 470rpx;width: 700rpx;">
 			<view class="flex flex-jc flex-ac font-32 cor-f" style="font-weight: 700; height: 88rpx;">
@@ -20,15 +21,15 @@
 				style="margin-top: 20rpx; height: 88rpx;width: 100%;background-color: #fff;border-radius: 44rpx;">
 				<view class="flex flex-ac" style="padding-left: 20rpx;">
 					<up-icon name="search" color="#ccc" size="50rpx"></up-icon>
-					<view class="" style="margin-left: 10rpx; width: 200rpx;height: 80rpx;">
+					<view class="" style="margin-left: 10rpx; width: 400rpx;height: 80rpx;">
 						<swiper style="height: 80rpx;" class="" autoplay circular vertical interval="2000"
 							duration="1000">
-							<swiper-item>
-								<text style="width: 200rpx;height: 80rpx;color: #aaa;" class=" flex flex-ac">123</text>
+							<swiper-item v-for="(item,index) in textSwiper.searchArr" :key="index">
+								<text style="width: 400rpx;height: 80rpx;color: #aaa;" class="text-d font-28  flex flex-ac">{{ item }}</text>
 							</swiper-item>
-							<swiper-item>
+							<!-- <swiper-item>
 								<text style="width: 200rpx;height: 80rpx;color: #aaa;" class=" flex flex-ac">123</text>
-							</swiper-item>
+							</swiper-item> -->
 						</swiper>
 					</view>
 
@@ -43,18 +44,18 @@
 			<view class="" style="width: 700rpx;height: 158rpx;margin-top: 22rpx;">
 				<swiper @change="swiperChange" :current='swiperIndex' style="height: 158rpx;width: 700rpx;" class=""
 					autoplay circular interval="3000" duration="1000">
-					<swiper-item>
+					<swiper-item v-for="(item,index) in bannerList">
 						<view style="height: 158rpx;width: 700rpx;" class="pos-r ov-h ">
-							<image class="pos-a" style="left: -25rpx;bottom: -60rpx;width: 750rpx;height: 470rpx;"
-								src="/src/static/img/DM_20250619214345_002.png" mode="scaleToFill" />
+							<image class="pos-a" style="left: -24rpx;bottom: -60rpx;width: 750rpx;height: 470rpx;"
+								:src="item.url" mode="aspectFill" />
 						</view>
 					</swiper-item>
-					<swiper-item>
+<!-- 					<swiper-item>
 						<view style="height: 158rpx;width: 700rpx;" class="pos-r ov-h ">
 							<image class="pos-a" style="left: -25rpx;bottom: -60rpx;width: 750rpx;height: 470rpx;"
 								src="/src/static/img/DM_20250619214345_003.png" mode="scaleToFill" />
 						</view>
-					</swiper-item>
+					</swiper-item> -->
 				</swiper>
 
 			</view>
@@ -68,32 +69,33 @@
 				<view style="width: 560rpx;margin-left: 20rpx;height: 60rpx;" class="">
 					<swiper style="width: 560rpx;height: 100%;" class="" autoplay circular vertical interval="2000"
 						duration="1000">
-						<swiper-item>
+						<swiper-item v-for="(item,index) in textSwiper.noticeArr" :key="index">
 							<view style="width: 560rpx;height: 100%; color: rgb(54, 14, 14);line-height: 60rpx;"
 								class="text-d font-B  font-24">
-								正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版
+								{{ item }}
 							</view>
 						</swiper-item>
-						<swiper-item>
+						<!-- <swiper-item>
 							<view style="width: 560rpx;height: 100%; color: rgb(54, 14, 14);line-height: 60rpx;"
 								class="text-d font-B  font-24">
 								正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版
 							</view>
-						</swiper-item>
+						</swiper-item> -->
 					</swiper>
 				</view>
 			</view>
 
-			<view style="width: 700rpx;height: 600rpx;overflow-x: scroll;" class="flex flex-dc flex-ww bg-f">
-				<view v-for="item in 20" style="width: 20%;height: 174rpx;margin: 4rpx 0;"
-					class=" flex flex-dc flex-jc flex-ac">
-					<image style="width: 112rpx;height: 112rpx;" src="/src/static/img/DM_20250619214345_010.png"
+			<view style="width: 700rpx;height: 600rpx;overflow-x: scroll;" class="grid-container bg-f">
+				<view @tap="navClass(index)" v-for="(item,index) in state.classList" :key="item.id" style="width: 140rpx;min-height: 174rpx;margin: 4rpx 0;"
+					class="aaa flex flex-dc flex-jc flex-ac">
+					<image class="" style="width: 112rpx;min-height: 112rpx;max-height: 112rpx;" :src="item.coverImage"
 						mode="scaleToFill" />
-					<view style="font-size: 26rpx;color: #444;margin-top: 10rpx;">海鲜水产</view>
+					<view class=" text-d" style="width: 120rpx; font-size: 26rpx;color: #444;margin-top: 10rpx;text-align: center;">{{item.name}}</view>
 				</view>
 			</view>
+			
 		</view>
-		<view style="width: 750rpx;height: 128rpx;margin-top: 26rpx;margin-bottom: 10rpx; overflow-x: scroll;" class=" flex fle-ac bg-f">
+<!-- 		<view v-if="false" style="width: 750rpx;height: 128rpx;margin-top: 26rpx;margin-bottom: 10rpx; overflow-x: scroll;" class=" flex fle-ac bg-f">
 			<view v-for="item, index in state.hometabble" :key="index"  class=" flex flex-ac">
 				<view @tap="changetabble(index)" class="flex flex-dc flex-ac flex-jc"
 					style="padding: 0 20rpx;white-space: nowrap;">
@@ -104,10 +106,9 @@
 				</view>
 				<view v-if="state.hometabble.length-1!==index" style="width: 1rpx; height: 40rpx;background: #dbdbdb;" class=""></view>
 			</view>
-
-		</view>
+		</view> -->
 		
-		<image-flow></image-flow>
+		<image-flow v-if="goodsList.length>0" :listF="goodsList"></image-flow>
 		<tabbar></tabbar>
 
 	</view>
@@ -119,6 +120,8 @@ import tabbar from "@/components/tabbar.vue"
 import imageFlow from "@/components/imageFlow.vue"
 import statusHeight from '@/components/statusHeight.vue'
 import { useI18n } from 'vue-i18n'
+import { post } from '../../utils/request'
+import { onLoad } from '@dcloudio/uni-app'
 const { t,tm } = useI18n()
 console.log(tm('home.tabble'))
 const swiperIndex = ref(0)
@@ -128,7 +131,8 @@ function swiperChange(e) {
 
 const state = reactive({
 	hometabble: [],
-	homeIndex: 0
+	homeIndex: 0,
+	classList: []
 })
 setTimeout(()=>{
 	state.hometabble = tm('home.tabble')
@@ -156,6 +160,63 @@ function navWarehouse(){
 		url:'/pages/index/getWarehouse'
 	})
 }
+function navClass(index){
+	uni.setStorageSync('classIndex',index+1)
+	uni.switchTab({
+		url:'/pages/class/class'
+	})
+}
+
+
+
+const bannerList = ref([])
+async function getBannerList(){
+	const res = await post('/banner/list')
+	bannerList.value = res.data
+	console.log(res)
+}
+const textSwiper = reactive({
+	searchArr:[],
+	noticeArr:[],
+})
+function getSearchWords(){
+	let {value:searchJSON}=uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
+	let {value:noticeJSON}=uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION']
+	try{
+		textSwiper.searchArr = JSON.parse(searchJSON)
+		textSwiper.noticeArr = JSON.parse(noticeJSON)
+	}catch(err){
+		console.log(err)
+	}
+}
+async function getClassList() {
+		let res = await post('/goods/class/list')
+		if (res.code === 200) {
+			state.classList = res.data
+		}
+		console.log(res)
+	}
+
+const goodsList = ref([])
+async function getGoodsList(){
+	let params = {
+		page:1,
+		pageSize:10,
+		name:null,
+		classId:null
+	}
+	let res = await post('/goods/list',params)
+	console.log(res)
+	if(res.code==200){
+		goodsList.value = res.data
+	}
+}
+onLoad(()=>{
+	getBannerList()
+	getSearchWords()
+	getClassList()
+	getGoodsList()
+})
 </script>
 
 <style>
@@ -185,5 +246,11 @@ function navWarehouse(){
 .tabbleActive {
 	background-color: #21cc5b;
 	color: #fff !important;
+}
+.grid-container {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr); /* 创建3行 */
+  grid-auto-flow: column; /* 先填充列 */
+  /* gap: 10px;  */
 }
 </style>

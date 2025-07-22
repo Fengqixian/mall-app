@@ -3,7 +3,7 @@
 		<!-- <up-button @click="clear">清空列表</up-button> -->
 		<up-waterfall v-model="list" ref="uWaterfallRef">
 			<template v-slot:left="{ leftList }">
-				<view @tap="navDetails" class="demo-warter" v-for="(item, index) in leftList" :key="item.goodsInfo.id">
+				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in leftList" :key="item.goodsInfo.id">
 					<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
 					<up-lazy-load threshold="0" border-radius="10" :image="item.goodsInfo.coverImage" :index="index"></up-lazy-load>
 					<view class="demo-title text-2d font-B">
@@ -38,7 +38,7 @@
 				</view>
 			</template>
 			<template v-slot:right="{ rightList }">
-				<view @tap="navDetails" class="demo-warter" v-for="(item, index) in rightList" :key="item.goodsInfo.id">
+				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in rightList" :key="item.goodsInfo.id">
 					<up-lazy-load threshold="-450" border-radius="10" :image="item.goodsInfo.coverImage" :index="index"></up-lazy-load>
 					<view class="demo-title text-2d font-B">
 						{{ item.goodsInfo.name }}
@@ -111,9 +111,9 @@ export default {
 		}, 1000)
 	},
 	methods: {
-		navDetails(){
+		navDetails(id){
 			uni.navigateTo({
-				url:'/pages/index/goodsDetails'
+				url:'/pages/index/goodsDetails?id='+id
 			})
 		},
 		addRandomData() {

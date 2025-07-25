@@ -109,6 +109,24 @@
 				"navigationBarTitleText" : "%pages.orderDetail%",
 				"navigationBarBackgroundColor": "#ffffff"
 			}
+		},
+		{
+			"path" : "pages/index/seckillList",
+			"style" : 
+			{
+				"navigationBarTitleText" : "%toSeckill%",
+				"navigationBarBackgroundColor": "#eb2d18",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path" : "pages/index/selectList",
+			"style" : 
+			{
+				"navigationBarTitleText" : "%toSelect%",
+				"navigationBarBackgroundColor": "#6ccc4e",
+				"navigationBarTextStyle": "white"
+			}
 		}
 	],
 	"globalStyle": {

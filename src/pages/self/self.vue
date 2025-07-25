@@ -15,7 +15,7 @@
 				{{ t('self.myOrder') }}
 			</view>
 			<view class=" flex flex-jb" style="margin-top: 40rpx;">
-				<view @tap="goOrderList" v-for="item,index in orderButtonArr" :key="index"
+				<view @tap="goOrderList(item.orderState)" v-for="item,index in orderButtonArr" :key="index"
 					class="flex flex-ac flex-jc flex-dc" style="width: 142rpx;height: 142rpx;">
 					<image class="" style="width: 62rpx;height: 62rpx;" :src='item.imgSrc' mode="scaleToFill" />
 					<view class="font-24 cor-4" style=" margin-top: 12rpx;">{{item.text}}</view>
@@ -59,32 +59,36 @@
 	const modalShow = ref(false)
 	const orderButtonArr = ref([{
 			text: '待付款',
-			imgSrc: '/static/img/DM_20250619215903_001.png'
+			imgSrc: '/static/img/DM_20250619215903_001.png',
+			orderState:0
 		},
 		{
 			text: '进行中',
-			imgSrc: '/static/img/DM_20250619215903_002.png'
+			imgSrc: '/static/img/DM_20250619215903_002.png',
+			orderState:1
 		},
 		{
 			text: '待评价',
-			imgSrc: '/static/img/DM_20250619215903_003.png'
+			imgSrc: '/static/img/DM_20250619215903_003.png',
+			orderState:2
 		},
-		{
-			text: '退货/售后',
-			imgSrc: '/static/img/DM_20250619215903_004.png'
-		},
+		// {
+		// 	text: '退货/售后',
+		// 	imgSrc: '/static/img/DM_20250619215903_004.png'
+		// },
 		{
 			text: '收货地址',
-			imgSrc: '/static/img/DM_20250619215903_005.png'
+			imgSrc: '/static/img/DM_20250619215903_005.png',
+			orderState:null,
 		},
 	])
 	orderButtonArr.value.forEach((item, index) => {
 		item.text = tm('self.orderList')[index].title
 	})
 
-	function goOrderList() {
+	function goOrderList(e) {
 		uni.navigateTo({
-			url: '/pages/self/orderList'
+			url: '/pages/self/orderList?tabbleIndex='+e
 		})
 	}
 

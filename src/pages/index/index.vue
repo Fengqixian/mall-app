@@ -108,7 +108,48 @@
 			</view>
 		</view> -->
 		
+		<view class=" flex flex-jb " style="width: 710rpx;margin: 25rpx 0 10rpx;height: 312rpx;">
+			<view @tap="goSeckillList" class="flex flex-dc flex-ac bor-24 bg-f ov-h" style="width: 345rpx;">
+				<view class="" style="height: 106rpx;background: linear-gradient(180deg,#ffe7e7,#fff);width: 300rpx;padding: 0 20rpx;">
+					<view class=" font-36 cor-4 font-w7" style="line-height: 62rpx; height: 54rpx;margin-top: 8rpx;">
+						{{ t('toSeckill') }}
+					</view>
+					<view class=" font-26 text-d" style="color: #ff6027;margin-top: 10rpx;width: 300rpx;">
+						{{ t('toSeckillDesc') }}
+					</view>
+				</view>
+				<view class=" flex flex-jb" style="width: 300rpx;margin-top: 10rpx;">
+					<view v-for="(item,index) in seckillList" :key="index" class="">
+						<image :src="item.goodsInfo.coverImage" style="width: 136rpx;height: 136rpx;" mode=""></image>
+						<view class="cor-r font-28 font-w6" style="margin-top: 6rpx;">
+							<text class="font-18">{{ item.goodsInfo.priceUnitName }}</text>{{(item.goodsInfo.price/100).toFixed(2)}}
+						</view>
+					</view>
+
+				</view>
+			</view>
+			<view @tap="goSelectList" class="flex flex-dc flex-ac bor-24 bg-f ov-h" style="width: 345rpx;">
+				<view class="" style="height: 106rpx;background: linear-gradient(180deg,#e5fcbd,#fff);width: 300rpx;padding: 0 20rpx;">
+					<view class=" font-36 cor-4 font-w7" style="line-height: 62rpx; height: 54rpx;margin-top: 8rpx;">
+						{{ t('toSelect') }}
+					</view>
+					<view class=" font-26 text-d" style="color: #6ccc4e;margin-top: 10rpx;width: 300rpx;">
+						{{ t('toSelectDesc') }}
+					</view>
+				</view>
+				<view class=" flex flex-jb" style="width: 300rpx;margin-top: 10rpx;">
+					<view v-for="(item,index) in selectList" :key="index" class="">
+						<image :src="item.goodsInfo.coverImage" style="width: 136rpx;height: 136rpx;" mode=""></image>
+						<view class="cor-r font-28 font-w6" style="margin-top: 6rpx;">
+							<text class="font-18">{{ item.goodsInfo.priceUnitName }}</text>{{(item.goodsInfo.price/100).toFixed(2)}}
+						</view>
+					</view>
+
+				</view>
+			</view>
+		</view>
 		<image-flow v-if="goodsList.length>0" :listF="goodsList"></image-flow>
+		<no-more-data></no-more-data>
 		<tabbar></tabbar>
 
 	</view>
@@ -117,6 +158,9 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import tabbar from "@/components/tabbar.vue"
+
+
+import noMoreData from "@/components/noMoreData.vue"
 import imageFlow from "@/components/imageFlow.vue"
 import statusHeight from '@/components/statusHeight.vue'
 import { useI18n } from 'vue-i18n'
@@ -216,11 +260,53 @@ async function getGoodsList(){
 		goodsList.value = res.data
 	}
 }
+//秒杀列表
+const seckillList = ref([])
+async function getSeckillList(){
+	let params={
+		classId:null,
+		name:null,
+		page:1,
+		pageSize:2
+	}
+	let res = await post('/goods/purchased/list',params)
+	console.log(res)
+	if(res.code==200){
+		seckillList.value = res.data
+	}
+}
+function goSeckillList(){
+	uni.navigateTo({
+		url:'/pages/index/seckillList'
+	})
+}
+//优选列表
+const selectList = ref([])
+async function getSelectList(){
+	let params={
+		classId:null,
+		name:null,
+		page:1,
+		pageSize:2
+	}
+	let res = await post('/goods/qualityed/list',params)
+	console.log(res)
+	if(res.code==200){
+		selectList.value = res.data
+	}
+}
+function goSelectList(){
+	uni.navigateTo({
+		url:'/pages/index/selectList'
+	})
+}
 onLoad(()=>{
 	getBannerList()
 	getSearchWords()
 	getClassList()
 	getGoodsList()
+	getSeckillList()
+	getSelectList()
 })
 </script>
 

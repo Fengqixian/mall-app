@@ -74,7 +74,7 @@
 
 				<nullMsg v-if="goodsInfoArray.length === 0" style=" margin: 100rpx 0;"></nullMsg>
 				<view v-for='item in goodsInfoArray' :key='item.id' class=" flex flex-dc bor-b2sf0"
-					style="height: 300rpx;">
+					style="min-height: 220rpx;">
 					<view class="flex flex-ac " style="height: 220rpx;">
 						<radio style="transform:scale(0.7)" borderColor="#d1d1d1" activeBorderColor='#21cc5b'
 							:checked="item.status == 1" @tap="item.status = item.status == 1 ? 0 : 1" color='#21cc5b'></radio>
@@ -121,14 +121,14 @@
 							</view>
 						</view>
 					</view>
-					<input type="text" class="font-28"
+					<input v-if="false" type="text" class="font-28"
 						style="border-radius: 8rpx; height: 60rpx;padding: 0 12rpx;background: #f5f5f5;"
 						:placeholder="t('cart.notes')" />
 				</view>
 
 
 				<view class=" flex flex-ac flex-drr font-B font-28 cor-4" style="height: 100rpx;">
-					<view class=""
+					<view @click="goOrder" class=""
 						style="line-height: 60rpx; background: #21cc5b; border-radius: 0 30rpx 30rpx 0; height: 60rpx;padding: 0 20rpx;">
 						{{ t('cart.goSettle') }}({{ goodsInfoObj.number }})
 					</view>
@@ -213,11 +213,48 @@ function numberBoxChange(e) {
 }
 
 const likeList = ref([])
-function goOrder() {
-	uni.navigateTo({
-		url: '/pages/cart/submitOrder'
+async function goOrder() {
+	let orderArr=[]
+	if(goodsInfoObj.value.status === 0){
+		// 未全选
+		orderArr=goodsInfoArray.value.filter(item => item.status === 1)
+	}else{
+		//已全选 直接把所有数据传递过去
+		orderArr=goodsInfoArray.value
+	}
+	if(orderArr.length === 0){
+		uni.showToast({
+			title: '请选择商品',
+			icon: 'none'
+		})
+		return
+	}
+	let params=orderArr.map(item => {
+		return {
+			goodsId:item.id,
+			goodsNum:item.number
+		}
 	})
+	uni.showLoading({
+		title: 'loading...'
+	})
+	let res=await post('/order/price',params)
+	uni.hideLoading()
+	console.log(res)
+	if(res.code === 200){	
+		uni.setStorageSync('orderArr',res.data)
+		uni.navigateTo({
+			url: '/pages/cart/submitOrder'
+		})
+	}else{
+		uni.showToast({
+			title: res.message,
+			icon: 'none'
+		})
+	}
 }
+
+
 async function getLikeList() {
 	const res = await post('/goods/search/info')
 	console.log(res);

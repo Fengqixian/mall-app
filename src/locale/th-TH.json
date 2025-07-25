@@ -10,10 +10,14 @@
 	},
 	"uni.showModal.cancel": "t取消",
 	"uni.showModal.confirm": "t确定",
+	"toSeckill": "t今日秒杀",
+	"toSeckillDesc": "t今日低价秒杀超划算",
+	"toSelect": "t优选菜场",
+	"toSelectDesc": "t网红小吃样样平价",
 	"copy": "t复制",
 	"nullMsg": "t暂无数据~",
 	"guessLike": "t猜你喜欢",
-	"money": "t￥",
+	"money": "฿",
 	"tabBar.home": "t首页",
 	"tabBar.class": "t分类",
 	"tabBar.cart": "t购物车",
@@ -104,8 +108,23 @@
 		"goodsNotes": "t填写商品备注",
 		"notes": "t填写订单备注",
 		"goodsAmount": "t商品金额",
+		"discountAmount": "t折扣减免",
 		"deliveryAmount": "t配送费",
-		"waitPay": "t待支付"
+		"waitPay": "t待支付",
+		"sendArr": [{
+			"label": "t平台配送",
+			"value": 0
+		}, {
+			"label": "t自提",
+			"value": 1
+		}],
+		"sendTimeArr": [{
+			"label": "t尽快送达",
+			"value": 0
+		}, {
+			"label": "t次日送达",
+			"value": 1
+		}]
 	},
 	"addressList": {
 		"botton": "t新增地址"
@@ -148,10 +167,7 @@
 				"title": "t待评价"
 			},
 			{
-				"title": "t退货/售后"
-			},
-			{
-				"title": "t收货地址"
+				"title": "t全部订单"
 			}
 		]
 	},

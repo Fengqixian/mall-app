@@ -201,13 +201,13 @@
 		const _pushParams = {
 			"city": addressInfo.value.address_components[componentsLenReal-3].long_name||'',
 			"country": addressInfo.value.address_components[componentsLenReal-1].long_name||'',
-			"detailedAddress": addressInfo.value.formatted_address,
+			"detailedAddress": pushParams.detailedAddress||'',
 			"district": addressInfo.value.address_components[componentsLenReal-4].long_name||'',
-			"id": 1,
+			// "id": 1,
 			"isDefault": Boolean(0),
 			"province": addressInfo.value.address_components[componentsLenReal-2].long_name||'',
-			"receiverName": "张三",
-			"receiverPhone": "13800138000",
+			"receiverName": pushParams.receiverName||'',
+			"receiverPhone": pushParams.receiverPhone||'',
 			"userId": uni.getStorageSync('userInfo').userId
 		}
 		for (var key in _pushParams) {

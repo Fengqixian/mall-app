@@ -64,7 +64,9 @@ import {
 	reactive
 } from 'vue';
 import orderListCom from '@/components/orderListCom.vue';
+import { post } from '@/utils/request';
 import { useI18n } from 'vue-i18n'
+import { onLoad } from '@dcloudio/uni-app';
 const { t,tm } = useI18n()
 
 // 创建响应式数据  
@@ -107,7 +109,30 @@ function changeSwiper(e) {
 // let scrollTouchEnd =()=>{
 // 	scrollStatus.value = false
 // }
+const orderList = ref([])
+async function getOrderList(){
+	let params ={
+		orderState:tabsCurrent.value==0?null:tabsCurrent.value-1,
+		page:1,
+		pageSize:10,
+		userId:uni.getStorageSync('userInfo').userId
+	}
+	let res = await post('/order/list',params)
+	if(res.code==200){
+		orderList.value = res.data
+	}
+}
 
+onLoad((e)=>{
+	if(e.tabbleIndex){
+		if(e.tabbleIndex=="null"){
+			tabsCurrent.value = 0
+		}else{
+			tabsCurrent.value = (e.tabbleIndex-0)+1
+		}
+	}
+	getOrderList()
+})
 </script>
 
 <style>

@@ -10,6 +10,10 @@
 	},
 	"uni.showModal.cancel": "取消",
 	"uni.showModal.confirm": "确定",
+	"toSeckill": "今日秒杀",
+	"toSeckillDesc": "今日低价秒杀超划算",
+	"toSelect": "优选菜场",
+	"toSelectDesc": "网红小吃样样平价",
 	"copy": "复制",
 	"nullMsg": "暂无数据~",
 	"guessLike": "猜你喜欢",
@@ -104,8 +108,23 @@
 		"goodsNotes": "填写商品备注",
 		"notes": "填写订单备注",
 		"goodsAmount": "商品金额",
+		"discountAmount": "折扣减免",
 		"deliveryAmount": "配送费",
-		"waitPay": "待支付"
+		"waitPay": "待支付",
+		"sendArr": [{
+			"label": "平台配送",
+			"value": 0
+		}, {
+			"label": "自提",
+			"value": 1
+		}],
+		"sendTimeArr": [{
+			"label": "尽快送达",
+			"value": 0
+		}, {
+			"label": "次日送达",
+			"value": 1
+		}]
 	},
 	"addressList": {
 		"botton": "新增地址"
@@ -148,10 +167,7 @@
 				"title": "待评价"
 			},
 			{
-				"title": "退货/售后"
-			},
-			{
-				"title": "收货地址"
+				"title": "全部订单"
 			}
 		]
 	},

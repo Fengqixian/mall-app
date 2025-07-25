@@ -41,11 +41,11 @@
 			<view class="" style="width: 570rpx;">
 				<view class=" flex flex-ac flex-drr"
 					style="height: 70rpx; box-sizing: border-box; border-bottom: 2rpx solid #f5f5f5;">
-					<view @tap="changeRightTabble(rightTable.current == 2 ? 3 : 2)" :class="rightTable.current >= 2 ? 'cor-g' : ''"
+					<view @tap="changeRightTabble(rightTable.current == 3 ? 4 : 3)" :class="(rightTable.current == 4|| rightTable.current == 3) ? 'cor-g' : ''"
 						class=" flex flex-ac flex-jc font-26 cor-4" style="width: 134rpx;height: 68rpx;">
 						{{ t('class.price') }}
-						<up-icon v-show='rightTable.current >= 2' class="tst-3"
-							:class="rightTable.current == 2 ? 'rotate-180' : 'rotate-0'" style="margin-left: 6rpx;"
+						<up-icon v-show='rightTable.current == 4|| rightTable.current == 3' class="tst-3"
+							:class="rightTable.current == 4 ? 'rotate-180' : 'rotate-0'" style="margin-left: 6rpx;"
 							name="arrow-down-fill" color="#21cc5b" size="30rpx"></up-icon>
 					</view>
 					<view @tap="changeRightTabble(1)" :class="rightTable.current === 1 ? 'cor-g' : ''"
@@ -161,6 +161,7 @@ const searchCearchIndex = ref(0)
 function searchCearchChange(e) {
 	searchCearchIndex.value = e.detail.current
 }
+const tabbleIndex=ref(0)
 const state = reactive({
 	classList: [],
 	goodsList: []
@@ -193,13 +194,15 @@ const rightTable = reactive({
 function changeRightTabble(index) {
 	console.log(index)
 	rightTable.current = index
+	getGoodsList(state.classList[leftTable.current].id)
 }
 
 async function getGoodsList(id) {
 	let params = {
 		"classId": id,
 		"page": 1,
-		"pageSize": 10
+		"pageSize": 10,
+		sort:rightTable.current
 	}
 	let data = await post('/goods/list', params)
 	if (data.code === 200) {

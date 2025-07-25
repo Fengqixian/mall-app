@@ -1,19 +1,23 @@
-{	
+{
 	"tips": {
 		"addSuccess": "e添加成功",
 		"loginOut": "e已登录，是否退出登录",
 		"confirm": "e确认",
 		"cancel": "e取消",
-		"prompt":"e提示",
-		"clickBack":"e保存成功，点击返回！！！",
-		"sureClearSearch":"e确定要清空搜索历史吗？"
+		"prompt": "e提示",
+		"clickBack": "e保存成功，点击返回！！！",
+		"sureClearSearch": "e确定要清空搜索历史吗？"
 	},
 	"uni.showModal.cancel": "e取消",
 	"uni.showModal.confirm": "e确定",
-	"copy":"e复制",
+	"toSeckill": "e今日秒杀",
+	"toSeckillDesc": "e今日低价秒杀超划算",
+	"toSelect": "e优选菜场",
+	"toSelectDesc": "e网红小吃样样平价",
+	"copy": "e复制",
 	"nullMsg": "e暂无数据~",
 	"guessLike": "e猜你喜欢",
-	"money": "e￥",
+	"money": "$",
 	"tabBar.home": "e首页",
 	"tabBar.class": "e分类",
 	"tabBar.cart": "e购物车",
@@ -104,70 +108,93 @@
 		"goodsNotes": "e填写商品备注",
 		"notes": "e填写订单备注",
 		"goodsAmount": "e商品金额",
+		"discountAmount": "e折扣减免",
 		"deliveryAmount": "e配送费",
-		"waitPay": "e待支付"
+		"waitPay": "e待支付",
+		"sendArr": [{
+			"label": "e平台配送",
+			"value": 0
+		}, {
+			"label": "e自提",
+			"value": 1
+		}],
+		"sendTimeArr": [{
+			"label": "e尽快送达",
+			"value": 0
+		}, {
+			"label": "e次日送达",
+			"value": 1
+		}]
 	},
-	"addressList":{
-		"botton":"e新增地址"
+	"addressList": {
+		"botton": "e新增地址"
 	},
-	"setAddress":{
-		"name":"e收货人",
-		"namePlaceholder":"e请输入收货人",
-		"man":"e先生",
-		"woman":"e女士",
-		"phone":"e手机号",
-		"phonePlaceholder":"e请输入手机号",
-		"address":"e收货地址",
-		"addressPlaceholder":"e点击选择收货地址",
-		"addressDetail":"e详细地址",
-		"label":"e标签",
-		"addressDetailPlaceholder":"e请输入详细地址和门牌号",
-		"default":"e设为默认地址",
-		"defaultDesc":"e每次购物时会优先定位该地址，方便您轻松购物",
-		"delete":"e删除收货地址",
-		"save":"e保存收货地址"
+	"setAddress": {
+		"name": "e收货人",
+		"namePlaceholder": "e请输入收货人",
+		"man": "e先生",
+		"woman": "e女士",
+		"phone": "e手机号",
+		"phonePlaceholder": "e请输入手机号",
+		"address": "e收货地址",
+		"addressPlaceholder": "e点击选择收货地址",
+		"addressDetail": "e详细地址",
+		"label": "e标签",
+		"addressDetailPlaceholder": "e请输入详细地址和门牌号",
+		"default": "e设为默认地址",
+		"defaultDesc": "e每次购物时会优先定位该地址，方便您轻松购物",
+		"delete": "e删除收货地址",
+		"save": "e保存收货地址"
 	},
-	"login":{
-		"phonePlaceholder":"e请输入手机号",
-		"codePlaceholder":"e请输入验证码",
-		"getCode":"e获取验证码",
-		"againGet":"e重新获取",
-		"login":"e登录"
+	"login": {
+		"phonePlaceholder": "e请输入手机号",
+		"codePlaceholder": "e请输入验证码",
+		"getCode": "e获取验证码",
+		"againGet": "e重新获取",
+		"login": "e登录"
 	},
-	"self":{
-		"title":"e点击登录用户",
-		"myOrder":"e我的订单",
-		"orderList":[
+	"self": {
+		"title": "e点击登录用户",
+		"myOrder": "e我的订单",
+		"orderList": [
 			{
-				"title":"e待付款"
+				"title": "e待付款"
 			},
 			{
-				"title":"e进行中"
+				"title": "e进行中"
 			},
 			{
-				"title":"e待评价"
+				"title": "e待评价"
 			},
 			{
-				"title":"e退货/售后"
-			},
-			{
-				"title":"e收货地址"
+				"title": "e全部订单"
 			}
 		]
 	},
-	"orderList":{
-		"tabble":["e全部","e待付款","e进行中","e待评价"],
-		"orderListCom":{
-			"status":["e已取消","e待付款","e进行中","e待评价","e已完成"],
-			"storeDelivery":"e商家配送",
-			"orderID":"e订单ID",
-			"deliveryTime":"e配送时间",
-			"number":"e数量",
-			"realPay":"e实付",
-			"button":{
-				"cancelOrder":"e取消订单",
-				"comeAgain":"e再来一单",
-				"goPay":"e去付款"
+	"orderList": {
+		"tabble": [
+			"e全部",
+			"e待付款",
+			"e进行中",
+			"e待评价"
+		],
+		"orderListCom": {
+			"status": [
+				"e已取消",
+				"e待付款",
+				"e进行中",
+				"e待评价",
+				"e已完成"
+			],
+			"storeDelivery": "e商家配送",
+			"orderID": "e订单ID",
+			"deliveryTime": "e配送时间",
+			"number": "e数量",
+			"realPay": "e实付",
+			"button": {
+				"cancelOrder": "e取消订单",
+				"comeAgain": "e再来一单",
+				"goPay": "e去付款"
 			}
 		}
 	},
@@ -183,17 +210,17 @@
 			"comeAgain": "e再来一单",
 			"goPay": "e去付款"
 		},
-		"address":"e收货地址",
-		"delivery":"e配送方式",
-		"time":"e预约时间",
-		"goodsList":"e购物清单",
-		"unitPrice":"e单价",
-		"number":"e数量",
-		"goodsPrice":"e商品价格",
-		"deliveryPrice":"e配送费",
-		"orderMessage":"e订单信息",
-		"orderID":"e订单ID",
-		"orderTime":"e下单时间",
-		"orderNumber":"e订单编号"
+		"address": "e收货地址",
+		"delivery": "e配送方式",
+		"time": "e预约时间",
+		"goodsList": "e购物清单",
+		"unitPrice": "e单价",
+		"number": "e数量",
+		"goodsPrice": "e商品价格",
+		"deliveryPrice": "e配送费",
+		"orderMessage": "e订单信息",
+		"orderID": "e订单ID",
+		"orderTime": "e下单时间",
+		"orderNumber": "e订单编号"
 	}
 }

@@ -1,16 +1,21 @@
 <template>
 	<view class="flex flex-dc flex-ac cor-4">
-		<view class=" bg-f bor-20 ov-h flex flex-dc flex-ac mar-t24" style="width: 700rpx;height: 240rpx;">
+		<view class=" bg-f bor-20 ov-h flex flex-dc flex-ac mar-t24" style="width: 700rpx;min-height: 240rpx;">
 			<view class=" bg-g" style="  height: 20rpx; width: 700rpx;"></view>
-			<view class="bor-b2sf0 flex flex-dc flex-jc" style="width: 650rpx;height: 120rpx;">
-				<view class=" font-32 font-B">
+			<view class="bor-b2sf0 flex flex-dc flex-jc" style="width: 650rpx;min-height: 120rpx;">
+				<view class=" font-32 font-B" style="margin-top: 20rpx;">
 					{{ tm('orderDetail.headStatus')[0].title }}
 				</view>
 				<view class=" font-26" style="margin-top: 18rpx;">
 					{{ tm('orderDetail.headStatus')[0].desc }}
 				</view>
+				
+				<view class="aaa flex flex-ac flex-jc" style="margin: 20rpx 0;">
+					<image class="aaa" src="/src/static/img/DM_20250619214345_011.png" style="width: 400rpx;height: 400rpx;"
+						mode=""></image>
+				</view>
 			</view>
-			<view class="flex-g flex-ac flex flex-drr font-26" style="width: 650rpx;">
+			<view class="flex-g flex-ac flex flex-drr font-26" style="width: 650rpx;min-height: 100rpx;">
 				<view class=" flex">
 					<view class="flex flex-ac bor-box mar-l16"
 						style=" border: 2rpx solid #ddd; height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
@@ -160,11 +165,29 @@ import {
 		onShow,
 		onLoad
 	} from '@dcloudio/uni-app'
+	import {post} from '@/utils/request'
 import {useI18n} from 'vue-i18n'
 
 const {t, tm} = useI18n()
 
-
+const orderId=ref()
+const userId = uni.getStorageSync('userInfo').userId
+const orderInfo = ref({})
+async function getOrderDetail(){
+	let res = await post('/order/info',{
+		orderId:orderId.value-0,
+		userId:userId-0
+	})
+	if(res.code===200){
+		orderInfo.value = res.data
+	}
+}
+onLoad((e)=>{
+	if(e.orderId){
+		orderId.value=e.orderId
+	}
+	getOrderDetail()
+})
 
 
 </script>

@@ -158,25 +158,25 @@
 		"myOrder": "e我的订单",
 		"orderList": [
 			{
-				"title": "e待付款"
-			},
-			{
-				"title": "e进行中"
-			},
-			{
-				"title": "e待评价"
-			},
-			{
 				"title": "e全部订单"
+			},
+			{
+				"title": "e待支付"
+			},
+			{
+				"title": "e已支付"
+			},
+			{
+				"title": "e售后处理"
 			}
 		]
 	},
 	"orderList": {
 		"tabble": [
-			"e全部",
-			"e待付款",
-			"e进行中",
-			"e待评价"
+			"e全部订单",
+			"e待支付",
+			"e已支付",
+			"e售后处理"
 		],
 		"orderListCom": {
 			"status": [

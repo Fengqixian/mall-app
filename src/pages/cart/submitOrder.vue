@@ -63,7 +63,7 @@
 						style="padding-bottom: 20rpx;">
 						<view class="flex " style="margin-top: 30rpx;">
 							<image class="" style="width: 111rpx;height: 111rpx;border-radius: 8rpx;"
-								src="/src/static/img/DM_20250619214345_011.png" mode=""></image>
+								:src="item.coverImage" mode=""></image>
 							<view class="flex flex-dc flex-jb mar-l20 flex-g">
 								<view class=" flex flex-jb  font-26" style="">
 									<view class="">

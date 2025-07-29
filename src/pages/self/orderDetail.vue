@@ -10,8 +10,8 @@
 					{{ tm('orderDetail.headStatus')[0].desc }}
 				</view>
 				
-				<view class="aaa flex flex-ac flex-jc" style="margin: 20rpx 0;">
-					<image class="aaa" src="/src/static/img/DM_20250619214345_011.png" style="width: 400rpx;height: 400rpx;"
+				<view class=" flex flex-ac flex-jc" style="margin: 20rpx 0;">
+					<image class="" @longpress="show=true" :src="orderInfo.payQrCode" style="width: 500rpx;height: 710rpx;"
 						mode=""></image>
 				</view>
 			</view>
@@ -156,6 +156,9 @@
 		<view class="" style="height: 40rpx;">
 
 		</view>
+		
+		
+		<up-modal :show="show" @confirm="confirm" @cancel='show=false' title="提示" showCancelButton content='确认是否保存图片'></up-modal>
 	</view>
 </template>
 
@@ -170,6 +173,7 @@ import {useI18n} from 'vue-i18n'
 
 const {t, tm} = useI18n()
 
+const show = ref(false)
 const orderId=ref()
 const userId = uni.getStorageSync('userInfo').userId
 const orderInfo = ref({})
@@ -182,6 +186,47 @@ async function getOrderDetail(){
 		orderInfo.value = res.data
 	}
 }
+
+const confirm=()=>{
+	show.value = false
+	saveImage()
+}
+
+	const saveImage = (e) => {
+		console.log(orderInfo.value)
+		uni.downloadFile({
+        url: orderInfo.value.payQrCode,
+		// url:"https://freshdala-555.oss-cn-hongkong.aliyuncs.com/64de1926-0585-4fc6-a291-af2e00c0ecb5.png",
+        success: (res) => {
+			console.log(res)
+          if (res.statusCode === 200) {
+            uni.saveImageToPhotosAlbum({
+              filePath: res.tempFilePath,
+              success: () => {
+                uni.showToast({
+                  title: '图片保存成功',
+                  icon: 'success'
+                });
+              },
+              fail: (err) => {
+				  console.log(err)
+                uni.showToast({
+                  title: '保存失败: ' + err.errMsg,
+                  icon: 'none'
+                });
+              }
+            });
+          }
+        },
+        fail: (err) => {
+          uni.showToast({
+            title: '下载失败: ' + err.errMsg,
+            icon: 'none'
+          });
+        }
+      });
+    
+	}
 onLoad((e)=>{
 	if(e.orderId){
 		orderId.value=e.orderId

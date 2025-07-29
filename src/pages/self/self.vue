@@ -57,18 +57,24 @@
 	} = useI18n()
 	const userInfo = ref(uni.getStorageSync('userInfo')||null)
 	const modalShow = ref(false)
-	const orderButtonArr = ref([{
-			text: '待付款',
+	const orderButtonArr = ref([
+		{
+			text: '全部订单',
+			imgSrc: '/static/img/DM_20250619215903_005.png',
+			orderState:null,
+		},
+		{
+			text: '待支付',
 			imgSrc: '/static/img/DM_20250619215903_001.png',
 			orderState:0
 		},
 		{
-			text: '进行中',
+			text: '已支付',
 			imgSrc: '/static/img/DM_20250619215903_002.png',
 			orderState:1
 		},
 		{
-			text: '待评价',
+			text: '售后处理',
 			imgSrc: '/static/img/DM_20250619215903_003.png',
 			orderState:2
 		},
@@ -76,11 +82,7 @@
 		// 	text: '退货/售后',
 		// 	imgSrc: '/static/img/DM_20250619215903_004.png'
 		// },
-		{
-			text: '收货地址',
-			imgSrc: '/static/img/DM_20250619215903_005.png',
-			orderState:null,
-		},
+
 	])
 	orderButtonArr.value.forEach((item, index) => {
 		item.text = tm('self.orderList')[index].title

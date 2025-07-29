@@ -4,7 +4,7 @@
 			<view class="" style="width: 650rpx;">
 				<view class=" font-26 flex flex-jb flex-ac bor-b2sf0" style="height: 80rpx;">
 					<view class=" flex flex-ac">
-						2025-07-01 15:35
+						{{itemMsg.payExpiredTime}}
 						<view class="font-16 box-border" style=" border-radius: 6rpx; border: 2rpx solid #ffaa00; color: #ffaa00; margin-left: 10rpx;padding: 4rpx 6rpx;">
 							{{t('orderList.orderListCom.storeDelivery')}}
 						</view>
@@ -27,7 +27,7 @@
 							{{t('orderList.orderListCom.orderID')}}
 						</view>
 						<view>
-							7612
+							{{itemMsg.orderNumber}}
 						</view>
 					</view>
 
@@ -36,7 +36,7 @@
 							{{t('orderList.orderListCom.deliveryTime')}}
 						</view>
 						<view>
-							2025-07-01 15:35
+							{{itemMsg.deliveryTime}}
 						</view>
 					</view>
 
@@ -71,10 +71,17 @@
 import { useI18n } from 'vue-i18n'
 const { t,tm } = useI18n()
 
+const props = defineProps({
+	itemMsg:{
+		type: Object,
+		default:{}
+	}
+})
 
+console.log(props)
 function navOrderDetail(){
 	uni.navigateTo({
-		url:"/pages/self/orderDetail"
+		url:"/pages/self/orderDetail?orderId="+props.itemMsg.orderId
 	})
 }
 </script>

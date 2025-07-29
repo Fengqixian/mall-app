@@ -158,25 +158,25 @@
 		"myOrder": "t我的订单",
 		"orderList": [
 			{
-				"title": "t待付款"
-			},
-			{
-				"title": "t进行中"
-			},
-			{
-				"title": "t待评价"
-			},
-			{
 				"title": "t全部订单"
+			},
+			{
+				"title": "t待支付"
+			},
+			{
+				"title": "t已支付"
+			},
+			{
+				"title": "t售后处理"
 			}
 		]
 	},
 	"orderList": {
 		"tabble": [
-			"t全部",
-			"t待付款",
-			"t进行中",
-			"t待评价"
+			"t全部订单",
+			"t待支付",
+			"t已支付",
+			"t售后处理"
 		],
 		"orderListCom": {
 			"status": [

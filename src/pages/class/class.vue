@@ -59,11 +59,11 @@
 				</view>
 				<scroll-view scroll-y="true" class="flex flex-dc" style="height: calc(100% - 70rpx);">
 					<nullMsg v-if="state.goodsList.length === 0" style=" margin-top: 200rpx;"></nullMsg>
-					<view v-for="item in state.goodsList" :key="item.id" class=" flex flex-dc"
+					<view v-for="item in state.goodsList" :key="item.id" @tap="goDetail(item.goodsInfo.id)" class=" flex flex-dc"
 						style="padding: 20rpx 0; min-height: 213rpx;border-bottom: 2rpx solid #f5f5f5;">
 						<view class="flex flex-ac flex-jc">
 							<image class="" style="width: 182rpx;height: 182rpx;"
-								src="/src/static/img/DM_20250619214345_011.png" mode=""></image>
+								:src="item.goodsInfo.coverImage" mode=""></image>
 							<view class=" flex flex-dc" style="width: 340rpx; min-height: 100%; margin-left: 12rpx;">
 								<view class=" cor-4 font-26 font-w7 text-d">
 									{{ item.goodsInfo.name }}
@@ -84,7 +84,7 @@
 								<view class=" flex flex-ac flex-jb cor-8 font-22 text-d" style="margin-top: 8rpx;">
 									<text>{{ t('class.self') }}</text>
 
-									<view @tap="addGoodsInfo(item.goodsInfo)" class=" bor-50- flex flex-ac flex-jc"
+									<view @tap.stop="addGoodsInfo(item.goodsInfo)" class=" bor-50- flex flex-ac flex-jc"
 										style="width: 56rpx;height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 										<up-icon class="" name="shopping-cart" color="#fff" size="50rpx"></up-icon>
 									</view>
@@ -191,6 +191,12 @@ const rightTable = reactive({
 	current: 0,
 })
 
+
+function goDetail(id){
+	uni.navigateTo({
+		url: '/pages/index/goodsDetails?id=' + id
+	})
+}
 function changeRightTabble(index) {
 	console.log(index)
 	rightTable.current = index

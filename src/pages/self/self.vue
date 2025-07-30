@@ -55,7 +55,7 @@
 		t,
 		tm
 	} = useI18n()
-	const userInfo = ref(uni.getStorageSync('userInfo')||null)
+	const userInfo = ref()
 	const modalShow = ref(false)
 	const orderButtonArr = ref([
 		{
@@ -107,6 +107,7 @@
 	function loginOut(){
 		uni.removeStorageSync('token')
 		uni.removeStorageSync('userInfo')
+		modalShow.value =false
 		uni.navigateTo({
 			url: '/pages/login/login'
 		})
@@ -127,11 +128,10 @@
 		getLikeList()
 	})
 
-	// onShow(() => {
-	// 	let userInfo = uni.getStorageSync('userInfo')
-	// 	userInfo.value = userInfo
-	// 	console.log(userInfo)
-	// })
+	onShow(() => {
+		let _userInfo = uni.getStorageSync('userInfo')
+		userInfo.value = _userInfo
+	})
 </script>
 
 <style></style>

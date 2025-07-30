@@ -171,7 +171,8 @@
 
 <script setup>
 	import {
-		onLoad
+		onLoad,
+		onShow
 	} from '@dcloudio/uni-app'
 	import {
 		post
@@ -265,12 +266,20 @@
 	console.log(langField.value)
 	onLoad((options) => {
 		console.log(options)
-		getAddressList()
+		// getAddressList()
 		getTimeColumns()
 		orderArr.value = uni.getStorageSync('orderArr')
 
 	})
 
+	onShow(()=>{
+		let address = uni.getStorageSync('address')
+		if(address){
+			addressListObj.value = address
+		}else{
+			getAddressList()	
+		}
+	})
 
 	async function submitOrder() {
 		let params = {

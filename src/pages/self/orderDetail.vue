@@ -10,7 +10,7 @@
 					{{ orderInfo.orderStateDes }}
 				</view>
 				
-				<view class=" flex flex-ac flex-jc " style="margin: 20rpx 0;">
+				<view v-if="orderInfo.orderState===0" class=" flex flex-ac flex-jc " style="margin: 20rpx 0;">
 					
 					<up-lazy-load class="" style="width: 650rpx;height: 910rpx;"  border-radius="10" :image="orderInfo.payQrCode"
 					loading-img="/src/static/imgLoading.png"
@@ -21,18 +21,18 @@
 			</view>
 			<view class="flex-g flex-ac flex flex-drr font-26" style="width: 650rpx;min-height: 100rpx;">
 				<view class=" flex">
-					<view class="flex flex-ac bor-box mar-l16"
+					<view @tap="cancelOrder" v-if="orderInfo.orderState===0" class="flex flex-ac bor-box mar-l16"
 						style=" border: 2rpx solid #ddd; height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
 						{{ t("orderDetail.button.cancelOrder") }}
 					</view>
-					<view class="flex flex-ac bor-box mar-l16"
+					<view @tap="refundShowFn" v-if="orderInfo.orderState===1" class="flex flex-ac bor-box mar-l16"
 						style=" border: 2rpx solid #ddd; height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
 						{{ t("orderDetail.button.comeAgain") }}
 					</view>
-					<view class="flex flex-ac cor-f mar-l16"
+					<!-- <view class="flex flex-ac cor-f mar-l16"
 						style=" background: var(--cor-g); height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
 						{{ t("orderDetail.button.goPay") }}
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -105,7 +105,7 @@
 						</view>
 					</view>
 
-					<view class=" flex flex-jb mar-t30">
+					<view v-if="orderInfo.discountAmount" class=" flex flex-jb mar-t30">
 						<view class="cor-8" style="min-width: 140rpx;">
 							{{ t('submitOrder.discountAmount') }}
 						</view>
@@ -181,6 +181,9 @@
 		
 		
 		<up-modal :show="show" @confirm="confirm" @cancel='show=false' title="提示" showCancelButton content='确认是否保存图片'></up-modal>
+			<!-- 退款原因 -->
+			<up-picker :show="refundShow" :columns="refundColumns" keyName="label" valueName="value"
+			@confirm="refundConfirm" @cancel="cancelRefund"></up-picker>
 	</view>
 </template>
 
@@ -188,7 +191,7 @@
 import {ref, reactive} from 'vue'	
 import {
 		onShow,
-		onLoad
+		onLoad,onBackPress
 	} from '@dcloudio/uni-app'
 	import {post} from '@/utils/request'
 import {useI18n} from 'vue-i18n'
@@ -265,13 +268,90 @@ const confirm=()=>{
       });
     
 	}
+	function cancelOrder() {
+	uni.showModal({
+		title: t('tips.prompt'),
+		content: t('tips.cancelOrder'),
+		success: async (res) => {
+			if (res.confirm) {
+				console.log('用户点击确定');
+				let params = {
+					orderId: orderId.value-0,
+					userId: uni.getStorageSync('userInfo').userId
+				}
+				let res = await post('/order/cancel', params)
+				if (res.code == 200) {
+					orderInfo.value.orderState = 4
+					uni.showToast({
+						title: t('tips.cancelSuccess'),
+						icon: 'none',
+						mask: true,
+						success: () => {
+							uni.navigateBack()
+						}
+					})
+				}
+			} else if (res.cancel) {
+				console.log('用户点击取消');
+			}
+		}
+	});
+}
+
+const refundShow = ref(false)
+const refundColumns = ref([tm('orderDetail.refund')])
+async function refundConfirm(e) {
+	// defineEmits('tableShow')
+	let params = {
+		id: orderId.value-0,
+		userId: uni.getStorageSync('userInfo').userId,
+		refundCause: e.value[0]
+	}
+	let res = await post('/order/refund/apply', params)
+	refundShow.value = false
+	if (res.code == 200) {
+		orderInfo.value.orderState = 8
+		uni.showToast({
+			title: t('tips.refundSuccess'),
+			icon: 'none'
+		})
+	} else {
+		uni.showToast({
+			title: res.message,
+			icon: 'none'
+		})
+	}
+}
+
+function refundShowFn() {
+	// defineEmits('tableHide')
+	refundShow.value = true
+}
+function cancelRefund() {
+	// defineEmits('tableShow')
+	refundShow.value = false
+}
+const orderListStatus = ref(false)
 onLoad((e)=>{
 	if(e.orderId){
 		orderId.value=e.orderId
 	}
+	if(e.list){
+		orderListStatus.value = e.list
+	}
 	getOrderDetail()
 })
-
+onBackPress(()=>{
+	if(orderListStatus.value){
+		// uni.navigateBack()
+	}else{
+		uni.switchTab({
+			url:'/pages/cart/cart'
+		})
+		// uni.navigateBack()
+	}
+	return false
+})
 
 </script>
 

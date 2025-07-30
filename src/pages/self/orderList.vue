@@ -1,7 +1,7 @@
 <template>
 	<view class="flex flex-dc flex-ac ov-h bodyH" style="">
-		<view class="" style="height: 88rpx;"></view>
-		<view class=" pos-f w-100- bg-f order-tabble-top z-5" style="height: 88rpx;">
+		<view v-show="tableStatus" class="" style="height: 88rpx;"></view>
+		<view v-show="tableStatus" class="pos-f w-100- bg-f order-tabble-top z-5" style="height: 88rpx;">
 			<up-tabs @click="changeTabs" class="" :current='tabsCurrent' :list="tabsList" lineWidth="14"
 				lineColor="var(--cor-g)" :activeStyle="{
 					color: 'var(--cor-g)',
@@ -18,7 +18,8 @@
 			style="width: 100%;height: calc(100svh - 88rpx);" :duration="500">
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
-					<orderListCom v-for="(item, index) in orderList.all" :key="item.orderId+'0'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
+					<nullMsg style="margin-top: 200rpx;" v-if="orderList.all.length===0"></nullMsg>
+					<orderListCom v-for="(item, index) in orderList.all" :key="item.orderId+'0'" :itemMsg="item" style="margin-top: 20rpx;" @tableHide="tableHide" @tableShow="tableShow"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
 
@@ -28,6 +29,7 @@
 			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+					<nullMsg style="margin-top: 200rpx;" v-if="orderList.waitPay.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.waitPay" :key="item.orderId+'1'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
@@ -37,7 +39,8 @@
 			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
-					<orderListCom v-for="(item, index) in orderList.endPay" :key="item.orderId+'2'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
+					<nullMsg style="margin-top: 200rpx;" v-if="orderList.endPay.length===0"></nullMsg>
+					<orderListCom v-for="(item, index) in orderList.endPay" :key="item.orderId+'2'" :itemMsg="item" style="margin-top: 20rpx;" @tableHide="tableHide" @tableShow="tableShow"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
 
@@ -46,6 +49,7 @@
 			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+					<nullMsg style="margin-top: 200rpx;" v-if="orderList.after.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.after" :key="item.orderId+'3'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
@@ -71,13 +75,13 @@
 		useI18n
 	} from 'vue-i18n'
 	import {
-		onLoad
+		onLoad, onShow
 	} from '@dcloudio/uni-app';
 	const {
 		t,
 		tm
 	} = useI18n()
-
+	import nullMsg from '@/components/nullMsg.vue'
 	// 创建响应式数据  
 	const tabsList = reactive([{
 			name: '全部',
@@ -102,9 +106,7 @@
 	const tabsCurrent = ref(0)
 
 	function changeTabs(item, index) {
-		console.log(item)
 		tabsCurrent.value = index
-		console.log(tabsCurrent.value)
 	}
 
 	function changeSwiper(e) {
@@ -135,7 +137,7 @@
 		let orderState= index==undefined?orParams[tabsCurrent.value]:orParams[index]
 		let myIndex= index==undefined?tabsCurrent.value:index
 		let params = {
-			orderState: orderState,
+			orderStates: orderState,
 			page: 1,
 			pageSize: 5,
 			userId: uni.getStorageSync('userInfo').userId
@@ -146,23 +148,37 @@
 			console.log(orderList)
 		}
 	}
+	const tableStatus = ref(true)
+	function tableHide() {
+		tableStatus.value = false
+	}
+	function tableShow() {
+		tableStatus.value = true
+	}
 
 
-
-	onLoad((e) => {
-		let initArr =[]
-		for(let i=0;i<4;i++){
-			initArr.push(getOrderList(i))
+	onShow(()=>{
+		if(!orderList.all.length){
+			let initArr =[]
+			for(let i=0;i<4;i++){
+				initArr.push(getOrderList(i))
+			}
+			uni.showLoading({
+				title: 'loading...',
+				mask: true
+			})
+			Promise.all(initArr).then(()=>{
+				uni.hideLoading()
+			}).catch(()=>{
+				uni.hideLoading()
+			})
 		}
-		uni.showLoading({
-			title: 'loading...',
-			mask: true
-		})
-		Promise.all(initArr).then(()=>{
-			uni.hideLoading()
-		})
-		if (e.tabbleIndex) {
-			tabsCurrent.value = (e.tabbleIndex - 0)
+	})
+	onLoad((option) => {
+
+		if (option.tabbleIndex) {
+			tabsCurrent.value = option.tabbleIndex - 0
+			// console.log(tabsCurrent.value)
 		}
 	})
 </script>

@@ -1,7 +1,7 @@
 <template>
 	<statusHeight></statusHeight>
 	<view style="" class="bg-f flex flex-dc flex-ac">
-
+	<image @click="goBack" class="pos-f z-10" src="/src/static/Back.svg" style=" background: rgba(255, 255, 255, .8); width: 60rpx;height: 60rpx;left: 30rpx;border-radius: 50%;" :style="'top: '+(statusBarHeight*2+30)+'rpx;'" mode=""></image>
 		<view class="flex flex-ac flex-jc" style="width: 750rpx;height: 750rpx;">
 			<image class="pos-f " :class="{ 'myfirstClass z-10': animationStatus }" v-show="animationStatus" :src="list1[0]" style="width: 80rpx;height: 80rpx;"></image>
 			<view class="" style="width: 750rpx;height: 750rpx;">
@@ -154,12 +154,16 @@ import {
 const {
 	t
 } = useI18n()
+	const systemInfo = uni.getSystemInfoSync();
+	const statusBarHeight =ref(systemInfo.statusBarHeight || 0); // 单位：px
 const tabbleStatus = ref(0)
 const idValue = ref('')
 const list1 = reactive([
 
 ]);
-
+function goBack(){
+	uni.navigateBack()
+}
 const goodsDetails = ref({})
 async function getGoodsDetails() {
 	const res = await post('/goods/info', {

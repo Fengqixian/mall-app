@@ -32,7 +32,9 @@
 			"path" : "pages/index/search",
 			"style" : 
 			{
-				"navigationStyle":"custom"
+				"navigationBarTitleText" : "%pages.search%",
+				"navigationBarBackgroundColor": "#fff",
+				"navigationBarTextStyle": "black"
 			}
 		},
 		{

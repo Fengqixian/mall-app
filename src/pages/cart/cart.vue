@@ -54,7 +54,7 @@
 		<view class=" bg-f flex flex-jc"
 			style="min-height: 300rpx; width: 700rpx; margin-top: 24rpx;border-radius: 24rpx;">
 			<view class=" flex flex-dc" style="width: 650rpx;">
-				<view class=" flex flex-ac bor-b2sf0" style="min-height: 100rpx;">
+				<!-- <view class=" flex flex-ac bor-b2sf0" style="min-height: 100rpx;">
 					<radio style="transform:scale(0.7)" borderColor="#d1d1d1" activeBorderColor='#21cc5b'
 					:checked="goodsInfoObj.status===1" @tap="changeAllStatus" color='#21cc5b'></radio>
 					<view style="" class=" h-100- flex flex-dc flex-jc mar-l10">
@@ -69,8 +69,8 @@
 							次日 07:00-12:00 送达
 						</view>
 					</view>
-				</view>
-
+				</view> -->
+				<view style="height: 40rpx;"> </view>
 
 				<nullMsg v-if="goodsInfoArray.length === 0" style=" margin: 100rpx 0;"></nullMsg>
 				<view v-for='item in goodsInfoArray' :key='item.id' class=" flex flex-dc bor-b2sf0"
@@ -127,7 +127,8 @@
 				</view>
 
 
-				<view class=" flex flex-ac flex-drr font-B font-28 cor-4" style="height: 100rpx;">
+				<view style="height: 40rpx;"> </view>
+				<!-- <view class=" flex flex-ac flex-drr font-B font-28 cor-4" style="height: 100rpx;">
 					<view @click="goOrder" class=""
 						style="line-height: 60rpx; background: #21cc5b; border-radius: 0 30rpx 30rpx 0; height: 60rpx;padding: 0 20rpx;">
 						{{ t('cart.goSettle') }}({{ goodsInfoObj.number }})
@@ -137,7 +138,7 @@
 						<text class="font-20">{{ t('money') }}</text>
 						{{ (goodsInfoObj.toatalPrice/100).toFixed(2) }}
 					</view>
-				</view>
+				</view> -->
 
 			</view>
 		</view>
@@ -235,9 +236,7 @@ async function goOrder() {
 			goodsNum:item.number
 		}
 	})
-	uni.showLoading({
-		title: 'loading...'
-	})
+	uni.showLoading({title: 'loading...',mask:true})
 	let res=await post('/order/price',params)
 	uni.hideLoading()
 	console.log(res)

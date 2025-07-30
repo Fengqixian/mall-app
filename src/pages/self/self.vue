@@ -61,22 +61,22 @@
 		{
 			text: '全部订单',
 			imgSrc: '/static/img/DM_20250619215903_005.png',
-			orderState:null,
+			orderState:0,
 		},
 		{
 			text: '待支付',
 			imgSrc: '/static/img/DM_20250619215903_001.png',
-			orderState:0
+			orderState:1
 		},
 		{
 			text: '已支付',
 			imgSrc: '/static/img/DM_20250619215903_002.png',
-			orderState:1
+			orderState:2
 		},
 		{
 			text: '售后处理',
 			imgSrc: '/static/img/DM_20250619215903_003.png',
-			orderState:2
+			orderState:3
 		},
 		// {
 		// 	text: '退货/售后',

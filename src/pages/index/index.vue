@@ -67,7 +67,7 @@
 				<image style="width: 36rpx;height: 32rpx;margin-left: 20rpx;"
 					src="/src/static/img/DM_20250619214345_007.png" mode="scaleToFill" />
 				<view style="width: 560rpx;margin-left: 20rpx;height: 60rpx;" class="">
-					<swiper style="width: 560rpx;height: 100%;" class="" autoplay circular vertical interval="2000"
+					<swiper style="width: 560rpx;height: 100%;" class="" autoplay circular  interval="2000"
 						duration="1000">
 						<swiper-item v-for="(item,index) in textSwiper.noticeArr" :key="index">
 							<view style="width: 560rpx;height: 100%; color: rgb(54, 14, 14);line-height: 60rpx;"
@@ -85,7 +85,7 @@
 				</view>
 			</view>
 
-			<view style="width: 700rpx;height: 600rpx;overflow-x: scroll;" class="grid-container bg-f">
+			<view style="width: 700rpx;height: 400rpx;overflow-x: scroll;" class="grid-container bg-f">
 				<view @tap="navClass(index)" v-for="(item,index) in state.classList" :key="item.id" style="width: 140rpx;min-height: 174rpx;margin: 4rpx 0;"
 					class=" flex flex-dc flex-jc flex-ac">
 					<image class="" style="width: 112rpx;min-height: 112rpx;max-height: 112rpx;" :src="item.coverImage"
@@ -340,7 +340,7 @@ onLoad(()=>{
 }
 .grid-container {
   display: grid;
-  grid-template-rows: repeat(3, 1fr); /* 创建3行 */
+  grid-template-rows: repeat(2, 1fr); /* 创建3行 */
   grid-auto-flow: column; /* 先填充列 */
   /* gap: 10px;  */
 }

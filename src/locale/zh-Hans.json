@@ -199,6 +199,18 @@
 		}
 	},
 	"orderDetail": {
+		"status": [
+			"待支付",
+			"已支付",
+			"已发货",
+			"已送达",
+			"已取消",
+			"已退款",
+			"已过期",
+			"支付失败",
+			"退款中",
+			"拒绝退款"
+		],
 		"headStatus": [
 			{
 				"title": "已取消",
@@ -218,6 +230,7 @@
 		"number": "数量",
 		"goodsPrice": "商品价格",
 		"deliveryPrice": "配送费",
+		"payAmount": "支付金额",
 		"orderMessage": "订单信息",
 		"orderID": "订单ID",
 		"orderTime": "下单时间",

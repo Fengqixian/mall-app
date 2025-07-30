@@ -18,7 +18,7 @@
 			style="width: 100%;height: calc(100svh - 88rpx);" :duration="500">
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
-					<orderListCom v-for="(item, index) in orderList.all" :key="index" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
+					<orderListCom v-for="(item, index) in orderList.all" :key="item.orderId+'0'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
 
@@ -28,7 +28,7 @@
 			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
-					<!-- <orderListCom v-for="(item, index) in 30" style="margin-top: 20rpx;"></orderListCom> -->
+					<orderListCom v-for="(item, index) in orderList.waitPay" :key="item.orderId+'1'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
 
@@ -37,7 +37,7 @@
 			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
-					<!-- <orderListCom v-for="(item, index) in 20" style="margin-top: 20rpx;"></orderListCom> -->
+					<orderListCom v-for="(item, index) in orderList.endPay" :key="item.orderId+'2'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
 
@@ -46,7 +46,7 @@
 			</swiper-item>
 			<swiper-item>
 				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
-					<!-- <orderListCom v-for="(item, index) in 10" style="margin-top: 20rpx;"></orderListCom> -->
+					<orderListCom v-for="(item, index) in orderList.after" :key="item.orderId+'3'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 
 					<view class="" style="height: 140rpx;">
 
@@ -130,29 +130,40 @@
 		after: []
 	})
 
-	async function getOrderList() {
+	const orParams=[[],[0],[1],[5,8,9]] 
+	async function getOrderList(index=undefined) {
+		let orderState= index==undefined?orParams[tabsCurrent.value]:orParams[index]
+		let myIndex= index==undefined?tabsCurrent.value:index
 		let params = {
-			orderState: tabsCurrent.value == 0 ? null : tabsCurrent.value - 1,
+			orderState: orderState,
 			page: 1,
-			pageSize: 10,
+			pageSize: 5,
 			userId: uni.getStorageSync('userInfo').userId
 		}
 		let res = await post('/order/list', params)
 		if (res.code == 200) {
-			orderList[tabsList[tabsCurrent.value].key]=res.data
+			orderList[tabsList[myIndex].key]=res.data
 			console.log(orderList)
 		}
 	}
 
+
+
 	onLoad((e) => {
-		if (e.tabbleIndex) {
-			if (e.tabbleIndex == "null") {
-				tabsCurrent.value = 0
-			} else {
-				tabsCurrent.value = (e.tabbleIndex - 0) + 1
-			}
+		let initArr =[]
+		for(let i=0;i<4;i++){
+			initArr.push(getOrderList(i))
 		}
-		getOrderList()
+		uni.showLoading({
+			title: 'loading...',
+			mask: true
+		})
+		Promise.all(initArr).then(()=>{
+			uni.hideLoading()
+		})
+		if (e.tabbleIndex) {
+			tabsCurrent.value = (e.tabbleIndex - 0)
+		}
 	})
 </script>
 

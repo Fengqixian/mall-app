@@ -78,7 +78,7 @@ const searchParams = reactive({
 const searchHistory = ref([])
 const searchList = ref([])
 async function getSearchList() {
-	isFocus.value = false
+	// isFocus.value = false
 	if (searchParams.name) {
 		let historyStorage = uni.getStorageSync('searchHistory') || []
 		if (historyStorage.indexOf(searchParams.name) !== -1) {
@@ -100,18 +100,18 @@ async function getSearchList() {
 		searchList.value = res.data
 	}
 }
-const isFocus = ref(false)
+const isFocus = ref(true)
 function handleFocus() {
 	isFocus.value = true
 }
 function handleBlur() {
 
-	setTimeout(() => {
-		isFocus.value = false
-	}, 100)
+	// setTimeout(() => {
+	// 	isFocus.value = false
+	// }, 100)
 }
 function clearHistory() {
-	console.log(11111111111111)
+	
 	uni.showModal({
 		title: t('tips.prompt'),
 		content:  t('tips.sureClearSearch'),

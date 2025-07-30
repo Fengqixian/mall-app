@@ -11,13 +11,13 @@
 					</view>
 					
 					<view class="">
-						{{t('orderList.orderListCom.status.1')}}
+						{{orderStateArr[itemMsg.orderState]}}
 					</view>
 				</view>
 				
 				<view class="order-grid" style="margin-top: 24rpx;">
-					<view v-for="item in 6" class="order-grid-item ">
-						<image style="width: 100%;height: 100%;" src="/src/static/img/DM_20250619214345_012.png" mode=""></image>
+					<view v-for="(item,index) in itemMsg.goodsList" :key="index" v-show="index<4" class="order-grid-item ">
+						<image style="width: 100%;height: 100%;" :src="item.goodsInfo.coverImage" mode=""></image>
 					</view>
 				</view>
 
@@ -41,9 +41,7 @@
 					</view>
 
 					<view class=" cor-8 font-28" style="text-align: right; height: 60rpx;line-height: 60rpx;">
-						{{t('orderList.orderListCom.number')}}:1 {{t('orderList.orderListCom.realPay')}}: <text class="cor-r font-B">￥123.00</text>
-
-
+						{{t('orderList.orderListCom.number')}}:{{getAllNumber()}} {{t('orderList.orderListCom.realPay')}}: <text class="cor-r font-B">{{ t('money') }}{{ (itemMsg.amount/100).toFixed(2) }}</text>
 					</view>
 				</view>
 				
@@ -67,7 +65,7 @@
 </template>
 
 <script setup>
-
+import {ref} from 'vue'
 import { useI18n } from 'vue-i18n'
 const { t,tm } = useI18n()
 
@@ -77,12 +75,16 @@ const props = defineProps({
 		default:{}
 	}
 })
-
-console.log(props)
+const orderStateArr=ref(tm('orderDetail.status'))
+console.log(orderStateArr)
 function navOrderDetail(){
 	uni.navigateTo({
 		url:"/pages/self/orderDetail?orderId="+props.itemMsg.orderId
 	})
+}
+
+function getAllNumber(){
+	return props.itemMsg.goodsList.reduce((sum, item) => sum + item.goodsInfo.orderQuantity, 0);
 }
 </script>
 

@@ -199,6 +199,18 @@
 		}
 	},
 	"orderDetail": {
+		"status": [
+			"e待支付",
+			"e已支付",
+			"e已发货",
+			"e已送达",
+			"e已取消",
+			"e已退款",
+			"e已过期",
+			"e支付失败",
+			"e退款中",
+			"e拒绝退款"
+		],
 		"headStatus": [
 			{
 				"title": "e已取消",
@@ -218,6 +230,7 @@
 		"number": "e数量",
 		"goodsPrice": "e商品价格",
 		"deliveryPrice": "e配送费",
+		"payAmount": "e支付金额",
 		"orderMessage": "e订单信息",
 		"orderID": "e订单ID",
 		"orderTime": "e下单时间",

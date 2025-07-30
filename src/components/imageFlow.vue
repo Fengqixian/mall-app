@@ -1,5 +1,6 @@
 <template>
 	<view class="wrap">
+		<!-- <image src="" mode=""></image> -->
 		<!-- <up-button @click="clear">清空列表</up-button> -->
 		<up-waterfall v-model="list" ref="uWaterfallRef">
 			<template v-slot:left="{ leftList }">
@@ -7,6 +8,8 @@
 					:key="item.goodsInfo.id">
 					<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
 					<up-lazy-load threshold="0" border-radius="10" :image="item.goodsInfo.coverImage"
+						loading-img="/src/static/imgLoading.png"
+						error-img="/src/static/imgError.png"
 						:index="index"></up-lazy-load>
 					<view class="demo-title text-2d font-B">
 						{{ item.goodsInfo.name }}
@@ -45,6 +48,8 @@
 				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in rightList"
 					:key="item.goodsInfo.id">
 					<up-lazy-load threshold="-450" border-radius="10" :image="item.goodsInfo.coverImage"
+					loading-img="/src/static/imgLoading.png"
+					error-img="/src/static/imgError.png"
 						:index="index"></up-lazy-load>
 					<view class="demo-title text-2d font-B">
 						{{ item.goodsInfo.name }}

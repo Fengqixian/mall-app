@@ -67,7 +67,7 @@
 							<view class="flex flex-dc flex-jb mar-l20 flex-g">
 								<view class=" flex flex-jb  font-26" style="">
 									<view class="">
-										{{ item.descTh }}
+										{{ item.nameTh }}
 									</view>
 									<view v-if="orderArr.goodsNumMap[item.id] !== 1" class="">
 										<text class="font-22">{{ item.priceUnitName }}</text><text

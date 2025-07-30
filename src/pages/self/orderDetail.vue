@@ -4,15 +4,19 @@
 			<view class=" bg-g" style="  height: 20rpx; width: 700rpx;"></view>
 			<view class="bor-b2sf0 flex flex-dc flex-jc" style="width: 650rpx;min-height: 120rpx;">
 				<view class=" font-32 font-B" style="margin-top: 20rpx;">
-					{{ tm('orderDetail.headStatus')[0].title }}
+					{{ orderStateArr[orderInfo.orderState] }}
 				</view>
 				<view class=" font-26" style="margin-top: 18rpx;">
-					{{ tm('orderDetail.headStatus')[0].desc }}
+					{{ orderInfo.orderStateDes }}
 				</view>
 				
-				<view class=" flex flex-ac flex-jc" style="margin: 20rpx 0;">
-					<image class="" @longpress="show=true" :src="orderInfo.payQrCode" style="width: 500rpx;height: 710rpx;"
-						mode=""></image>
+				<view class=" flex flex-ac flex-jc " style="margin: 20rpx 0;">
+					
+					<up-lazy-load class="" style="width: 650rpx;height: 910rpx;"  border-radius="10" :image="orderInfo.payQrCode"
+					loading-img="/src/static/imgLoading.png"
+					error-img="/src/static/imgError.png"></up-lazy-load>
+<!-- 					<image class="" @longpress="show=true" :src="orderInfo.payQrCode" style="width: 500rpx;height: 710rpx;"
+						mode=""></image> -->
 				</view>
 			</view>
 			<view class="flex-g flex-ac flex flex-drr font-26" style="width: 650rpx;min-height: 100rpx;">
@@ -40,7 +44,7 @@
 						{{ t("orderDetail.address") }}
 					</view>
 					<view class="" style="text-align: right;line-height: 42rpx;">
-						四川省成都市四川省成都市四川省成都市四川省成都市四川省成都市
+						{{ orderInfo.country+orderInfo.province+orderInfo.city+orderInfo.district+orderInfo.detailedAddress }}
 					</view>
 				</view>
 				<view class=" flex flex-jb mar-t30">
@@ -48,7 +52,7 @@
 						{{ t("orderDetail.delivery") }}
 					</view>
 					<view class="" style="text-align: right;">
-						商家配送
+						{{ sendColumns[0][orderInfo.deliveryType]?.label }}
 					</view>
 				</view>
 				<view class=" flex flex-jb mar-t30" style="margin-bottom: 30rpx;">
@@ -56,7 +60,7 @@
 						{{ t("orderDetail.time") }}
 					</view>
 					<view class="" style="text-align: right;">
-						2025-07-10 05:00-14:00
+						{{ orderInfo.deliveryTime }}
 					</view>
 				</view>
 			</view>
@@ -68,24 +72,24 @@
 					{{ t("orderDetail.goodsList") }}
 				</view>
 				<view class="bor-b2sf0">
-					<view v-for="item in 3" class=" mar-t30 flex mar-b24" style="min-height: 120rpx;">
-						<image src="/src/static/img/DM_20250619214345_011.png" style="width: 120rpx;height: 120rpx;"
+					<view v-for="item in orderInfo.goodsList" :key="item.goodsInfo.id"  class=" mar-t30 flex mar-b24" style="min-height: 120rpx;">
+						<image :src="item.goodsInfo.coverImage" style="width: 120rpx;height: 120rpx;"
 							mode=""></image>
 						<view class=" mar-l20 flex flex-dc flex-jb" style="width: calc(650rpx - 140rpx);">
 							<view class=" flex font-28 font-B flex-jb">
 								<view class=" text-d" style="width: 380rpx;">
-									商品名称商品名称商品名称商品名称
+									{{ item.goodsInfo.name }}
 								</view>
-								<view class="">
-									{{ t("money") }}48.00
+								<view class="font-B cor-r">
+									{{ t("money") }}{{ (item.goodsInfo.price*item.goodsInfo.orderQuantity/100).toFixed(2) }}
 								</view>
 							</view>
 
 							<view class=" flex font-26 cor-8 flex-jb">
-								{{ t("orderDetail.unitPrice") }}：{{ t("money") }}48.00/500克
+								{{ t("orderDetail.unitPrice") }}：{{ t("money") }}{{ (item.goodsInfo.price/100).toFixed(2) }}/{{ item.goodsInfo.unitName }}
 							</view>
 							<view class=" flex font-26 cor-8 flex-jb" style="margin-bottom: 10rpx;">
-								{{ t("orderDetail.number") }}：1
+								{{ t("orderDetail.number") }}：{{ item.goodsInfo.orderQuantity }}
 							</view>
 						</view>
 					</view>
@@ -94,10 +98,19 @@
 				<view class="bor-b2sf0" style="padding-bottom: 30rpx;">
 					<view class=" flex flex-jb mar-t30">
 						<view class="cor-8" style="min-width: 140rpx;">
-							{{ t("orderDetail.goodsPrice") }}
+							{{ t('submitOrder.goodsAmount') }}
 						</view>
-						<view class="font-B" style="text-align: right;">
-							{{ t("money") }}1234
+						<view class="font-B cor-r" style="text-align: right;">
+							{{ t("money") }}{{ (orderInfo.goodsAmount/100).toFixed(2) }}
+						</view>
+					</view>
+
+					<view class=" flex flex-jb mar-t30">
+						<view class="cor-8" style="min-width: 140rpx;">
+							{{ t('submitOrder.discountAmount') }}
+						</view>
+						<view class="font-B cor-r" style="text-align: right;">
+							{{ t("money") }}-{{ (orderInfo.discountAmount/100).toFixed(2) }}
 						</view>
 					</view>
 
@@ -105,8 +118,17 @@
 						<view class="cor-8" style="min-width: 140rpx;">
 							{{ t("orderDetail.deliveryPrice") }}
 						</view>
-						<view class="font-B" style="text-align: right;">
-							{{ t("money") }}1234
+						<view class="font-B cor-r" style="text-align: right;">
+							{{ t("money") }}{{ (orderInfo.deliveryFee/100).toFixed(2) }}
+						</view>
+					</view>
+
+					<view class=" flex flex-jb mar-t30 flex-ac">
+						<view class="cor-8" style="min-width: 140rpx;">
+							{{ t('orderDetail.payAmount') }}
+						</view>
+						<view class="font-B cor-r font-32" style="text-align: right;">
+							{{ t("money") }}{{ (orderInfo.amount/100).toFixed(2) }}
 						</view>
 					</view>
 
@@ -124,7 +146,7 @@
 						{{ t("orderDetail.orderID") }}
 					</view>
 					<view class="" style="text-align: right;">
-						1234
+						{{ orderInfo.orderId }}
 					</view>
 				</view>
 				<view class=" flex flex-jb mar-t30">
@@ -132,8 +154,8 @@
 						{{ t("orderDetail.orderNumber") }}
 					</view>
 					<view class="" style="text-align: right;">
-						1234564646
-						<up-copy content="uview-plus is great !" style="display: inline-block;">
+						{{ orderInfo.orderNumber }}
+						<up-copy :content="orderInfo.orderNumber" style="display: inline-block;">
 							<text class="aaa cor-g"
 								style="margin-left: 20rpx; border-color: var(--cor-g); border-radius: 8rpx; padding: 4rpx 12rpx;">
 								{{ t("copy") }}
@@ -147,7 +169,7 @@
 						{{ t("orderDetail.orderTime") }}
 					</view>
 					<view class="" style="text-align: right;">
-						2025-07-10 05:00-14:00
+						{{ orderInfo.createTime }}
 					</view>
 				</view>
 			</view>
@@ -163,7 +185,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'	
+import {ref, reactive} from 'vue'	
 import {
 		onShow,
 		onLoad
@@ -187,6 +209,23 @@ async function getOrderDetail(){
 	}
 }
 
+// const orderStateArr=ref([
+// 	"待支付",
+// 	"已支付",
+// 	"已发货",
+// 	"已送达",
+// 	"已取消",
+// 	"已退款",
+// 	"已过期",
+// 	"支付失败",
+// 	"退款中",
+// 	"拒绝退款"
+// ])
+const sendColumns = reactive([
+		tm('submitOrder.sendArr')
+	]);
+const orderStateArr=ref(tm('orderDetail.status'))
+console.log(orderStateArr)
 const confirm=()=>{
 	show.value = false
 	saveImage()
@@ -196,7 +235,6 @@ const confirm=()=>{
 		console.log(orderInfo.value)
 		uni.downloadFile({
         url: orderInfo.value.payQrCode,
-		// url:"https://freshdala-555.oss-cn-hongkong.aliyuncs.com/64de1926-0585-4fc6-a291-af2e00c0ecb5.png",
         success: (res) => {
 			console.log(res)
           if (res.statusCode === 200) {

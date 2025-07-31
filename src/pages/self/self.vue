@@ -125,7 +125,7 @@
 		}
 	}
 	onLoad(()=>{
-		getLikeList()
+		
 	})
 	function setBadge(arr) {
 		// 设置角标
@@ -137,6 +137,7 @@
 		})
 	}
 	onShow(() => {
+		getLikeList()
 		let _userInfo = uni.getStorageSync('userInfo')
 		userInfo.value = _userInfo
 		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []

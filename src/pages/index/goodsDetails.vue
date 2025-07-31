@@ -96,8 +96,9 @@
 		<view class="" style="width: 750rpx;background: #f5f5f5;height: 20rpx;"></view>
 
 		<view class="" style="width: 700rpx;min-height: 700rpx;">
-			<view v-show="tabbleStatus == 0">
-				<null-msg style="margin-top: 200rpx;"></null-msg>
+			<view v-show="tabbleStatus == 0" style="margin-top: 20rpx;">
+				<rich-text :nodes="goodsProtocol"></rich-text>
+				<null-msg v-if="!goodsProtocol" style="margin-top: 200rpx;"></null-msg>
 			</view>
 			<view v-show="tabbleStatus == 1" class="">
 				<view class="flex flex-ac bor-b2sf0 font-26" v-for="(item,index) in buyRecord" :key="index"
@@ -247,10 +248,18 @@
 			text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
 		})
 	}
+	const goodsProtocol = ref([])
+	async function getGoodsProtocol(){
+		const res = await post('/common/goods/delivery/protocol')
+		if (res.code == 200) {
+			goodsProtocol.value = res.data
+		}
+	}
 	onLoad((e) => {
 		idValue.value = e.id
 		getGoodsDetails()
 		getBuyRecord()
+		getGoodsProtocol()
 	})
 </script>
 

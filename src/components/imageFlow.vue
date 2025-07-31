@@ -7,9 +7,14 @@
 				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in leftList"
 					:key="item.goodsInfo.id">
 					<!-- 警告：微信小程序中需要hx2.8.11版本才支持在template中结合其他组件，比如下方的lazy-load组件 -->
-					<up-lazy-load threshold="0" border-radius="10" :image="item.goodsInfo.coverImage"
+					<!-- <up-lazy-load threshold="0" border-radius="10" :image="item.goodsInfo.coverImage"
 						loading-img="/src/static/imgLoading.png" error-img="/src/static/imgError.png"
-						:index="index"></up-lazy-load>
+						:index="index"></up-lazy-load> -->
+					<u-image :src="item.goodsInfo.coverImage" width="100%" radius="10">
+						<template v-slot:loading>
+							<u-loading-icon color="#999"></u-loading-icon>
+						</template>
+					</u-image>
 					<view class="demo-title text-2d font-B">
 						{{ item.goodsInfo.name }}
 					</view>
@@ -46,9 +51,16 @@
 			<template v-slot:right="{ rightList }">
 				<view @tap="navDetails(item.goodsInfo.id)" class="demo-warter" v-for="(item, index) in rightList"
 					:key="item.goodsInfo.id">
-					<up-lazy-load threshold="-450" border-radius="10" :image="item.goodsInfo.coverImage"
+					<!-- <up-lazy-load threshold="-450" border-radius="10" :image="item.goodsInfo.coverImage"
 						loading-img="/src/static/imgLoading.png" error-img="/src/static/imgError.png"
-						:index="index"></up-lazy-load>
+						:index="index"></up-lazy-load> -->
+
+					<u-image :src="item.goodsInfo.coverImage" width="100%" radius="10">
+						<template v-slot:loading>
+							<u-loading-icon color="#999"></u-loading-icon>
+						</template>
+					</u-image>
+
 					<view class="demo-title text-2d font-B">
 						{{ item.goodsInfo.name }}
 					</view>

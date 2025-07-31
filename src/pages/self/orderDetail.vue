@@ -12,9 +12,15 @@
 				
 				<view v-if="orderInfo.orderState===0" class=" flex flex-ac flex-jc " style="margin: 20rpx 0;">
 					
-					<up-lazy-load class="" style="width: 650rpx;height: 910rpx;"  border-radius="10" :image="orderInfo.payQrCode"
+					<!-- <up-lazy-load class="" style="width: 650rpx;height: 910rpx;"  border-radius="10" :image="orderInfo.payQrCode"
 					loading-img="/src/static/imgLoading.png"
-					error-img="/src/static/imgError.png"></up-lazy-load>
+					error-img="/src/static/imgError.png"></up-lazy-load> -->
+
+					<u-image :src="orderInfo.payQrCode" width="100%" radius="10" mode="widthFix">
+						<template v-slot:loading>
+							<u-loading-icon color="#999"></u-loading-icon>
+						</template>
+					</u-image>
 <!-- 					<image class="" @longpress="show=true" :src="orderInfo.payQrCode" style="width: 500rpx;height: 710rpx;"
 						mode=""></image> -->
 				</view>

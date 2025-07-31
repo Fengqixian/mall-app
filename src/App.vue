@@ -5,7 +5,12 @@ export default {
 	  //获取系统配置
 	  {
 		  async function getConfig(){
+			    uni.showLoading({
+			      title: 'loading...',
+			      mask: true
+			    })
 			  let data = await post('/system/config')
+			  uni.hideLoading()
 			  console.log(data)
 			  if(data.code === 200){
 				  uni.setStorageSync('appConfig',data.data)
@@ -27,7 +32,6 @@ export default {
   onHide: function () {
     console.log('App Hide')
   },
-    
   globalData: {
 		addressInfo:''
     }

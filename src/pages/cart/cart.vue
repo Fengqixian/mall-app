@@ -327,7 +327,7 @@ function getGoodsInfoArray(){
 
 
 onLoad(() => {
-	getLikeList()
+	
 })
 
 function setBadge(arr) {
@@ -341,6 +341,7 @@ function setBadge(arr) {
 }
 
 onShow(() => {
+	getLikeList()
 	getGoodsInfoArray()
 	const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 	setBadge(goodsInfoStorage)

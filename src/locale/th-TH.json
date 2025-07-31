@@ -32,6 +32,7 @@
   "pages.orderList": "t我的订单",
   "pages.orderDetail": "t订单详情",
   "pages.search": "t搜索",
+  "pages.goodsDetails":"t商品详情",
   "home": {
     "title": "t首页",
     "getSite": "t获取当前地址",

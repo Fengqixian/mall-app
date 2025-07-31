@@ -141,14 +141,14 @@
 				<view class=" font-28 cor-4 font-B bor-b2sf0" style="height: 72rpx;line-height: 72rpx;">
 					{{ t("orderDetail.orderMessage") }}
 				</view>
-				<view class=" flex flex-jb mar-t30">
+<!-- 				<view class=" flex flex-jb mar-t30">
 					<view class="cor-8" style="min-width: 140rpx;">
 						{{ t("orderDetail.orderID") }}
 					</view>
 					<view class="" style="text-align: right;">
 						{{ orderInfo.orderId }}
 					</view>
-				</view>
+				</view> -->
 				<view class=" flex flex-jb mar-t30">
 					<view class="cor-8" style="min-width: 140rpx;">
 						{{ t("orderDetail.orderNumber") }}

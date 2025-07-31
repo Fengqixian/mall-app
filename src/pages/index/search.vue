@@ -40,7 +40,8 @@
 					<!-- <up-icon style="" name="trash" color="#666" size="38rpx"></up-icon> -->
 				</view>
 				<view class="flex flex-ww" style="width: 700rpx;margin-bottom: 20rpx;margin-top: 20rpx;">
-					<view @tap="handleHistory(item)" v-for="(item,index) in hotList" :key="index"  class="flex flex-ac font-26 cor-5"
+					<view @tap="handleHistory(item)" v-for="(item,index) in hotList" :key="index"
+						class="flex flex-ac font-26 cor-5"
 						style="border-radius: 8rpx; background: #f5f5f5; margin: 10rpx; padding: 6rpx 10rpx;">
 						<image style="width: 24rpx;height: 30rpx;margin-right: 6rpx;"
 							src="/src/static/img/17452692336806b1f1d940b.png" mode="scaleToFill" />
@@ -55,105 +56,143 @@
 		</view>
 
 		<image-flow v-if="searchList.length > 0" :listF="searchList"></image-flow>
-		<null-msg v-else  style="margin-top: 300rpx;"></null-msg>
-
+		<null-msg v-else style="margin-top: 300rpx;"></null-msg>
+		<no-more-data v-if="isNullMsg&&searchList.length > 0"></no-more-data>
+		<view class="" style="height: 40rpx;"></view>
 	</view>
 </template>
 
 <script setup>
-import { reactive, ref,nextTick } from 'vue'
-import { onLoad, onShow } from '@dcloudio/uni-app'
-import statusHeight from '@/components/statusHeight.vue'
-import imageFlow from "@/components/imageFlow.vue"
-import nullMsg from "@/components/nullMsg.vue"
-import { useI18n } from 'vue-i18n'
-import { post } from '@/utils/request'
-const { t } = useI18n()
-const searchParams = reactive({
-	classId: null,
-	name: null,
-	page: 1,
-	pageSize: 10
-})
-const searchHistory = ref([])
-const searchList = ref([])
-async function getSearchList() {
-	// isFocus.value = false
-	if (searchParams.name) {
-		let historyStorage = uni.getStorageSync('searchHistory') || []
-		if (historyStorage.indexOf(searchParams.name) !== -1) {
-			historyStorage.splice(historyStorage.indexOf(searchParams.name), 1)
-			historyStorage.unshift(searchParams.name)
-			searchHistory.value = historyStorage
-			uni.setStorageSync('searchHistory', historyStorage)
-		} else {
-			if (historyStorage.length >= 10) {
-				historyStorage.pop()
-			}
-			historyStorage.unshift(searchParams.name)
-			searchHistory.value = historyStorage
-			uni.setStorageSync('searchHistory', historyStorage)
-		}
-	}
-	let res = await post('/goods/list', searchParams)
-	if (res.code == 200) {
-		searchList.value = res.data
-	}
-}
-const isFocus = ref(true)
-function handleFocus() {
-	isFocus.value = true
-}
-function handleBlur() {
-
-	// setTimeout(() => {
-	// 	isFocus.value = false
-	// }, 100)
-}
-function clearHistory() {
-	
-	uni.showModal({
-		title: t('tips.prompt'),
-		content:  t('tips.sureClearSearch'),
-		success: (res) => {
-			if (res.confirm) {
-				searchHistory.value = []
-				uni.setStorageSync('searchHistory', [])
-			}
-		}
+	import {
+		reactive,
+		ref,
+		nextTick
+	} from 'vue'
+	import {
+		onLoad,
+		onShow,
+		onPullDownRefresh,
+		onReachBottom
+	} from '@dcloudio/uni-app'
+	import statusHeight from '@/components/statusHeight.vue'
+	import imageFlow from "@/components/imageFlow.vue"
+	import noMoreData from "@/components/noMoreData.vue"
+	import nullMsg from "@/components/nullMsg.vue"
+	import {
+		useI18n
+	} from 'vue-i18n'
+	import {
+		post
+	} from '@/utils/request'
+	const {
+		t
+	} = useI18n()
+	const searchParams = reactive({
+		classId: null,
+		name: null,
+		page: 1,
+		pageSize: 10
 	})
-}
-function handleHistory(item) {
-	searchParams.name = item
-	getSearchList()
-}
-
-const hotList = ref([])
-function getHotList() {
-	let {value:searchJSON}=uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
-	try{
-		hotList.value = JSON.parse(searchJSON)
-	}catch(err){
-		console.log(err)
+	const isNullMsg =ref(false)
+	const searchHistory = ref([])
+	const searchList = ref([])
+	async function getSearchList() {
+		// isFocus.value = false
+		if (searchParams.name) {
+			let historyStorage = uni.getStorageSync('searchHistory') || []
+			if (historyStorage.indexOf(searchParams.name) !== -1) {
+				historyStorage.splice(historyStorage.indexOf(searchParams.name), 1)
+				historyStorage.unshift(searchParams.name)
+				searchHistory.value = historyStorage
+				uni.setStorageSync('searchHistory', historyStorage)
+			} else {
+				if (historyStorage.length >= 10) {
+					historyStorage.pop()
+				}
+				historyStorage.unshift(searchParams.name)
+				searchHistory.value = historyStorage
+				uni.setStorageSync('searchHistory', historyStorage)
+			}
+		}
+		let res = await post('/goods/list', searchParams)
+		if (res.code == 200) {
+			if(res.data.length){
+				searchList.value = [...searchList.value,...res.data]
+			}else{
+				isNullMsg.value=true
+			}
+			
+		}
 	}
+	const isFocus = ref(true)
+
+	function handleFocus() {
+		isFocus.value = true
+	}
+
+	function handleBlur() {
+
+		// setTimeout(() => {
+		// 	isFocus.value = false
+		// }, 100)
+	}
+
+	function clearHistory() {
+
+		uni.showModal({
+			title: t('tips.prompt'),
+			content: t('tips.sureClearSearch'),
+			success: (res) => {
+				if (res.confirm) {
+					searchHistory.value = []
+					uni.setStorageSync('searchHistory', [])
+				}
+			}
+		})
+	}
+
+	function handleHistory(item) {
+		searchParams.name = item
+		getSearchList()
+	}
+
+	const hotList = ref([])
+
+	function getHotList() {
+		let {
+			value: searchJSON
+		} = uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
+		try {
+			hotList.value = JSON.parse(searchJSON)
+		} catch (err) {
+			console.log(err)
+		}
+
+	}
+
+	const searchInputEl = ref(null)
+	onShow(() => {
+		// nextTick(() => {
+		// 	console.log(searchInputEl.value)
+		// 	// searchInputEl?.value?.focus()
+		// })
+	})
+	onLoad((options) => {
+		if (options.name) {
+			searchParams.name = options.name
+		}
+		searchHistory.value = uni.getStorageSync('searchHistory') || []
+		getSearchList()
+		getHotList()
+	})
+		onReachBottom(() => {
+			if(!isNullMsg.value){
+				searchParams.page++
+				getSearchList()
+			}
+			console.log("上拉加载更多"+isNullMsg.value)
+		})
 	
-}
-
-const searchInputEl = ref(null)
-onShow(() => {
-	// nextTick(() => {
-	// 	console.log(searchInputEl.value)
-	// 	// searchInputEl?.value?.focus()
-	// })
-})
-onLoad((options) => {
-	if(options.name){
-		searchParams.name = options.name
-	}
-	searchHistory.value = uni.getStorageSync('searchHistory') || []
-	getSearchList()
-	getHotList()
-})
 </script>
 
 <style></style>

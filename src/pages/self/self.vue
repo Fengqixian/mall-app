@@ -127,10 +127,20 @@
 	onLoad(()=>{
 		getLikeList()
 	})
-
+	function setBadge(arr) {
+		// 设置角标
+		let text = arr.reduce((sum, item) => sum + item.number, 0)
+		console.log(text)
+		uni.setTabBarBadge({
+			index: 2, // tabBar 的哪一项，从左边算起，索引从0开始
+			text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
+		})
+	}
 	onShow(() => {
 		let _userInfo = uni.getStorageSync('userInfo')
 		userInfo.value = _userInfo
+		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
+		setBadge(goodsInfoStorage)
 	})
 </script>
 

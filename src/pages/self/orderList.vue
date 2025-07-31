@@ -17,10 +17,11 @@
 		<swiper class=" pos-r z-1" @change="changeSwiper" :current='tabsCurrent' :acceleration="false"
 			style="width: 100%;height: calc(100svh - 88rpx);" :duration="500">
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.all.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.all" :key="item.orderId+'0'" :itemMsg="item" style="margin-top: 20rpx;" @tableHide="tableHide" @tableShow="tableShow"></orderListCom>
-
+					
+					<no-more-data v-if="tabsList[0].isMoreMsg&&orderList.all.length"></no-more-data>
 					<view class="" style="height: 140rpx;">
 
 					</view>
@@ -28,30 +29,30 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.waitPay.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.waitPay" :key="item.orderId+'1'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
-
-					<view class="" style="height: 140rpx;">
-
-					</view>
+					<no-more-data v-if="tabsList[1].isMoreMsg&&orderList.waitPay.length"></no-more-data>
+					<view class="" style="height: 140rpx;"></view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.endPay.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.endPay" :key="item.orderId+'2'" :itemMsg="item" style="margin-top: 20rpx;" @tableHide="tableHide" @tableShow="tableShow"></orderListCom>
-
+					
+					<no-more-data v-if="tabsList[2].isMoreMsg&&orderList.endPay.length"></no-more-data>
 					<view class="" style="height: 140rpx;">
 
 					</view>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true" style="height: calc(100svh - 88rpx);">
+				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.after.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.after" :key="item.orderId+'3'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
-
+					
+					<no-more-data v-if="tabsList[3].isMoreMsg&&orderList.after.length"></no-more-data>
 					<view class="" style="height: 140rpx;">
 
 					</view>
@@ -82,22 +83,35 @@
 		tm
 	} = useI18n()
 	import nullMsg from '@/components/nullMsg.vue'
+	import noMoreData from "@/components/noMoreData.vue"
 	// 创建响应式数据  
 	const tabsList = reactive([{
 			name: '全部',
-			key:'all'
+			key:'all',
+			isMoreMsg:false,
+			page:1,
+			pageSize:5,
 		},
 		{
 			name: '待付款',
-			key:'waitPay'
+			key:'waitPay',
+			isMoreMsg:false,
+			page:1,
+			pageSize:5,
 		},
 		{
 			name: '进行中',
-			key:'endPay'
+			key:'endPay',
+			isMoreMsg:false,
+			page:1,
+			pageSize:5,
 		},
 		{
 			name: '待评价',
-			key:'after'
+			key:'after',
+			isMoreMsg:false,
+			page:1,
+			pageSize:5,
 		},
 	]);
 	tabsList.forEach((item, index) => {
@@ -138,13 +152,22 @@
 		let myIndex= index==undefined?tabsCurrent.value:index
 		let params = {
 			orderStates: orderState,
-			page: 1,
-			pageSize: 5,
+			page: tabsList[myIndex].page,
+			pageSize: tabsList[myIndex].pageSize,
 			userId: uni.getStorageSync('userInfo').userId
+		}
+		if(tabsList[myIndex].isMoreMsg){
+			tabsList[myIndex].page--
+			return
 		}
 		let res = await post('/order/list', params)
 		if (res.code == 200) {
-			orderList[tabsList[myIndex].key]=res.data
+			if(res.data.length){
+				orderList[tabsList[myIndex].key]=[...orderList[tabsList[myIndex].key],...res.data]
+			}else{
+				tabsList[myIndex].isMoreMsg=true
+			}
+			
 			console.log(orderList)
 		}
 	}
@@ -155,7 +178,11 @@
 	function tableShow() {
 		tableStatus.value = true
 	}
-
+	
+	function getAllMoerOrderList(){
+		tabsList[tabsCurrent.value].page++
+		getOrderList()
+	}
 
 	onShow(()=>{
 		if(!orderList.all.length){

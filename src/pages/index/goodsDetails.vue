@@ -1,9 +1,10 @@
 <template>
-	<statusHeight></statusHeight>
+	<!-- <statusHeight></statusHeight> -->
 	<view style="" class="bg-f flex flex-dc flex-ac">
-	<image @click="goBack" class="pos-f z-10" src="/src/static/Back.svg" style=" background: rgba(255, 255, 255, .8); width: 60rpx;height: 60rpx;left: 30rpx;border-radius: 50%;" :style="'top: '+(statusBarHeight*2+30)+'rpx;'" mode=""></image>
+		<!-- <image @click="goBack" class="pos-f z-10" src="/src/static/Back.svg" style=" background: rgba(255, 255, 255, .8); width: 60rpx;height: 60rpx;left: 30rpx;border-radius: 50%;" :style="'top: '+(statusBarHeight*2+30)+'rpx;'" mode=""></image> -->
 		<view class="flex flex-ac flex-jc" style="width: 750rpx;height: 750rpx;">
-			<image class="pos-f " :class="{ 'myfirstClass z-10': animationStatus }" v-show="animationStatus" :src="list1[0]" style="width: 80rpx;height: 80rpx;"></image>
+			<image class="pos-f " :class="{ 'myfirstClass z-10': animationStatus }" v-show="animationStatus"
+				:src="list1[0]" style="width: 80rpx;height: 80rpx;"></image>
 			<view class="" style="width: 750rpx;height: 750rpx;">
 				<up-swiper height="375" circular :list="list1"></up-swiper>
 			</view>
@@ -96,12 +97,13 @@
 
 		<view class="" style="width: 700rpx;min-height: 700rpx;">
 			<view v-show="tabbleStatus == 0">
-				<null-msg  style="margin-top: 200rpx;"></null-msg>
+				<null-msg style="margin-top: 200rpx;"></null-msg>
 			</view>
 			<view v-show="tabbleStatus == 1" class="">
-				<view class="flex flex-ac bor-b2sf0 font-26" v-for="(item,index) in buyRecord" :key="index" style="height: 80rpx;">
-					<text class="font-28 font-w6">{{ item.userName }}</text> 
-					<text class="font-28 cor-6 mar-l20">购买了{{ item.quantity }}份</text> 
+				<view class="flex flex-ac bor-b2sf0 font-26" v-for="(item,index) in buyRecord" :key="index"
+					style="height: 80rpx;">
+					<text class="font-28 font-w6">{{ item.userName }}</text>
+					<text class="font-28 cor-6 mar-l20">购买了{{ item.quantity }}份</text>
 					<text class="font-26 cor-9 mar-l20">{{ item.purchaseTime }}</text>
 				</view>
 				<null-msg v-show="buyRecord.length == 0" style="margin-top: 200rpx;"></null-msg>
@@ -113,7 +115,8 @@
 		<view class="bg-f z-20 pos-f bottom-0 flex flex-ac flex-jc"
 			style="width: 750rpx;height: 96rpx;box-shadow: 0 0 16rpx #c3c3c3;">
 
-			<view class=" flex flex-dc flex-ac flex-jc font-20 cor-6" style="width: 94rpx;height: 72rpx;">
+			<view @tap="goSwitch('/pages/index/index')" class=" flex flex-dc flex-ac flex-jc font-20 cor-6"
+				style="width: 94rpx;height: 72rpx;">
 				<up-icon style="display: inline-block;" name="home" color="#666" size="20"></up-icon>
 				<text style="margin-top: 8rpx;">{{ t('goodsDetails.home') }}</text>
 			</view>
@@ -121,7 +124,8 @@
 				<up-icon style="display: inline-block;" name="phone" color="#666" size="20"></up-icon>
 				<text style="margin-top: 8rpx;">{{ t('goodsDetails.customerService') }}</text>
 			</view>
-			<view class=" flex flex-dc flex-ac flex-jc font-20 cor-6" style="width: 94rpx;height: 72rpx;">
+			<view @tap="goSwitch('/pages/cart/cart')" class=" flex flex-dc flex-ac flex-jc font-20 cor-6"
+				style="width: 94rpx;height: 72rpx;">
 				<up-icon style="display: inline-block;" name="shopping-cart" color="#666" size="20"></up-icon>
 				<text style="margin-top: 8rpx;">{{ t('goodsDetails.shoppingCart') }}</text>
 			</view>
@@ -136,136 +140,161 @@
 </template>
 
 <script setup>
-import {
-	reactive,
-	ref
-} from "vue"
-import {
-	onShow,
-	onLoad
-} from '@dcloudio/uni-app'
-import { post } from '@/utils/request'
-import statusHeight from '@/components/statusHeight.vue'
-import imageFlow from "@/components/imageFlow.vue"
-import nullMsg from "@/components/nullMsg.vue"
-import {
-	useI18n
-} from 'vue-i18n'
-const {
-	t
-} = useI18n()
+	import {
+		reactive,
+		ref
+	} from "vue"
+	import {
+		onShow,
+		onLoad
+	} from '@dcloudio/uni-app'
+	import {
+		post
+	} from '@/utils/request'
+	import statusHeight from '@/components/statusHeight.vue'
+	import imageFlow from "@/components/imageFlow.vue"
+	import nullMsg from "@/components/nullMsg.vue"
+	import {
+		useI18n
+	} from 'vue-i18n'
+	const {
+		t
+	} = useI18n()
 	const systemInfo = uni.getSystemInfoSync();
-	const statusBarHeight =ref(systemInfo.statusBarHeight || 0); // 单位：px
-const tabbleStatus = ref(0)
-const idValue = ref('')
-const list1 = reactive([
+	const statusBarHeight = ref(systemInfo.statusBarHeight || 0); // 单位：px
+	const tabbleStatus = ref(0)
+	const idValue = ref('')
+	const list1 = reactive([
 
-]);
-function goBack(){
-	uni.navigateBack()
-}
-const goodsDetails = ref({})
-async function getGoodsDetails() {
-	const res = await post('/goods/info', {
-		id: idValue.value - 0
-	})
-	if (res.code == 200) {
-		goodsDetails.value = res.data
-		res.data.staticResources.forEach(item => {
-			list1.push(item.resourceLink)
+	]);
+
+	function goBack() {
+		uni.navigateBack()
+	}
+
+	function goSwitch(url) {
+		uni.switchTab({
+			url: url
 		})
 	}
-}
-const buyRecord = ref([])
-async function getBuyRecord() {
-	const res = await post('/goods/purchase/record', {
-		id: idValue.value - 0
-	})
-	if (res.code == 200) {
-		buyRecord.value = res.data
+	const goodsDetails = ref({})
+	async function getGoodsDetails() {
+		const res = await post('/goods/info', {
+			id: idValue.value - 0
+		})
+		if (res.code == 200) {
+			goodsDetails.value = res.data
+			res.data.staticResources.forEach(item => {
+				list1.push(item.resourceLink)
+			})
+		}
 	}
-}
-
-const animationStatus = ref(false)
-function addToCart() {
-	animationStatus.value = true
-	setTimeout(() => {
-		animationStatus.value = false
-	}, 550)
-
-	addGoodsInfo(goodsDetails.value.goodsInfo)
-}
-
-function addGoodsInfo(goodsInfo) {
-	// goodsInfo.number = 1
-	const _goodsInfo = {...goodsInfo,number:1,status:1,notes:''}
-	const goodsInfoStorage = uni.getStorageSync('goodsInfo')||[]
-	let findIndex = findIndexById(goodsInfoStorage,goodsInfo.id)
-	if(findIndex == -1){
-		goodsInfoStorage.push(_goodsInfo)
-	}else{
-		goodsInfoStorage[findIndex].number++
+	const buyRecord = ref([])
+	async function getBuyRecord() {
+		const res = await post('/goods/purchase/record', {
+			id: idValue.value - 0
+		})
+		if (res.code == 200) {
+			buyRecord.value = res.data
+		}
 	}
-	uni.setStorageSync('goodsInfo', goodsInfoStorage)
 
-	uni.showToast({
-		title: t('tips.addSuccess'),
-		icon: 'none'
+	const animationStatus = ref(false)
+
+	function addToCart() {
+		animationStatus.value = true
+		setTimeout(() => {
+			animationStatus.value = false
+		}, 550)
+
+		addGoodsInfo(goodsDetails.value.goodsInfo)
+	}
+
+	function addGoodsInfo(goodsInfo) {
+		// goodsInfo.number = 1
+		const _goodsInfo = {
+			...goodsInfo,
+			number: 1,
+			status: 1,
+			notes: ''
+		}
+		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
+		let findIndex = findIndexById(goodsInfoStorage, goodsInfo.id)
+		if (findIndex == -1) {
+			goodsInfoStorage.push(_goodsInfo)
+		} else {
+			goodsInfoStorage[findIndex].number++
+		}
+		setBadge(goodsInfoStorage)
+		uni.setStorageSync('goodsInfo', goodsInfoStorage)
+
+		uni.showToast({
+			title: t('tips.addSuccess'),
+			icon: 'none'
+		})
+	}
+
+	function findIndexById(array, id) {
+		return array.findIndex(item => item.id === id);
+	}
+
+	function setBadge(arr) {
+		// 设置角标
+		let text = arr.reduce((sum, item) => sum + item.number, 0)
+		console.log(text)
+		uni.setTabBarBadge({
+			index: 2, // tabBar 的哪一项，从左边算起，索引从0开始
+			text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
+		})
+	}
+	onLoad((e) => {
+		idValue.value = e.id
+		getGoodsDetails()
+		getBuyRecord()
 	})
-}
-function findIndexById(array, id) {
-    return array.findIndex(item => item.id === id);
-}
-
-onLoad((e) => {
-	idValue.value = e.id
-	getGoodsDetails()
-	getBuyRecord()
-})
-
-
-
 </script>
 
 <style scoped>
-.lsl {
-	border: 1rpx solid red;
-}
-
-.myfirstClass {
-	animation: myfirst .6s infinite;
-}
-
-@keyframes myfirst {
-	0% {
-		top: 375rpx;
-		left: 375rpx;
-		opacity: 1;
-	} 
-
-	25% {
-		top: 160rpx;
-		left: 550rpx;
+	.lsl {
+		border: 1rpx solid red;
 	}
 
-	50% {
-		top: 100rpx;
-		left: 375rpx;
+	.myfirstClass {
+		animation: myfirst .6s infinite;
 	}
 
-	75% {
-		top: 160rpx;
-		left: 200rpx;
+	@keyframes myfirst {
+		0% {
+			top: 375rpx;
+			left: 375rpx;
+			opacity: 1;
+		}
+
+		25% {
+			top: 160rpx;
+			left: 550rpx;
+		}
+
+		50% {
+			top: 100rpx;
+			left: 375rpx;
+		}
+
+		75% {
+			top: 160rpx;
+			left: 200rpx;
+		}
+
+		99% {
+			top: 100vh;
+			left: 250rpx;
+			opacity: 1;
+		}
+
+		100% {
+			top: 100vh;
+			left: 250rpx;
+			opacity: 0;
+		}
 	}
-	99% {
-		top: 100vh;
-		left: 250rpx;
-		opacity: 1;
-	}
-	100% {
-		top: 100vh;
-		left: 250rpx;
-		opacity: 0;
-	}
-}
 </style>

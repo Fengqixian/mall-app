@@ -1,6 +1,6 @@
 <template>
 	<statusHeight></statusHeight>
-	<view :style="'height: calc(' + usableHeight + 'rpx - 28rpx);'" class="flex flex-dc flex-ac ">
+	<view :style="'height: calc(' + usableHeight + 'rpx - 28rpx);'" class=" flex flex-dc flex-ac ">
 		<view class="bg-f w-100- flex flex-jc flex-ac" style="min-height: 94rpx;">
 			<view class=" flex flex-ac" @tap="navSearch(searchList[searchCearchIndex])"
 				style=" box-sizing: border-box; padding: 0 16rpx; width: 700rpx;height: 64rpx;border-radius: 32rpx; background: #f5f5f5;">
@@ -17,7 +17,7 @@
 			</view>
 		</view>
 
-		<view class=" w-100- flex bg-f ov-h flex-jb" style="">
+		<view class=" w-100- flex bg-f ov-h flex-jb" style="height: calc(100% - 94rpx);">
 			<scroll-view scroll-y="true" :scroll-top="leftTable.scrollTop" scroll-with-animation
 				class="pos-r flex flex-dc"
 				style=" box-sizing: border-box; border-right: 2rpx solid #f5f5f5; width: 180rpx;height: 100%;">
@@ -41,7 +41,8 @@
 			<view class="" style="width: 570rpx;">
 				<view class=" flex flex-ac flex-drr"
 					style="height: 70rpx; box-sizing: border-box; border-bottom: 2rpx solid #f5f5f5;">
-					<view @tap="changeRightTabble(rightTable.current == 3 ? 4 : 3)" :class="(rightTable.current == 4|| rightTable.current == 3) ? 'cor-g' : ''"
+					<view @tap="changeRightTabble(rightTable.current == 3 ? 4 : 3)"
+						:class="(rightTable.current == 4|| rightTable.current == 3) ? 'cor-g' : ''"
 						class=" flex flex-ac flex-jc font-26 cor-4" style="width: 134rpx;height: 68rpx;">
 						{{ t('class.price') }}
 						<up-icon v-show='rightTable.current == 4|| rightTable.current == 3' class="tst-3"
@@ -57,13 +58,15 @@
 						{{ t('class.all') }}
 					</view>
 				</view>
-				<scroll-view scroll-y="true" class="flex flex-dc" style="height: calc(100% - 70rpx);">
+				<scroll-view scroll-y="true" @scrolltolower="touchBottom" class="flex flex-dc"
+					style="height: calc(100% - 70rpx);">
 					<nullMsg v-if="state.goodsList.length === 0" style=" margin-top: 200rpx;"></nullMsg>
-					<view v-for="item in state.goodsList" :key="item.id" @tap="goDetail(item.goodsInfo.id)" class=" flex flex-dc"
+					<view v-for="item in state.goodsList" :key="item.id" @tap="goDetail(item.goodsInfo.id)"
+						class=" flex flex-dc"
 						style="padding: 20rpx 0; min-height: 213rpx;border-bottom: 2rpx solid #f5f5f5;">
 						<view class="flex flex-ac flex-jc">
-							<image class="" style="width: 182rpx;height: 182rpx;"
-								:src="item.goodsInfo.coverImage" mode=""></image>
+							<image class="" style="width: 182rpx;height: 182rpx;" :src="item.goodsInfo.coverImage"
+								mode=""></image>
 							<view class=" flex flex-dc" style="width: 340rpx; min-height: 100%; margin-left: 12rpx;">
 								<view class=" cor-4 font-26 font-w7 text-d">
 									{{ item.goodsInfo.name }}
@@ -124,6 +127,7 @@
 						</view> -->
 
 					</view>
+					<no-more-data v-if="paramsPage.isMore&&state.goodsList.length"></no-more-data>
 					<view class="" style="height: 100rpx;"></view>
 				</scroll-view>
 			</view>
@@ -136,153 +140,203 @@
 </template>
 
 <script setup>
-import {
-	ref,
-	reactive
-} from 'vue'
-import statusHeight from '@/components/statusHeight.vue'
-import imageFlow from "@/components/imageFlow.vue"
-import {
-	post
-} from '@/utils/request'
-import nullMsg from "@/components/nullMsg.vue"
-import {
-	useI18n
-} from 'vue-i18n'
-import {
-	onHide,
-	onLoad,
-	onShow
-} from '@dcloudio/uni-app'
-const {
-	t
-} = useI18n()
-const searchCearchIndex = ref(0)
-function searchCearchChange(e) {
-	searchCearchIndex.value = e.detail.current
-}
-const tabbleIndex=ref(0)
-const state = reactive({
-	classList: [],
-	goodsList: []
-})
+	import {
+		ref,
+		reactive
+	} from 'vue'
+	import statusHeight from '@/components/statusHeight.vue'
+	import imageFlow from "@/components/imageFlow.vue"
+	import noMoreData from "@/components/noMoreData.vue"
+	import {
+		post
+	} from '@/utils/request'
+	import nullMsg from "@/components/nullMsg.vue"
+	import {
+		useI18n
+	} from 'vue-i18n'
+	import {
+		onHide,
+		onLoad,
+		onShow
+	} from '@dcloudio/uni-app'
+	const {
+		t
+	} = useI18n()
+	const searchCearchIndex = ref(0)
 
-// 获取系统信息
-const systemInfo = uni.getSystemInfoSync()
-
-// 计算可用高度（减去状态栏、导航栏和TabBar高度）
-let usableHeight = systemInfo.windowHeight * 2
-console.log(usableHeight)
-
-const leftTable = reactive({
-	current: 0,
-	scrollTop: 0
-})
-
-function changeLeftTabble(index) {
-	leftTable.current = index
-	setTimeout(() => {
-		leftTable.scrollTop = (index * 50) - (usableHeight / 4 - 44)
-	}, 100)
-
-	getGoodsList(state.classList[index].id)
-}
-const rightTable = reactive({
-	current: 0,
-})
-
-
-function goDetail(id){
-	uni.navigateTo({
-		url: '/pages/index/goodsDetails?id=' + id
+	function searchCearchChange(e) {
+		searchCearchIndex.value = e.detail.current
+	}
+	const tabbleIndex = ref(0)
+	const state = reactive({
+		classList: [],
+		goodsList: []
 	})
-}
-function changeRightTabble(index) {
-	console.log(index)
-	rightTable.current = index
-	getGoodsList(state.classList[leftTable.current].id)
-}
 
-async function getGoodsList(id) {
-	let params = {
-		"classId": id,
-		"page": 1,
-		"pageSize": 10,
-		sort:rightTable.current
-	}
-	let data = await post('/goods/list', params)
-	if (data.code === 200) {
-		state.goodsList = data.data
-	}
-	console.log(data)
-}
-async function getClassList() {
-	let data = await post('/goods/class/list')
-	if (data.code === 200) {
-		state.classList = data.data
-		getGoodsList(state.classList[0].id)
-	}
-	console.log(data)
-}
-const searchList = ref([])
-function getSearchList() {
-	let { value: searchJSON } = uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
-	try {
-		searchList.value = JSON.parse(searchJSON)
-	} catch (err) {
-		console.log(err)
-	}
-}
-function navSearch(name) {
-	uni.navigateTo({
-		url: '/pages/index/search?name=' + name
+	// 获取系统信息
+	const systemInfo = uni.getSystemInfoSync()
+
+	// 计算可用高度（减去状态栏、导航栏和TabBar高度）
+	let usableHeight = systemInfo.windowHeight * 2
+	console.log(usableHeight)
+
+	const leftTable = reactive({
+		current: 0,
+		scrollTop: 0
 	})
-}
 
-function addGoodsInfo(goodsInfo) {
-	// goodsInfo.number = 1
-	const _goodsInfo = {...goodsInfo,number:1,status:1,notes:''}
-	const goodsInfoStorage = uni.getStorageSync('goodsInfo')||[]
-	let findIndex = findIndexById(goodsInfoStorage,goodsInfo.id)
-	if(findIndex == -1){
-		goodsInfoStorage.push(_goodsInfo)
-	}else{
-		goodsInfoStorage[findIndex].number++
+	function changeLeftTabble(index) {
+		leftTable.current = index
+		setTimeout(() => {
+			leftTable.scrollTop = (index * 50) - (usableHeight / 4 - 44)
+		}, 100)
+		paramsPage.page = 1
+		state.goodsList = []
+		getGoodsList(state.classList[index].id)
 	}
-	uni.setStorageSync('goodsInfo', goodsInfoStorage)
-
-	uni.showToast({
-		title: t('tips.addSuccess'),
-		icon: 'none'
+	const rightTable = reactive({
+		current: 0,
 	})
-}
-function findIndexById(array, id) {
-    return array.findIndex(item => item.id === id);
-}
 
-onLoad(() => {
-	getClassList()
-	getSearchList()
-})
-const classIndexRef = ref(-1)
-onShow(() => {
-	let classIndex = uni.getStorageSync('classIndex')
-	if (classIndex) {
-		classIndexRef.value = classIndex - 1
-		changeLeftTabble(classIndexRef.value)
+	function setBadge(arr) {
+		// 设置角标
+		let text = arr.reduce((sum, item) => sum + item.number, 0)
+		console.log(text)
+		uni.setTabBarBadge({
+			index: 2, // tabBar 的哪一项，从左边算起，索引从0开始
+			text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
+		})
 	}
-})
-onHide(() => {
-	uni.removeStorageSync('classIndex')
-})
+
+	function goDetail(id) {
+		uni.navigateTo({
+			url: '/pages/index/goodsDetails?id=' + id
+		})
+	}
+
+	function changeRightTabble(index) {
+		console.log(index)
+		rightTable.current = index
+		paramsPage.page = 1
+		state.goodsList = []
+		getGoodsList(state.classList[leftTable.current].id)
+	}
+	let paramsPage = reactive({
+		page: 1,
+		pageSize: 10,
+		isMore: false
+	})
+	async function getGoodsList(id) {
+		let params = {
+			"classId": id,
+			"page": paramsPage.page,
+			"pageSize": paramsPage.pageSize,
+			sort: rightTable.current
+		}
+		uni.showLoading({
+			title: "loadin...",
+			mask: true
+		})
+		let data = await post('/goods/list', params)
+		uni.hideLoading()
+		if (data.code === 200) {
+			if (data.data.length) {
+				state.goodsList = [...state.goodsList, ...data.data]
+			} else {
+				paramsPage.isMore = true
+			}
+
+		}
+		console.log(data)
+	}
+
+	function touchBottom() {
+		if (!paramsPage.isMore) {
+			paramsPage.page++
+			getGoodsList(state.classList[leftTable.current].id)
+		}
+	}
+	async function getClassList() {
+		let data = await post('/goods/class/list')
+		if (data.code === 200) {
+			state.classList = data.data
+			getGoodsList(state.classList[0].id)
+		}
+		console.log(data)
+	}
+	const searchList = ref([])
+
+	function getSearchList() {
+		let {
+			value: searchJSON
+		} = uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
+		try {
+			searchList.value = JSON.parse(searchJSON)
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	function navSearch(name) {
+		uni.navigateTo({
+			url: '/pages/index/search?name=' + name
+		})
+	}
+
+	function addGoodsInfo(goodsInfo) {
+		// goodsInfo.number = 1
+		const _goodsInfo = {
+			...goodsInfo,
+			number: 1,
+			status: 1,
+			notes: ''
+		}
+		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
+		let findIndex = findIndexById(goodsInfoStorage, goodsInfo.id)
+		if (findIndex == -1) {
+			goodsInfoStorage.push(_goodsInfo)
+		} else {
+			goodsInfoStorage[findIndex].number++
+		}
+		setBadge(goodsInfoStorage)
+		uni.setStorageSync('goodsInfo', goodsInfoStorage)
+
+		uni.showToast({
+			title: t('tips.addSuccess'),
+			icon: 'none'
+		})
+	}
+
+	function findIndexById(array, id) {
+		return array.findIndex(item => item.id === id);
+	}
+
+	onLoad(() => {
+		getClassList()
+		getSearchList()
+	})
+	const classIndexRef = ref(-1)
+	onShow(() => {
+		let classIndex = uni.getStorageSync('classIndex')
+		if (classIndex) {
+			classIndexRef.value = classIndex - 1
+			changeLeftTabble(classIndexRef.value)
+		}
+		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
+		setBadge(goodsInfoStorage)
+		
+	})
+	onHide(() => {
+		uni.removeStorageSync('classIndex')
+	})
 </script>
 
 <style scoped>
-.rotate-180 {
-	transform: rotate(180deg);
-}
+	.rotate-180 {
+		transform: rotate(180deg);
+	}
 
-.rotate-0 {
-	transform: rotate(0deg);
-}
+	.rotate-0 {
+		transform: rotate(0deg);
+	}
 </style>

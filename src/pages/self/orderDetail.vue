@@ -7,8 +7,8 @@
 					{{ orderInfo.orderStateDes }}
 				</view>
 
-				<view v-show="showSuccess" class="" style="width: 650rpx;height: 920rpx;">
-					<view class="flex flex-jc flex-ac pos-a z-5 tst-3" style="background: rgba(255, 255, 255, 0); width: 650rpx;height: 920rpx;"
+				<view v-if="orderInfo.orderState===0 || orderInfo.orderState===1" class="" style="width: 650rpx;height: 920rpx;">
+					<view v-show="orderInfo.orderState===1"  class="flex flex-jc flex-ac pos-a z-5 tst-3" style="background: rgba(255, 255, 255, 0); width: 650rpx;height: 920rpx;"
 					:style="showSuccess?'background: rgba(255, 255, 255, 1);':'background: rgba(255, 255, 255, 0);'">
 						<success></success>
 					</view>
@@ -38,7 +38,7 @@
 						style=" border: 2rpx solid #ddd; height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
 						{{ t("orderDetail.button.comeAgain") }}
 					</view>
-					<view @tap="cancelOrder" v-if="orderInfo.orderState===5" class="flex flex-ac bor-box mar-l16"
+					<view @tap="cancelOrder" v-if="orderInfo.orderState===5 || orderInfo.orderState===8 || orderInfo.orderState===9" class="flex flex-ac bor-box mar-l16"
 						style=" border: 2rpx solid #ddd; height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
 						{{ '退款原因' }}
 					</view>

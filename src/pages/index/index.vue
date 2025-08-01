@@ -13,12 +13,12 @@
 			<view class="flex flex-jc flex-ac font-32 cor-f" style="font-weight: 700; height: 88rpx;">
 				{{ t('home.title') }}
 			</view>
-			<view @tap="navWarehouse" class="flex flex-ac cor-f" style="">
+			<!-- <view @tap="navWarehouse" class="flex flex-ac cor-f" style="">
 				<up-icon name="map-fill" color="#fff" size="34rpx"></up-icon>
 				<text class="font-30" style="margin-left: 10rpx;margin-right: 10rpx;">{{ t('home.getSite') }}</text>
 				<up-icon style="position: relative;top: 2rpx;" class="" name="arrow-down-fill" color="#fff"
 					size="22rpx"></up-icon>
-			</view>
+			</view> -->
 			<view @tap="navSearch(textSwiper.searchArr[swiperSearchIndex])" class="flex flex-ac flex-jb"
 				style="margin-top: 20rpx; height: 88rpx;width: 100%;background-color: #fff;border-radius: 44rpx;">
 				<view class="flex flex-ac" style="padding-left: 20rpx;">

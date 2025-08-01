@@ -13,13 +13,14 @@ export default {
     },
     methods: {
         ready() {
-            lottie.loadAnimation({
+            const animation = lottie.loadAnimation({
                 container: document.getElementById("start"),
                 renderer: 'svg',
-                loop: true,
-                autoplay: true, 
+                loop: false,
+                autoplay: false, 
                 animationData: start 
             }); 
+			animation.play();
         }
     }
 };
@@ -28,7 +29,7 @@ export default {
 <style>
 /* 这里可以自己定义相关的样式，这里只是做个示范，具体按照界面而定 */
 .container-start {
-  width: 80%;
+  width: 50%;
 }
 #start {
   width: 100%;

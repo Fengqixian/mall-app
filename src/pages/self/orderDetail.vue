@@ -1,17 +1,14 @@
 <template>
 	<view class="flex flex-dc flex-ac cor-4">
 		<view class=" bg-f bor-20 ov-h flex flex-dc flex-ac mar-t24" style="width: 700rpx;min-height: 240rpx;">
-			<view class=" bg-g" style="  height: 20rpx; width: 700rpx;"></view>
+			<!-- <view class=" bg-g" style="  height: 20rpx; width: 700rpx;"></view> -->
 			<view class="bor-b2sf0 flex flex-dc flex-jc" style="width: 650rpx;min-height: 120rpx;">
 				<view class=" font-32 font-B" style="margin-top: 20rpx;">
-					{{ orderStateArr[orderInfo.orderState] }}
-				</view>
-				<view class=" font-26" style="margin-top: 18rpx;">
 					{{ orderInfo.orderStateDes }}
 				</view>
 
-				<view class="" style="width: 650rpx;height: 920rpx;">
-					<view v-show="showSuccess" class="flex flex-jc flex-ac pos-a z-5 tst-3" style="background: rgba(255, 255, 255, 0); width: 650rpx;height: 920rpx;"
+				<view v-show="showSuccess" class="" style="width: 650rpx;height: 920rpx;">
+					<view class="flex flex-jc flex-ac pos-a z-5 tst-3" style="background: rgba(255, 255, 255, 0); width: 650rpx;height: 920rpx;"
 					:style="showSuccess?'background: rgba(255, 255, 255, 1);':'background: rgba(255, 255, 255, 0);'">
 						<success></success>
 					</view>
@@ -41,10 +38,10 @@
 						style=" border: 2rpx solid #ddd; height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
 						{{ t("orderDetail.button.comeAgain") }}
 					</view>
-					<!-- <view class="flex flex-ac cor-f mar-l16"
-						style=" background: var(--cor-g); height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
-						{{ t("orderDetail.button.goPay") }}
-					</view> -->
+					<view @tap="cancelOrder" v-if="orderInfo.orderState===5" class="flex flex-ac bor-box mar-l16"
+						style=" border: 2rpx solid #ddd; height: 60rpx; padding: 0 18rpx;border-radius: 8rpx;">
+						{{ '退款原因' }}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -56,7 +53,7 @@
 						{{ t("orderDetail.address") }}
 					</view>
 					<view class="" style="text-align: right;line-height: 42rpx;">
-						{{ orderInfo.country+orderInfo.province+orderInfo.city+orderInfo.district+orderInfo.detailedAddress }}
+						{{ /* orderInfo.country+orderInfo.province+orderInfo.city+orderInfo.district+ */orderInfo.detailedAddress }}
 					</view>
 				</view>
 				<view class=" flex flex-jb mar-t30">
@@ -380,20 +377,16 @@
 					clearTimeout(timer)
 				},2000)
 			}else{
-				showSuccess.value = true
-				setTimeout(()=>{
-					showSuccess.value = false
-				},1500)
-				baseInfoNumber.value=60
-				getOrderDetail()
+				if (res.data.orderState===1) {
+					showSuccess.value = true
+					baseInfoNumber.value=60
+					getOrderDetail()
+				}
 			}
 		}
 	}
 	function ces(){
 		showSuccess.value = true
-		setTimeout(()=>{
-			showSuccess.value = false
-		},1500)
 	}
 	onLoad((e) => {
 		if (e.orderId) {

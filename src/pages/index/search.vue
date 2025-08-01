@@ -37,7 +37,6 @@
 			<view class="bg-f flex flex-dc flex-ac" style="width: 750rpx; padding-top: 20rpx;">
 				<view class=" flex flex-jb flex-ac" style="width: 700rpx;">
 					<view style="color: #444;text-shadow: 0 0 1.2rpx #374050;">{{ t('search.hot') }}</view>
-					<!-- <up-icon style="" name="trash" color="#666" size="38rpx"></up-icon> -->
 				</view>
 				<view class="flex flex-ww" style="width: 700rpx;margin-bottom: 20rpx;margin-top: 20rpx;">
 					<view @tap="handleHistory(item)" v-for="(item, index) in hotList" :key="index"
@@ -49,10 +48,6 @@
 					</view>
 				</view>
 			</view>
-			<!-- <view class="" style="font-size: 30rpx;color: #444; font-weight: 700; margin: 20rpx;">
-				<text style="color: #999;font-weight: 500;">—</text> {{ t('search.hot') }} <text
-					style="color: #999;font-weight: 500;">—</text>
-			</view> -->
 		</view>
 		<view v-if="!isSearch" class="" style="font-size: 30rpx;color: #444; font-weight: 700; margin: 20rpx;">
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
@@ -120,6 +115,7 @@ async function getSearchList(isReach) {
 	}
 	let res = await post('/goods/list', searchParams)
 	if (res.code == 200) {
+		isFocus.value = false
 		if (!isSearch.value) {
 			isSearch.value = true
 			searchList.value = []
@@ -137,7 +133,6 @@ async function getSearchList(isReach) {
 		} else {
 			if (isReach) {
 				isNullMsg.value = true
-			} else {
 				searchList.value = []
 			}
 		}
@@ -147,7 +142,9 @@ async function getSearchList(isReach) {
 const isFocus = ref(true)
 
 function handleFocus() {
-	isFocus.value = true
+	if (searchList.length === 0) {
+		isFocus.value = true
+	}
 }
 
 function handleBlur() {

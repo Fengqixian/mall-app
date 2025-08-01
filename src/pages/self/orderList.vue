@@ -1,7 +1,7 @@
 <template>
 	<view class="flex flex-dc flex-ac ov-h bodyH" style="">
-		<view v-show="tableStatus" class="" style="height: 88rpx;"></view>
-		<view v-show="tableStatus" class="pos-f w-100- bg-f order-tabble-top z-5" style="height: 88rpx;">
+		<view v-show="tableStatus" class="" style="height: 98rpx;"></view>
+		<view v-show="tableStatus" class="pos-f w-100- bg-f order-tabble-top z-5 top-0" style="height: 88rpx;">
 			<up-tabs @click="changeTabs" class="" :current='tabsCurrent' :list="tabsList" lineWidth="14"
 				lineColor="var(--cor-g)" :activeStyle="{
 					color: 'var(--cor-g)',

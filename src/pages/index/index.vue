@@ -371,6 +371,7 @@ function setBadge(arr) {
 	// 设置角标
 	let text = arr.reduce((sum, item) => sum + item.number, 0)
 	console.log(text)
+	if(text==0){return}
 	uni.setTabBarBadge({
 		index: 2, // tabBar 的哪一项，从左边算起，索引从0开始
 		text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."

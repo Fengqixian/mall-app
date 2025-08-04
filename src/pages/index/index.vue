@@ -279,18 +279,16 @@ const textSwiper = reactive({
 	noticeArr: [],
 })
 
-function getSearchWords() {
+async function getSearchWords() {
 	try {
-		let {value: searchJSON} = uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
+		let res = await post('/goods/search/words')
+		if (res.code === 200) {
+			textSwiper.searchArr = res.data
+		}
 		let {value: noticeJSON} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION']
-		textSwiper.searchArr = JSON.parse(searchJSON)
 		textSwiper.noticeArr = JSON.parse(noticeJSON)
 	} catch (err) {
 		console.log(err)
-		let time = setTimeout(()=>{
-			getSearchWords()
-			clearTimeout(time)
-		},1000)
 	}
 }
 async function getClassList() {

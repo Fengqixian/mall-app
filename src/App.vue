@@ -2,6 +2,15 @@
 	import {post} from "@/utils/request.js"
 export default {
   onLaunch: function () {
+	  
+	  let lang = uni.getStorageSync('appLanguage')||false
+	  if(!lang){
+	  	// 重新加载页面
+	  	uni.reLaunch({
+	  		url: '/pages/index/setLang' 
+	  	});
+	  }
+	  
 	  //获取系统配置
 	  {
 		  async function getConfig(){

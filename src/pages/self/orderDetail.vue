@@ -10,8 +10,8 @@
 					{{ orderInfo.orderStateDes }}
 				</view>
 
-				<view class="" style="width: 650rpx;height: 920rpx;">
-					<view v-show="showSuccess" class="flex flex-jc flex-ac pos-a z-5 tst-3" style="background: rgba(255, 255, 255, 0); width: 650rpx;height: 920rpx;"
+				<view v-if="showSuccess||orderInfo.orderState===0" class="" style="width: 650rpx;height: 920rpx;">
+					<view v-if="showSuccess" class="flex flex-jc flex-ac pos-a z-5 tst-3" style="background: rgba(255, 255, 255, 0); width: 650rpx;height: 920rpx;"
 					:style="showSuccess?'background: rgba(255, 255, 255, 1);':'background: rgba(255, 255, 255, 0);'">
 						<success></success>
 					</view>
@@ -236,6 +236,7 @@
 		if (res.code === 200) {
 			orderInfo.value = res.data
 			
+			if(res.data.orderState===0){baseInfo()}
 		}
 	}
 
@@ -381,9 +382,9 @@
 				},2000)
 			}else{
 				showSuccess.value = true
-				setTimeout(()=>{
-					showSuccess.value = false
-				},1500)
+				// setTimeout(()=>{
+				// 	showSuccess.value = false
+				// },1500)
 				baseInfoNumber.value=60
 				getOrderDetail()
 			}
@@ -391,9 +392,9 @@
 	}
 	function ces(){
 		showSuccess.value = true
-		setTimeout(()=>{
-			showSuccess.value = false
-		},1500)
+		// setTimeout(()=>{
+		// 	showSuccess.value = false
+		// },1500)
 	}
 	onLoad((e) => {
 		if (e.orderId) {
@@ -403,7 +404,7 @@
 			orderListStatus.value = e.list
 		}
 		getOrderDetail()
-		baseInfo()
+		
 	})
 
 	onBackPress(() => {

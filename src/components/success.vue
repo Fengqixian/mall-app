@@ -6,17 +6,17 @@
 
 <script module="renderScript" lang="renderjs">
 import lottie from 'lottie-web'
-import start from "@/static/svgjson/Success.json";
+import start from "../static/svgjson/Success.json";
 export default {
     mounted() {
         this.ready()
     },
     methods: {
         ready() {
-            lottie.loadAnimation({
+            let animation = lottie.loadAnimation({
                 container: document.getElementById("start"),
                 renderer: 'svg',
-                loop: true,
+                loop: false, // 设置为false，不循环播放
                 autoplay: true, 
                 animationData: start 
             }); 

@@ -1,15 +1,22 @@
 const env = import.meta.env;
 const BASE_URL = env.VITE_API + env.VITE_BASE_URL
 
-let appLanguage = uni.getStorageSync('appLanguage')
+let appLanguage = uni.getStorageSync('appLanguage')||"zh-Hans"
 console.log(appLanguage)
+	let lang ={
+		"en":"en-US",
+		"zh-Hans":"zh-CN",
+		"th-TH":"th-TH"
+	}
 export function get(url, params) {
 	let token = uni.getStorageSync('token')
+
 	let Headers = {
 		'Content-Type': 'application/x-www-form-urlencoded',
 		'Authorization': token,
-		"Accept-Language": appLanguage
+		"Accept-Language": lang[appLanguage]
 	}
+	console.log(Headers,1111111111111111111111111)
 	// if (!uni.getStorageSync('token')) {
 	// 	uni.clearStorageSync();
 	// 	uni.reLaunch({
@@ -40,7 +47,7 @@ export function post(url, params) {
 
 	let Headers = {
 		'Authorization': token,
-		"Accept-Language": appLanguage
+		"Accept-Language": lang[appLanguage]
 	}
 	// if (!uni.getStorageSync('token')) {
 	// 	uni.clearStorageSync();

@@ -181,7 +181,7 @@
 		</view>
 		<image-flow v-if="goodsList.length > 0" :listF="goodsList"></image-flow>
 		<no-more-data v-if="goodsPage.isNullMsg"></no-more-data>
-		<tabbar></tabbar>
+		<!-- <tabbar></tabbar> -->
 
 	</view>
 </template>

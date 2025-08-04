@@ -1,5 +1,12 @@
 {
-	"pages": [ 
+	"pages": [
+		{
+			"path" : "pages/index/setLang",
+			"style" : 
+			{
+				"navigationStyle":"custom"
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {

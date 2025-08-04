@@ -127,7 +127,8 @@
 						</view> -->
 
 					</view>
-					<no-more-data v-if="paramsPage.isMore&&state.goodsList.length"></no-more-data>
+					<up-loadmore v-if="state.goodsList.length" :status="loadmoreStatus" />
+					<!-- <no-more-data v-if="paramsPage.isMore&&state.goodsList.length"></no-more-data> -->
 					<view class="" style="height: 100rpx;"></view>
 				</scroll-view>
 			</view>
@@ -135,7 +136,7 @@
 		</view>
 
 
-
+	
 	</view>
 </template>
 
@@ -163,7 +164,7 @@
 		t
 	} = useI18n()
 	const searchCearchIndex = ref(0)
-
+	const loadmoreStatus = ref('loadmore')
 	function searchCearchChange(e) {
 		searchCearchIndex.value = e.detail.current
 	}
@@ -191,6 +192,8 @@
 			leftTable.scrollTop = (index * 50) - (usableHeight / 4 - 44)
 		}, 100)
 		paramsPage.page = 1
+		paramsPage.isMore=false
+		loadmoreStatus.value ='loadmore'
 		state.goodsList = []
 		getGoodsList(state.classList[index].id)
 	}
@@ -219,6 +222,8 @@
 		console.log(index)
 		rightTable.current = index
 		paramsPage.page = 1
+		paramsPage.isMore=false
+		loadmoreStatus.value ='loadmore'
 		state.goodsList = []
 		getGoodsList(state.classList[leftTable.current].id)
 	}
@@ -234,17 +239,25 @@
 			"pageSize": paramsPage.pageSize,
 			sort: rightTable.current
 		}
-		uni.showLoading({
-			title: "loadin...",
-			mask: true
-		})
+		loadmoreStatus.value ='loading'
 		let data = await post('/goods/list', params)
-		uni.hideLoading()
+		
 		if (data.code === 200) {
+			loadmoreStatus.value ='loadmore'
 			if (data.data.length) {
 				state.goodsList = [...state.goodsList, ...data.data]
+				if(data.data.length<paramsPage.pageSize){
+					setTimeout(()=>{
+						loadmoreStatus.value ='nomore'
+						paramsPage.isMore = true
+					})
+				}
 			} else {
-				paramsPage.isMore = true
+				setTimeout(()=>{
+					loadmoreStatus.value ='nomore'
+					paramsPage.isMore = true
+				})
+
 			}
 
 		}

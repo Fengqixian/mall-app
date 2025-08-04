@@ -175,18 +175,6 @@ function handleHistory(item) {
 
 const hotList = ref([])
 
-function getHotList() {
-	let {
-		value: searchJSON
-	} = uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
-	try {
-		hotList.value = JSON.parse(searchJSON)
-	} catch (err) {
-		console.log(err)
-	}
-
-}
-
 
 async function getLikeList() {
 	const res = await post('/goods/search/info')
@@ -194,6 +182,7 @@ async function getLikeList() {
 	if (res.code == 200) {
 		searchList.value = []
 		setTimeout(() => {
+			hotList.value = res.data.searchList
 			searchList.value = res.data.list
 		})
 	}
@@ -206,12 +195,8 @@ onShow(() => {
 	// })
 })
 onLoad((options) => {
-	// if (options.name) {
-	// 	searchParams.name = options.name
-	// }
 	searchHistory.value = uni.getStorageSync('searchHistory') || []
 	getLikeList()
-	getHotList()
 })
 onReachBottom(() => {
 	if (!isNullMsg.value && isSearch.value) {

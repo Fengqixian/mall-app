@@ -118,6 +118,15 @@
 			url:'/pages/login/login'
 		}
 	])
+	
+	// 更新setList的函数
+	function updateSetList() {
+		const setListConfig = tm('self.setList')
+		setList.value = setList.value.map((item, index) => ({
+			...item,
+			title: setListConfig[index]?.title || item.title
+		}))
+	}
 	const orderButtonArr = ref([
 		{
 			text: '全部订单',
@@ -170,7 +179,7 @@
 		orderButtonArr.value.forEach((item, index) => {
 			item.text = tm('self.orderList')[index].title
 		})
-		setList.value=tm('self.setList')
+		updateSetList()
 		pickerShow.value =false
 	}
 
@@ -208,7 +217,7 @@
 		orderButtonArr.value.forEach((item, index) => {
 			item.text = tm('self.orderList')[index].title
 		})
-		setList.value = tm('self.setList')
+		updateSetList()
 	})
 	function setBadge(arr) {
 		// 设置角标
@@ -227,7 +236,7 @@
 		userInfo.value = _userInfo
 		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 		setBadge(goodsInfoStorage)
-		setList.value=tm('self.setList')
+		updateSetList()
 		console.log(setList.value)
 	})
 	function goSite(){

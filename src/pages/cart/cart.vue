@@ -239,7 +239,7 @@ const options1 = reactive([{
 	text: '删除',
 
 	style: {
-		backgroundColor: '#bbb'
+		backgroundColor: '#f56c6c'
 	}
 }]);
 

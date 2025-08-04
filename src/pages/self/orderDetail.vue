@@ -15,7 +15,7 @@
 					:style="showSuccess?'background: rgba(255, 255, 255, 1);':'background: rgba(255, 255, 255, 0);'">
 						<success></success>
 					</view>
-					<view @click="ces" v-if="orderInfo.orderState===0" class=" pos-r z-1 flex flex-ac flex-jc " style="margin: 20rpx 0;">
+					<view v-if="orderInfo.orderState===0" class=" pos-r z-1 flex flex-ac flex-jc " style="margin: 20rpx 0;">
 
 						<!-- <up-lazy-load class="" style="width: 650rpx;height: 910rpx;"  border-radius="10" :image="orderInfo.payQrCode"
 					loading-img="/src/static/imgLoading.png"

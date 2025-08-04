@@ -2,7 +2,7 @@
 	<statusHeight></statusHeight>
 	<view style="" class="flex flex-dc flex-ac">
 		<view class="flex flex-ac" style="width: 750rpx;height: 300rpx;background: #21b5a6;">
-			<view class="flex flex-ac" style="">
+			<view @tap="goLogin" class="flex flex-ac" style="">
 				<image class=" bor-50-" style="margin-left: 30rpx;margin-right: 20rpx; width: 125rpx;height: 125rpx;"
 					:src="userInfo?userInfo.avatar:'/src/static/img/per0.png'" mode="scaleToFill" />
 					
@@ -42,7 +42,7 @@
 				</view>
 				<image style="width: 40rpx;height: 40rpx;" src="/src/static/you.png" mode=""></image>
 			</view>
-			<view  @tap="goLogin" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 650rpx;">
+			<view v-if="userInfo"  @tap="goLogin" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 650rpx;">
 				<view class="flex flex-ac flex-jc" style="">
 					<image style="width: 50rpx;height: 50rpx;" src="/src/static/out.svg" mode=""></image>
 					<view class="" style="margin-left: 16rpx;">

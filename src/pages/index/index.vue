@@ -287,10 +287,10 @@ function getSearchWords() {
 		textSwiper.noticeArr = JSON.parse(noticeJSON)
 	} catch (err) {
 		console.log(err)
-		let time = setTimeout(()=>{
-			getSearchWords()
-			clearTimeout(time)
-		},1000)
+		// let time = setTimeout(()=>{
+		// 	getSearchWords()
+		// 	clearTimeout(time)
+		// },1000)
 	}
 }
 async function getClassList() {

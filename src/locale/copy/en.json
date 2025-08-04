@@ -1,0 +1,244 @@
+{
+  "tips.addSuccess": "e添加成功",
+  "tips.loginOut": "e已登录，是否退出登录",
+  "tips.confirm": "e确认",
+  "tips.cancel": "e取消",
+  "tips.prompt": "e提示",
+  "tips.clickBack": "e保存成功，点击返回！！！",
+  "tips.sureClearSearch": "e确定要清空搜索历史吗？",
+  "tips.cancelOrder": "e确定取消订单吗？",
+  "tips.cancelSuccess": "e订单已取消",
+  "tips.refundSuccess": "e退款申请成功",
+  "uni.showModal.cancel": "e取消",
+  "uni.showModal.confirm": "e确定",
+  "toSeckill": "e今日秒杀",
+  "toSeckillDesc": "e今日低价秒杀超划算",
+  "toSelect": "e优选菜场",
+  "toSelectDesc": "e网红小吃样样平价",
+  "copy": "e复制",
+  "nullMsg": "e暂无数据~",
+  "guessLike": "e猜你喜欢",
+  "money": "e￥",
+  "tabBar.home": "e首页",
+  "tabBar.class": "e分类",
+  "tabBar.cart": "e购物车",
+  "tabBar.self": "e我的",
+  "pages.login": "e登录",
+  "pages.submitOrder": "e提交订单",
+  "pages.addressList": "e选择地址",
+  "pages.setAddress": "e收货地址",
+  "pages.orderList": "e我的订单",
+  "pages.orderDetail": "e订单详情",
+  "pages.search": "e搜索",
+  "pages.goodsDetails": "e商品详情",
+  "home.title": "e首页",
+  "home.getSite": "e获取当前地址",
+  "home.search": "e搜索",
+  "home.tabbleLength": "6",
+  "home.tabble": [
+    {
+      "title": "e全部",
+      "text": "e精选好物"
+    },
+    {
+      "title": "e收藏",
+      "text": "e收藏"
+    },
+    {
+      "title": "e新鲜蔬菜",
+      "text": "e时时新鲜"
+    },
+    {
+      "title": "e调味料",
+      "text": "e调味料"
+    },
+    {
+      "title": "e干货",
+      "text": "e精选好物"
+    },
+    {
+      "title": "e直播",
+      "text": "e直播"
+    }
+  ],
+  "search.button": "e搜索",
+  "search.history": "e历史搜索",
+  "search.hot": "e热门搜索",
+  "search.placeholder": "e搜索商品",
+  "search.class.all": "e综合",
+  "search.class.sales": "e销量",
+  "search.class.price": "e价格",
+  "search.class.stock": "e库存",
+  "search.class.self": "e自营",
+  "search.class.select": "e选规格",
+  "goodsDetails.self": "e自营",
+  "goodsDetails.select": "e选规格",
+  "goodsDetails.price": "e￥",
+  "goodsDetails.sales": "e销量",
+  "goodsDetails.stock": "e库存",
+  "goodsDetails.delivery": "e配送",
+  "goodsDetails.service": "e服务",
+  "goodsDetails.goodsDetail": "e商品详情",
+  "goodsDetails.buyRecord": "e购买记录",
+  "goodsDetails.home": "e首页",
+  "goodsDetails.customerService": "e客服",
+  "goodsDetails.shoppingCart": "e购物车",
+  "goodsDetails.addToCart": "e加入购物车",
+  "cart.goodsCart": "e购物车",
+  "cart.delete": "e删除",
+  "cart.empty": "e购物车空空如也",
+  "cart.goLogin": "e去登陆",
+  "cart.goSettle": "e去结算",
+  "cart.settle": "e结算",
+  "cart.notes": "e填写商品备注",
+  "cart.allSelect": "e全选",
+  "cart.amountTo": "e不含运费 合计:",
+  "submitOrder.submitOrder": "e提交订单",
+  "submitOrder.address": "e选择地址",
+  "submitOrder.delivery": "e配送方式",
+  "submitOrder.time": "e选择时间",
+  "submitOrder.goodsNotes": "e填写商品备注",
+  "submitOrder.notes": "e填写订单备注",
+  "submitOrder.goodsAmount": "e商品金额",
+  "submitOrder.discountAmount": "e折扣减免",
+  "submitOrder.deliveryAmount": "e配送费",
+  "submitOrder.waitPay": "e待支付",
+  "submitOrder.sendArr": [
+    {
+      "label": "e平台配送",
+      "value": 0
+    },
+    {
+      "label": "e自提",
+      "value": 1
+    }
+  ],
+  "sendTimeArr": [
+    {
+      "label": "e尽快送达",
+      "value": 0
+    },
+    {
+      "label": "e次日送达",
+      "value": 1
+    }
+  ],
+  "addressList.botton": "e新增地址",
+  "addressList.sure": "e确认地址",
+  "setAddress.name": "e收货人",
+  "setAddress.namePlaceholder": "e请输入收货人",
+  "setAddress.man": "e先生",
+  "setAddress.woman": "e女士",
+  "setAddress.phone": "e手机号",
+  "setAddress.phonePlaceholder": "e请输入手机号",
+  "setAddress.address": "e收货地址",
+  "setAddress.addressPlaceholder": "e点击选择收货地址",
+  "setAddress.label": "e标签",
+  "setAddress.addressDetail": "e详细地址",
+  "setAddress.addressDetailPlaceholder": "e请输入详细地址和门牌号",
+  "setAddress.default": "e设为默认地址",
+  "setAddress.defaultDesc": "e每次购物时会优先定位该地址，方便您轻松购物",
+  "setAddress.delete": "e删除收货地址",
+  "setAddress.save": "e保存收货地址",
+  "login.phonePlaceholder": "e请输入手机号",
+  "login.codePlaceholder": "e请输入验证码",
+  "login.getCode": "e获取验证码",
+  "login.againGet": "e重新获取",
+  "login.login": "e登录",
+  "self.title": "e点击登录用户",
+  "self.myOrder": "e我的订单",
+  "self.orderList": [
+    {
+      "title": "e全部订单"
+    },
+    {
+      "title": "e待支付"
+    },
+    {
+      "title": "e已支付"
+    },
+    {
+      "title": "e售后处理"
+    }
+  ],
+  "self.setList": [
+    {
+      "title": "e地址管理"
+    },
+    {
+      "title": "e语言设置"
+    },
+    {
+      "title": "e退出登录"
+    }
+  ],
+  "orderList.tabble": [
+    "e全部订单",
+    "e待支付",
+    "e已支付",
+    "e售后处理"
+  ],
+  "orderList.orderListCom.status": [
+    "e已取消",
+    "e待付款",
+    "e进行中",
+    "e待评价",
+    "e已完成"
+  ],
+  "orderList.orderListCom.storeDelivery": "e商家配送",
+  "orderList.orderListCom.orderID": "e订单ID",
+  "orderList.orderListCom.deliveryTime": "e配送时间",
+  "orderList.orderListCom.number": "e数量",
+  "orderList.orderListCom.realPay": "e实付",
+  "orderList.orderListCom.button.cancelOrder": "e取消订单",
+  "orderList.orderListCom.button.comeAgain": "e申请退款",
+  "orderList.orderListCom.button.goPay": "e去付款",
+  "orderDetail.refund": [
+    "e不喜欢/不想要了",
+    "e商品与描述不符",
+    "e发货延迟",
+    "e重复下单",
+    "e价格变动/发现更低价",
+    "e商品过期/临期",
+    "e功能不符合预期",
+    "e操作复杂/不会使用",
+    "e与已有商品重复",
+    "e商品缺货/无法等待",
+    "e服务态度问题",
+    "e其他原因"
+  ],
+  "orderDetail.status": [
+    "e待支付",
+    "e已支付",
+    "e已发货",
+    "e已送达",
+    "e已取消",
+    "e已退款",
+    "e已过期",
+    "e支付失败",
+    "e退款中",
+    "e拒绝退款"
+  ],
+  "orderDetail.headStatus": [
+    {
+      "title": "e已取消",
+      "desc": "e订单超时未支付"
+    }
+  ],
+  "orderDetail.button.cancelOrder": "e取消订单",
+  "orderDetail.button.comeAgain": "e申请退款",
+  "orderDetail.button.goPay": "e去付款",
+  "orderDetail.address": "e收货地址",
+  "orderDetail.delivery": "e配送方式",
+  "orderDetail.time": "e预约时间",
+  "orderDetail.goodsList": "e购物清单",
+  "orderDetail.unitPrice": "e单价",
+  "orderDetail.number": "e数量",
+  "orderDetail.goodsPrice": "e商品价格",
+  "orderDetail.deliveryPrice": "e配送费",
+  "orderDetail.payAmount": "e支付金额",
+  "orderDetail.orderMessage": "e订单信息",
+  "orderDetail.orderID": "e订单ID",
+  "orderDetail.orderTime": "e下单时间",
+  "orderDetail.orderNumber": "e订单编号"
+}

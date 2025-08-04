@@ -6,7 +6,7 @@
 
 <script module="renderScript" lang="renderjs">
 import lottie from 'lottie-web'
-import start from "@/static/svgjson/Success.json";
+import start from "../static/svgjson/Success.json";
 export default {
     mounted() {
         this.ready()

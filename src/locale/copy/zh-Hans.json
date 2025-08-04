@@ -1,0 +1,244 @@
+{
+  "tips.addSuccess": "添加成功",
+  "tips.loginOut": "已登录，是否退出登录",
+  "tips.confirm": "确认",
+  "tips.cancel": "取消",
+  "tips.prompt": "提示",
+  "tips.clickBack": "保存成功，点击返回！！！",
+  "tips.sureClearSearch": "确定要清空搜索历史吗？",
+  "tips.cancelOrder": "确定取消订单吗？",
+  "tips.cancelSuccess": "订单已取消",
+  "tips.refundSuccess": "退款申请成功",
+  "uni.showModal.cancel": "取消",
+  "uni.showModal.confirm": "确定",
+  "toSeckill": "今日秒杀",
+  "toSeckillDesc": "今日低价秒杀超划算",
+  "toSelect": "优选菜场",
+  "toSelectDesc": "网红小吃样样平价",
+  "copy": "复制",
+  "nullMsg": "暂无数据~",
+  "guessLike": "猜你喜欢",
+  "money": "￥",
+  "tabBar.home": "首页",
+  "tabBar.class": "分类",
+  "tabBar.cart": "购物车",
+  "tabBar.self": "我的",
+  "pages.login": "登录",
+  "pages.submitOrder": "提交订单",
+  "pages.addressList": "选择地址",
+  "pages.setAddress": "收货地址",
+  "pages.orderList": "我的订单",
+  "pages.orderDetail": "订单详情",
+  "pages.search": "搜索",
+  "pages.goodsDetails": "商品详情",
+  "home.title": "首页",
+  "home.getSite": "获取当前地址",
+  "home.search": "搜索",
+  "home.tabbleLength": "6",
+  "home.tabble": [
+    {
+      "title": "全部",
+      "text": "精选好物"
+    },
+    {
+      "title": "收藏",
+      "text": "收藏"
+    },
+    {
+      "title": "新鲜蔬菜",
+      "text": "时时新鲜"
+    },
+    {
+      "title": "调味料",
+      "text": "调味料"
+    },
+    {
+      "title": "干货",
+      "text": "精选好物"
+    },
+    {
+      "title": "直播",
+      "text": "直播"
+    }
+  ],
+  "search.button": "搜索",
+  "search.history": "历史搜索",
+  "search.hot": "热门搜索",
+  "search.placeholder": "搜索商品",
+  "search.class.all": "综合",
+  "search.class.sales": "销量",
+  "search.class.price": "价格",
+  "search.class.stock": "库存",
+  "search.class.self": "自营",
+  "search.class.select": "选规格",
+  "goodsDetails.self": "自营",
+  "goodsDetails.select": "选规格",
+  "goodsDetails.price": "￥",
+  "goodsDetails.sales": "销量",
+  "goodsDetails.stock": "库存",
+  "goodsDetails.delivery": "配送",
+  "goodsDetails.service": "服务",
+  "goodsDetails.goodsDetail": "商品详情",
+  "goodsDetails.buyRecord": "购买记录",
+  "goodsDetails.home": "首页",
+  "goodsDetails.customerService": "客服",
+  "goodsDetails.shoppingCart": "购物车",
+  "goodsDetails.addToCart": "加入购物车",
+  "cart.goodsCart": "购物车",
+  "cart.delete": "删除",
+  "cart.empty": "购物车空空如也",
+  "cart.goLogin": "去登陆",
+  "cart.goSettle": "去结算",
+  "cart.settle": "结算",
+  "cart.notes": "填写商品备注",
+  "cart.allSelect": "全选",
+  "cart.amountTo": "不含运费 合计:",
+  "submitOrder.submitOrder": "提交订单",
+  "submitOrder.address": "选择地址",
+  "submitOrder.delivery": "配送方式",
+  "submitOrder.time": "选择时间",
+  "submitOrder.goodsNotes": "填写商品备注",
+  "submitOrder.notes": "填写订单备注",
+  "submitOrder.goodsAmount": "商品金额",
+  "submitOrder.discountAmount": "折扣减免",
+  "submitOrder.deliveryAmount": "配送费",
+  "submitOrder.waitPay": "待支付",
+  "submitOrder.sendArr": [
+    {
+      "label": "平台配送",
+      "value": 0
+    },
+    {
+      "label": "自提",
+      "value": 1
+    }
+  ],
+  "sendTimeArr": [
+    {
+      "label": "尽快送达",
+      "value": 0
+    },
+    {
+      "label": "次日送达",
+      "value": 1
+    }
+  ],
+  "addressList.botton": "新增地址",
+  "addressList.sure": "确认地址",
+  "setAddress.name": "收货人",
+  "setAddress.namePlaceholder": "请输入收货人",
+  "setAddress.man": "先生",
+  "setAddress.woman": "女士",
+  "setAddress.phone": "手机号",
+  "setAddress.phonePlaceholder": "请输入手机号",
+  "setAddress.address": "收货地址",
+  "setAddress.addressPlaceholder": "点击选择收货地址",
+  "setAddress.label": "标签",
+  "setAddress.addressDetail": "详细地址",
+  "setAddress.addressDetailPlaceholder": "请输入详细地址和门牌号",
+  "setAddress.default": "设为默认地址",
+  "setAddress.defaultDesc": "每次购物时会优先定位该地址，方便您轻松购物",
+  "setAddress.delete": "删除收货地址",
+  "setAddress.save": "保存收货地址",
+  "login.phonePlaceholder": "请输入手机号",
+  "login.codePlaceholder": "请输入验证码",
+  "login.getCode": "获取验证码",
+  "login.againGet": "重新获取",
+  "login.login": "登录",
+  "self.title": "点击登录用户",
+  "self.myOrder": "我的订单",
+  "self.orderList": [
+    {
+      "title": "全部订单"
+    },
+    {
+      "title": "待支付"
+    },
+    {
+      "title": "已支付"
+    },
+    {
+      "title": "售后处理"
+    }
+  ],
+  "self.setList": [
+    {
+      "title": "地址管理"
+    },
+    {
+      "title": "语言设置"
+    },
+    {
+      "title": "退出登录"
+    }
+  ],
+  "orderList.tabble": [
+    "全部订单",
+    "待支付",
+    "已支付",
+    "售后处理"
+  ],
+  "orderList.orderListCom.status": [
+    "已取消",
+    "待付款",
+    "进行中",
+    "待评价",
+    "已完成"
+  ],
+  "orderList.orderListCom.storeDelivery": "商家配送",
+  "orderList.orderListCom.orderID": "订单ID",
+  "orderList.orderListCom.deliveryTime": "配送时间",
+  "orderList.orderListCom.number": "数量",
+  "orderList.orderListCom.realPay": "实付",
+  "orderList.orderListCom.button.cancelOrder": "取消订单",
+  "orderList.orderListCom.button.comeAgain": "申请退款",
+  "orderList.orderListCom.button.goPay": "去付款",
+  "orderDetail.refund": [
+    "不喜欢/不想要了",
+    "商品与描述不符",
+    "发货延迟",
+    "重复下单",
+    "价格变动/发现更低价",
+    "商品过期/临期",
+    "功能不符合预期",
+    "操作复杂/不会使用",
+    "与已有商品重复",
+    "商品缺货/无法等待",
+    "服务态度问题",
+    "其他原因"
+  ],
+  "orderDetail.status": [
+    "待支付",
+    "已支付",
+    "已发货",
+    "已送达",
+    "已取消",
+    "已退款",
+    "已过期",
+    "支付失败",
+    "退款中",
+    "拒绝退款"
+  ],
+  "orderDetail.headStatus": [
+    {
+      "title": "已取消",
+      "desc": "订单超时未支付"
+    }
+  ],
+  "orderDetail.button.cancelOrder": "取消订单",
+  "orderDetail.button.comeAgain": "申请退款",
+  "orderDetail.button.goPay": "去付款",
+  "orderDetail.address": "收货地址",
+  "orderDetail.delivery": "配送方式",
+  "orderDetail.time": "预约时间",
+  "orderDetail.goodsList": "购物清单",
+  "orderDetail.unitPrice": "单价",
+  "orderDetail.number": "数量",
+  "orderDetail.goodsPrice": "商品价格",
+  "orderDetail.deliveryPrice": "配送费",
+  "orderDetail.payAmount": "支付金额",
+  "orderDetail.orderMessage": "订单信息",
+  "orderDetail.orderID": "订单ID",
+  "orderDetail.orderTime": "下单时间",
+  "orderDetail.orderNumber": "订单编号"
+}

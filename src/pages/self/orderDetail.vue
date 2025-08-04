@@ -364,6 +364,7 @@
 	const orderListStatus = ref(false)
 	const baseInfoNumber = ref(0)
 	const showSuccess=ref(false)
+	let postTimer=null
 	async function baseInfo() {
 		baseInfoNumber.value++
 		console.log(baseInfoNumber.value)
@@ -376,9 +377,9 @@
 		})
 		if(res.code==200){
 			if(res.data.orderState===0){
-				let timer = setTimeout(()=>{
+				postTimer = setTimeout(()=>{
 					baseInfo()
-					clearTimeout(timer)
+					clearTimeout(postTimer)
 				},2000)
 			}else{
 				showSuccess.value = true
@@ -390,6 +391,11 @@
 			}
 		}
 	}
+	// onHide(()=>{
+	// 	clearTimeout(postTimer)
+	// 	baseInfoNumber.value=60
+	// 	console.log(baseInfoNumber.value)
+	// })
 	function ces(){
 		showSuccess.value = true
 		// setTimeout(()=>{
@@ -408,6 +414,10 @@
 	})
 
 	onBackPress(() => {
+		clearTimeout(postTimer)
+		baseInfoNumber.value=60
+		console.log(baseInfoNumber.value)
+		
 		if (orderListStatus.value) {
 			// uni.navigateBack()
 		} else {

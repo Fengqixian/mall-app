@@ -3,11 +3,12 @@ import App from "@/App.vue";
 import { createI18n } from "vue-i18n";
 import messages from "@/locale";
 import uviewPlus from "uview-plus";
+const env = import.meta.env;
 export function createApp() {
   const app = createSSRApp(App);
   const i18n = createI18n({
     legacy: false, // 推荐使用composition api
-    locale: "zh-Hans", // 默认语言
+    locale: env.VITE_LANGUAGE, // 默认语言
     messages,
   });
 

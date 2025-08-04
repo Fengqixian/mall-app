@@ -6,7 +6,7 @@
 				<image class=" bor-50-" style="margin-left: 30rpx;margin-right: 20rpx; width: 125rpx;height: 125rpx;"
 					:src="userInfo?userInfo.avatar:'/src/static/img/per0.png'" mode="scaleToFill" />
 					
-				<view @tap="goLogin" class="cor-f font-34 font-w7">{{userInfo?userInfo.nickname:t('self.title') }}</view>
+				<view class="cor-f font-34 font-w7">{{userInfo?userInfo.nickname:t('self.title') }}</view>
 			</view>
 		</view>
 		<view class=" bg-f"
@@ -22,6 +22,36 @@
 				</view>
 			</view>
 		</view>
+		
+		<view class="bg-f flex flex-dc flex-ac font-28" style="width: 700rpx;border-radius: 10rpx;padding: 20rpx 0;">
+			<view @tap="goSite" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1; height: 80rpx;width: 650rpx;">
+				<view class="flex flex-ac flex-jc" style="">
+					<image style="width: 50rpx;height: 50rpx;" src="/src/static/address.svg" mode=""></image>
+					<view class="" style="margin-left: 16rpx;">
+						{{setList[0].title}}
+					</view>
+				</view>
+				<image style="width: 40rpx;height: 40rpx;" src="/src/static/you.png" mode=""></image>
+			</view>
+			<view @tap="pickerShow=true" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 650rpx;">
+				<view class="flex flex-ac flex-jc" style="">
+					<image style="width: 50rpx;height: 50rpx;" src="/src/static/language.svg" mode=""></image>
+					<view class="" style="margin-left: 16rpx;">
+						{{setList[1].title}}
+					</view>
+				</view>
+				<image style="width: 40rpx;height: 40rpx;" src="/src/static/you.png" mode=""></image>
+			</view>
+			<view  @tap="goLogin" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 650rpx;">
+				<view class="flex flex-ac flex-jc" style="">
+					<image style="width: 50rpx;height: 50rpx;" src="/src/static/out.svg" mode=""></image>
+					<view class="" style="margin-left: 16rpx;">
+						{{setList[2].title}}
+					</view>
+				</view>
+				<image style="width: 40rpx;height: 40rpx;" src="/src/static/you.png" mode=""></image>
+			</view>
+		</view>
 		<view class="" style="font-size: 30rpx;color: #444; font-weight: 700; margin: 20rpx;">
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
 				style="color: #999;font-weight: 500;">—</text>
@@ -30,7 +60,7 @@
 		<imageFlow v-if="likeList.length>0" :listF="likeList"></imageFlow>
 		
 		<up-modal :show="modalShow" :content='t("tips.loginOut")' @confirm="loginOut" @cancel="modalShow=false" showCancelButton :confirmText="t('tips.confirm')" :cancelText="t('tips.cancel')"></up-modal>
-
+		<up-picker :show="pickerShow" keyName="title" :columns="languageArr" @confirm="confirmPicker" @cancel="pickerShow=false"></up-picker>
 	</view>
 </template>
 
@@ -51,12 +81,43 @@
 	import {
 		useI18n
 	} from 'vue-i18n'
+	const { locale } = useI18n()
 	const {
 		t,
 		tm
 	} = useI18n()
 	const userInfo = ref()
 	const modalShow = ref(false)
+	let languageArr=ref([[{
+		title:'ภาษาของฉันคือภาษาไทย',
+		key:'th-TH',
+		status:false,
+	},{
+		title:'my language is english',
+		key:'en',
+		status:false,
+	},{
+		title:'我的语言是汉语',
+		key:'zh-Hans',
+		status:false,
+	}]])
+	let setList=ref([
+		{
+			title:'我的地址',
+			imgSrc:'/static/address.svg',
+			url:'/pages/cart/addressList'
+		},
+		{
+			title:'语言设置',
+			imgSrc:'/static/language.svg',
+			url:'/pages/self/language'
+		},
+		{
+			title:'退出登录',
+			imgSrc:'/static/out.svg',
+			url:'/pages/login/login'
+		}
+	])
 	const orderButtonArr = ref([
 		{
 			text: '全部订单',
@@ -84,6 +145,8 @@
 		// },
 
 	])
+	// 移除这行，因为它在初始化时执行，不会随语言变化
+	// console.log(tm('self.orderList'))
 	orderButtonArr.value.forEach((item, index) => {
 		item.text = tm('self.orderList')[index].title
 	})
@@ -93,7 +156,23 @@
 			url: '/pages/self/orderList?tabbleIndex='+e
 		})
 	}
-
+	let pickerShow = ref(false)
+	function confirmPicker(option){
+		console.log(option)
+		locale.value = option.value[0].key
+			uni.setLocale(locale.value);
+			uni.setStorageSync('appLanguage', locale.value)
+			// 重新加载页面
+			// uni.reLaunch({
+			// 	url: '/' 
+			// });
+		// 语言切换后，重新更新orderButtonArr的文本
+		orderButtonArr.value.forEach((item, index) => {
+			item.text = tm('self.orderList')[index].title
+		})
+		setList.value=tm('self.setList')
+		pickerShow.value =false
+	}
 
 	function goLogin() {
 		if(userInfo.value){
@@ -125,7 +204,11 @@
 		}
 	}
 	onLoad(()=>{
-		
+		// 初始化语言相关的数据
+		orderButtonArr.value.forEach((item, index) => {
+			item.text = tm('self.orderList')[index].title
+		})
+		setList.value = tm('self.setList')
 	})
 	function setBadge(arr) {
 		// 设置角标
@@ -137,13 +220,21 @@
 			text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
 		})
 	}
+	
 	onShow(() => {
 		getLikeList()
 		let _userInfo = uni.getStorageSync('userInfo')
 		userInfo.value = _userInfo
 		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 		setBadge(goodsInfoStorage)
+		setList.value=tm('self.setList')
+		console.log(setList.value)
 	})
+	function goSite(){
+		uni.navigateTo({
+			url:"/pages/cart/addressList"
+		})
+	}
 </script>
 
 <style></style>

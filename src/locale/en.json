@@ -181,6 +181,17 @@
       {
         "title": "e售后处理"
       }
+    ],
+    "setList":[
+      {
+        "title":"e地址管理"
+      },
+      {
+        "title":"e语言设置"
+      },
+      {
+        "title":"e退出登录"
+      }
     ]
   },
   "orderList": {

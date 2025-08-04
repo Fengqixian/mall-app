@@ -2,14 +2,16 @@
 	import {post} from "@/utils/request.js"
 export default {
   onLaunch: function () {
+	  // 语言初始化已经在main.js中处理
+	  console.log('当前语言设置:', uni.getStorageSync('appLanguage') || 'zh-Hans');
 	  
-	  let lang = uni.getStorageSync('appLanguage')||false
-	  if(!lang){
-	  	// 重新加载页面
-	  	uni.reLaunch({
-	  		url: '/pages/index/setLang' 
-	  	});
-	  }
+	  // let lang = uni.getStorageSync('appLanguage')||false
+	  // if(!lang){
+	  // 	// 重新加载页面
+	  // 	uni.reLaunch({
+	  // 		url: '/pages/index/setLang' 
+	  // 	});
+	  // }
 	  
 	  //获取系统配置
 	  {

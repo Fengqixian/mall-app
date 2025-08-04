@@ -67,22 +67,22 @@
 							<view class="flex flex-dc flex-jb mar-l20 flex-g">
 								<view class=" flex flex-jb  font-26" style="">
 									<view class="">
-										{{ item.nameTh }}
+										{{ item.name }}
 									</view>
-									<view v-if="orderArr.goodsNumMap[item.id] !== 1" class="">
+									<view v-if="item.orderQuantity !== 1" class="">
 										<text class="font-22">{{ item.priceUnitName }}</text><text
 											class="font-B font-24">{{ (item.price / 100).toFixed(2) }}</text>
 									</view>
 								</view>
 								<view class=" font-24 cor-8">
-									{{ item.descTh }}
+									{{ item.desc }}
 								</view>
 								<view class="flex flex-ac flex-jb font-24 cor-8 ">
 									<text>
-										×{{ orderArr.goodsNumMap[item.id] }}
+										×{{ item.orderQuantity }}
 									</text>
 									<text class="cor-r font-24 font-B">
-										{{ (orderArr.goodsNumMap[item.id] * item.price / 100).toFixed(2) }}
+										{{ (item.orderQuantity * item.price / 100).toFixed(2) }}
 									</text>
 								</view>
 							</view>
@@ -296,7 +296,7 @@
 		for (const item of orderArr.value.goodsList) {
 			params.goodsList.push({
 				"goodsId": item.id,
-				"goodsNum": orderArr.value.goodsNumMap[item.id]
+				"goodsNum": item.orderQuantity
 			})
 		}
 

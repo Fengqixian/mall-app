@@ -44,7 +44,7 @@
 					{{ t('home.search') }}
 				</view>
 			</view>
-			<view class="" style="width: 700rpx;height: 158rpx;margin-top: 22rpx;">
+			<view class="" style="width: 700rpx;height: 158rpx;margin-top: 56rpx;">
 				<swiper @change="swiperChange" :current='swiperIndex' style="height: 158rpx;width: 700rpx;" class=""
 					autoplay circular interval="3000" duration="1000">
 					<swiper-item v-for="(item, index) in bannerList">
@@ -180,7 +180,10 @@
 			</view>
 		</view>
 		<image-flow v-if="goodsList.length > 0" :listF="goodsList"></image-flow>
-		<no-more-data v-if="goodsPage.isNullMsg"></no-more-data>
+		<up-loadmore v-if="goodsList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')" 
+        :loadmore-text="t('tips.loadmoreText')" 
+        :nomore-text="t('tips.nomoreText')"/>
+		<!-- <no-more-data v-if="goodsPage.isNullMsg"></no-more-data> -->
 		<!-- <tabbar></tabbar> -->
 
 	</view>
@@ -216,7 +219,7 @@ const {
 console.log(tm('home.tabble'))
 const swiperIndex = ref(0)
 const swiperSearchIndex = ref(0)
-
+const loadmoreStatus = ref('loadmore')
 function swiperChange(e) {
 	swiperIndex.value = e.detail.current
 }
@@ -316,13 +319,17 @@ async function getGoodsList() {
 		name: null,
 		classId: null
 	}
+	loadmoreStatus.value ='loading'
 	let res = await post('/goods/list', params)
+	loadmoreStatus.value ='loadmore'
 	console.log(res)
 	if (res.code == 200) {
 		if (res.data.length) {
 			goodsList.value = [...goodsList.value, ...res.data]
+			
 		} else {
 			goodsPage.isNullMsg = true
+			loadmoreStatus.value ='nomore'
 		}
 
 	}

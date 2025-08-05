@@ -39,9 +39,12 @@
 						<view class="demo-shop  text-d op-0" style="width: 230rpx;">
 							{{ item.goodsInfo.name }}
 						</view>
-						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc"
+						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc pos-r"
 							style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 							<up-icon name="shopping-cart" color="#fff" size="28"></up-icon>
+							<view v-if="item.goodsInfo._showGoodsNumber||getSelectGoodsNumber(item.goodsInfo.id)" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
+								{{getSelectGoodsNumber(item.goodsInfo.id)}}
+							</view>
 						</view>
 					</view>
 
@@ -85,9 +88,12 @@
 						<view class="demo-shop  text-d op-0" style="width: 230rpx;">
 							{{ item.goodsInfo.name }}
 						</view>
-						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc"
+						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc pos-r"
 							style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 							<up-icon name="shopping-cart" color="#fff" size="28"></up-icon>
+							<view v-if="item.goodsInfo._showGoodsNumber||getSelectGoodsNumber(item.goodsInfo.id)" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
+								{{getSelectGoodsNumber(item.goodsInfo.id)}}
+							</view>
 						</view>
 					</view>
 
@@ -166,7 +172,7 @@
 				})
 			},
 			addGoodsInfo(goodsInfo) {
-				// goodsInfo.number = 1
+				goodsInfo._showGoodsNumber=false
 				const _goodsInfo = {
 					...goodsInfo,
 					number: 1,
@@ -183,11 +189,26 @@
 				}
 				this.setBadge(goodsInfoStorage)
 				uni.setStorageSync('goodsInfo', goodsInfoStorage)
+				let goodsNumberObj={}
+				for (let item of goodsInfoStorage) {
+					goodsNumberObj[item.id]=item.number
+				}
+				uni.setStorageSync('goodsNumberObj', goodsNumberObj)
 				this.$emit('updataGoodsCart')
 				uni.showToast({
 					title: this.addSuccess,
 					icon: 'none'
 				})
+				
+				let time = setTimeout(()=>{
+					goodsInfo._showGoodsNumber=true
+					clearTimeout(time)
+				})
+			},
+			getSelectGoodsNumber(id){
+				let obj = uni.getStorageSync('goodsNumberObj')||{}
+				let num = obj[id]||0
+				return num>99?99:num
 			},
 			findIndexById(array, id) {
 				return array.findIndex(item => item.id === id);

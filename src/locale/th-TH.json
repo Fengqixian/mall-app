@@ -9,7 +9,10 @@
     "sureClearSearch": "t确定要清空搜索历史吗？",
     "cancelOrder": "t确定取消订单吗？",
     "cancelSuccess": "t订单已取消",
-    "refundSuccess": "t退款申请成功"
+    "refundSuccess": "t退款申请成功",
+	"loadingText":"t正在加载",
+	"loadmoreText":"t加载更多",
+	"nomoreText":"t没有更多了"
   },
   "uni.showModal.cancel": "t取消",
   "uni.showModal.confirm": "t确定",

@@ -84,12 +84,15 @@
 								<view class=" cor-8 font-22 text-d" style="margin-top: 8rpx;">
 									{{ t('class.stock') }} {{ item.inventory.inventoryNum }}
 								</view>
-								<view class=" flex flex-ac flex-jb cor-8 font-22 text-d" style="margin-top: 8rpx;">
+								<view class=" flex flex-ac flex-jb cor-8 font-22" style="margin-top: 8rpx;">
 									<text>{{ t('class.self') }}</text>
 
-									<view @tap.stop="addGoodsInfo(item.goodsInfo)" class=" bor-50- flex flex-ac flex-jc"
+									<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="pos-r bor-50- flex flex-ac flex-jc"
 										style="width: 56rpx;height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 										<up-icon class="" name="shopping-cart" color="#fff" size="50rpx"></up-icon>
+										<view v-if="item.goodsInfo._showGoodsNumber||getSelectGoodsNumber(item.goodsInfo.id)" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
+											{{getSelectGoodsNumber(item.goodsInfo.id)}}
+										</view>
 									</view>
 
 									<!-- 									<view  class="flex flex-ac flex-jc cor-f font-28"
@@ -127,7 +130,9 @@
 						</view> -->
 
 					</view>
-					<up-loadmore v-if="state.goodsList.length" :status="loadmoreStatus" />
+					<up-loadmore v-if="state.goodsList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')" 
+        :loadmore-text="t('tips.loadmoreText')" 
+        :nomore-text="t('tips.nomoreText')" />
 					<!-- <no-more-data v-if="paramsPage.isMore&&state.goodsList.length"></no-more-data> -->
 					<view class="" style="height: 100rpx;"></view>
 				</scroll-view>
@@ -212,6 +217,12 @@
 		})
 	}
 
+
+	function getSelectGoodsNumber(id){
+		let obj = uni.getStorageSync('goodsNumberObj')||{}
+		let num = obj[id]||0
+		return num>99?99:num
+	}
 	function goDetail(id) {
 		uni.navigateTo({
 			url: '/pages/index/goodsDetails?id=' + id
@@ -241,9 +252,9 @@
 		}
 		loadmoreStatus.value ='loading'
 		let data = await post('/goods/list', params)
-		
+		loadmoreStatus.value ='loadmore'
 		if (data.code === 200) {
-			loadmoreStatus.value ='loadmore'
+			
 			if (data.data.length) {
 				state.goodsList = [...state.goodsList, ...data.data]
 				if(data.data.length<paramsPage.pageSize){
@@ -299,6 +310,7 @@
 
 	function addGoodsInfo(goodsInfo) {
 		// goodsInfo.number = 1
+		goodsInfo._showGoodsNumber=false
 		const _goodsInfo = {
 			...goodsInfo,
 			number: 1,
@@ -315,10 +327,21 @@
 		setBadge(goodsInfoStorage)
 		uni.setStorageSync('goodsInfo', goodsInfoStorage)
 
-		uni.showToast({
-			title: t('tips.addSuccess'),
-			icon: 'none'
-		})
+				let goodsNumberObj={}
+				for (let item of goodsInfoStorage) {
+					goodsNumberObj[item.id]=item.number
+				}
+				uni.setStorageSync('goodsNumberObj', goodsNumberObj)
+				
+				uni.showToast({
+					title: t('tips.addSuccess'),
+					icon: 'none'
+				})
+				
+				let time = setTimeout(()=>{
+					goodsInfo._showGoodsNumber=true
+					clearTimeout(time)
+				})
 	}
 
 	function findIndexById(array, id) {

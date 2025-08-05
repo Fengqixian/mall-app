@@ -1,10 +1,10 @@
 <template>
-	<statusHeight></statusHeight>
+	<!-- <statusHeight></statusHeight> -->
 	<view style="" class="flex flex-dc flex-ac">
 
 
 
-		<view class="flex flex-dc flex-ac bg-f" style="width: 750rpx;">
+		<view class=" flex flex-dc flex-ac bg-f" style="width: 750rpx;">
 			<view class=" flex flex-ac flex-jb" style="width: 700rpx;height: 88rpx;">
 				<view class=" flex flex-ac"
 					style="background: #f7f7f7; border: 1rpx solid var(--cor-g); width: 500rpx;height: 60rpx;border-radius: 30rpx;">
@@ -49,163 +49,170 @@
 				</view>
 			</view>
 		</view>
+		
 		<view v-if="!isSearch" class="" style="font-size: 30rpx;color: #444; font-weight: 700; margin: 20rpx;">
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
 		<image-flow v-if="searchList.length > 0" :listF="searchList"></image-flow>
 		<null-msg v-else style="margin-top: 300rpx;"></null-msg>
-		<no-more-data v-if="isNullMsg && searchList.length > 0"></no-more-data>
+		<up-loadmore v-if="isNullMsg && searchList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')"
+		:loadmore-text="t('tips.loadmoreText')" 
+		:nomore-text="t('tips.nomoreText')"/>
+		<!-- <no-more-data v-if="isNullMsg && searchList.length > 0"></no-more-data> -->
 		<view class="" style="height: 40rpx;"></view>
 	</view>
 </template>
 
 <script setup>
-import {
-	reactive,
-	ref,
-	nextTick
-} from 'vue'
-import {
-	onLoad,
-	onShow,
-	onPullDownRefresh,
-	onReachBottom
-} from '@dcloudio/uni-app'
-import statusHeight from '@/components/statusHeight.vue'
-import imageFlow from "@/components/imageFlow.vue"
-import noMoreData from "@/components/noMoreData.vue"
-import nullMsg from "@/components/nullMsg.vue"
-import {
-	useI18n
-} from 'vue-i18n'
-import {
-	post
-} from '@/utils/request'
-const {
-	t
-} = useI18n()
-const searchParams = reactive({
-	classId: null,
-	name: null,
-	page: 1,
-	pageSize: 10
-})
-const isNullMsg = ref(false)
-const searchHistory = ref([])
-const searchList = ref([])
-const isSearch = ref(false)
-async function getSearchList(isReach) {
-	// isFocus.value = false
-	if (searchParams.name) {
-		let historyStorage = uni.getStorageSync('searchHistory') || []
-		if (historyStorage.indexOf(searchParams.name) !== -1) {
-			historyStorage.splice(historyStorage.indexOf(searchParams.name), 1)
-			historyStorage.unshift(searchParams.name)
-			searchHistory.value = historyStorage
-			uni.setStorageSync('searchHistory', historyStorage)
-		} else {
-			if (historyStorage.length >= 10) {
-				historyStorage.pop()
-			}
-			historyStorage.unshift(searchParams.name)
-			searchHistory.value = historyStorage
-			uni.setStorageSync('searchHistory', historyStorage)
-		}
-	}
-	let res = await post('/goods/list', searchParams)
-	if (res.code == 200) {
-		isFocus.value = false
-		if (!isSearch.value) {
-			isSearch.value = true
-			searchList.value = []
-		}
-		if (res.data.length) {
-			if (isReach) {
-				setTimeout(() => {
-					searchList.value = [...searchList.value, ...res.data]
-				})
+	import {
+		reactive,
+		ref,
+		nextTick
+	} from 'vue'
+	import {
+		onLoad,
+		onShow,
+		onPullDownRefresh,
+		onReachBottom
+	} from '@dcloudio/uni-app'
+	import statusHeight from '@/components/statusHeight.vue'
+	import imageFlow from "@/components/imageFlow.vue"
+	import noMoreData from "@/components/noMoreData.vue"
+	import nullMsg from "@/components/nullMsg.vue"
+	import {
+		useI18n
+	} from 'vue-i18n'
+	import {
+		post
+	} from '@/utils/request'
+	const {
+		t
+	} = useI18n()
+	const searchParams = reactive({
+		classId: null,
+		name: null,
+		page: 1,
+		pageSize: 6
+	})
+	const isNullMsg = ref(false)
+	const searchHistory = ref([])
+	const searchList = ref([])
+	const isSearch = ref(false)
+	const loadmoreStatus = ref('loadmore')
+	async function getSearchList(isReach) {
+		// isFocus.value = false
+		if (searchParams.name) {
+			let historyStorage = uni.getStorageSync('searchHistory') || []
+			if (historyStorage.indexOf(searchParams.name) !== -1) {
+				historyStorage.splice(historyStorage.indexOf(searchParams.name), 1)
+				historyStorage.unshift(searchParams.name)
+				searchHistory.value = historyStorage
+				uni.setStorageSync('searchHistory', historyStorage)
 			} else {
-				setTimeout(() => {
-					searchList.value = res.data
-				})
+				if (historyStorage.length >= 10) {
+					historyStorage.pop()
+				}
+				historyStorage.unshift(searchParams.name)
+				searchHistory.value = historyStorage
+				uni.setStorageSync('searchHistory', historyStorage)
 			}
-		} else {
-			if (isReach) {
-				isNullMsg.value = true
+		}
+		loadmoreStatus.value ='loading'
+		let res = await post('/goods/list', searchParams)
+		loadmoreStatus.value ='loadmore'
+		if (res.code == 200) {
+			isFocus.value = false
+			if (!isSearch.value) {
+				isSearch.value = true
 				searchList.value = []
 			}
-		}
-
-	}
-}
-const isFocus = ref(true)
-
-function handleFocus() {
-	if (searchList.length === 0) {
-		isFocus.value = true
-	}
-}
-
-function handleBlur() {
-
-	// setTimeout(() => {
-	// 	isFocus.value = false
-	// }, 100)
-}
-
-function clearHistory() {
-
-	uni.showModal({
-		title: t('tips.prompt'),
-		content: t('tips.sureClearSearch'),
-		success: (res) => {
-			if (res.confirm) {
-				searchHistory.value = []
-				uni.setStorageSync('searchHistory', [])
+			if (res.data.length) {
+				if (isReach) {
+					setTimeout(() => {
+						searchList.value = [...searchList.value, ...res.data]
+					})
+				} else {
+					setTimeout(() => {
+						searchList.value = res.data
+					})
+				}
+			} else {
+				if (isReach) {
+					isNullMsg.value = true
+					loadmoreStatus.value ='nomore'
+					// searchList.value = []
+				}
 			}
+
 		}
-	})
-}
+	}
+	const isFocus = ref(true)
 
-function handleHistory(item) {
-	searchParams.name = item
-	getSearchList()
-}
+	function handleFocus() {
+		if (searchList.length === 0) {
+			isFocus.value = true
+		}
+	}
 
-const hotList = ref([])
+	function handleBlur() {
 
+		// setTimeout(() => {
+		// 	isFocus.value = false
+		// }, 100)
+	}
 
-async function getLikeList() {
-	const res = await post('/goods/search/info')
-	console.log(res);
-	if (res.code == 200) {
-		searchList.value = []
-		setTimeout(() => {
-			hotList.value = res.data.searchList
-			searchList.value = res.data.list
+	function clearHistory() {
+
+		uni.showModal({
+			title: t('tips.prompt'),
+			content: t('tips.sureClearSearch'),
+			success: (res) => {
+				if (res.confirm) {
+					searchHistory.value = []
+					uni.setStorageSync('searchHistory', [])
+				}
+			}
 		})
 	}
-}
-const searchInputEl = ref(null)
-onShow(() => {
-	// nextTick(() => {
-	// 	console.log(searchInputEl.value)
-	// 	// searchInputEl?.value?.focus()
-	// })
-})
-onLoad((options) => {
-	searchHistory.value = uni.getStorageSync('searchHistory') || []
-	getLikeList()
-})
-onReachBottom(() => {
-	if (!isNullMsg.value && isSearch.value) {
-		searchParams.page++
-		getSearchList(true)
-	}
-	console.log("上拉加载更多" + isNullMsg.value)
-})
 
+	function handleHistory(item) {
+		searchParams.name = item
+		getSearchList()
+	}
+
+	const hotList = ref([])
+
+
+	async function getLikeList() {
+		const res = await post('/goods/search/info')
+		console.log(res);
+		if (res.code == 200) {
+			searchList.value = []
+			setTimeout(() => {
+				hotList.value = res.data.searchList
+				searchList.value = res.data.list
+			})
+		}
+	}
+	const searchInputEl = ref(null)
+	onShow(() => {
+		// nextTick(() => {
+		// 	console.log(searchInputEl.value)
+		// 	// searchInputEl?.value?.focus()
+		// })
+	})
+	onLoad((options) => {
+		searchHistory.value = uni.getStorageSync('searchHistory') || []
+		getLikeList()
+	})
+	onReachBottom(() => {
+		if (!isNullMsg.value && isSearch.value) {
+			searchParams.page++
+			getSearchList(true)
+		}
+		console.log("上拉加载更多" + isNullMsg.value)
+	})
 </script>
 
 <style></style>

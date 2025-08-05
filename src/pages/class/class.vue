@@ -86,12 +86,12 @@
 									{{ t('class.stock') }} {{ item.inventory.inventoryNum }}
 								</view>
 								<view class=" flex flex-ac flex-jb cor-8 font-22" style="margin-top: 8rpx;">
-									<text>{{ t('class.self') }}</text>
+									<text>{{ t('class.self')}}</text>
 
 									<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="pos-r bor-50- flex flex-ac flex-jc"
 										style="width: 56rpx;height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 										<up-icon class="" name="shopping-cart" color="#fff" size="50rpx"></up-icon>
-										<view v-if="item.goodsInfo._showGoodsNumber||pageGoodsNumberObj[item.goodsInfo.id]" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
+										<view v-if="pageGoodsNumberObj[item.goodsInfo.id]" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
 											{{pageGoodsNumberObj[item.goodsInfo.id]}}
 										</view>
 									</view>
@@ -374,6 +374,7 @@
 		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 		setBadge(goodsInfoStorage)
 		pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
+		console.log('aaaaaa')
 	})
 	onHide(() => {
 		uni.removeStorageSync('classIndex')

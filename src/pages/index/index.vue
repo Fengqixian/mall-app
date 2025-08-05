@@ -23,7 +23,7 @@
 				style="margin-top: 20rpx; height: 88rpx;width: 100%;background-color: #fff;border-radius: 44rpx;">
 				<view class="flex flex-ac" style="padding-left: 20rpx;">
 					<up-icon name="search" color="#ccc" size="50rpx"></up-icon>
-					<view class="aaa" style="margin-left: 10rpx; width: 400rpx;height: 80rpx;">
+					<view class="" style="margin-left: 10rpx; width: 400rpx;height: 80rpx;">
 						<swiper style="height: 80rpx;" :current='swiperSearchIndex' class="" autoplay circular vertical
 							interval="2000" duration="1000" @change="swiperSearchChange">
 							<swiper-item v-for="(item, index) in textSwiper.searchArr" :key="index">

@@ -1,5 +1,6 @@
 <template>
 	<view class="wrap">
+		
 		<!-- <image src="" mode=""></image> -->
 		<!-- <up-button @click="clear">清空列表</up-button> -->
 		<up-waterfall v-model="list" ref="uWaterfallRef">
@@ -42,8 +43,8 @@
 						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc pos-r"
 							style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 							<up-icon name="shopping-cart" color="#fff" size="28"></up-icon>
-							<view v-if="item.goodsInfo._showGoodsNumber||getSelectGoodsNumber(item.goodsInfo.id)" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
-								{{getSelectGoodsNumber(item.goodsInfo.id)}}
+							<view v-if="goodsNumberObj[item.goodsInfo.id]" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
+								{{goodsNumberObj[item.goodsInfo.id]}}
 							</view>
 						</view>
 					</view>
@@ -91,9 +92,10 @@
 						<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="flex flex-ac flex-jc pos-r"
 							style="width: 56rpx;height: 56rpx;border-radius: 50%;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 							<up-icon name="shopping-cart" color="#fff" size="28"></up-icon>
-							<view v-if="item.goodsInfo._showGoodsNumber||getSelectGoodsNumber(item.goodsInfo.id)" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
-								{{getSelectGoodsNumber(item.goodsInfo.id)}}
+							<view v-if="pageGoodsNumberObj[item.goodsInfo.id]" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
+								{{pageGoodsNumberObj[item.goodsInfo.id]}}
 							</view>
+							
 						</view>
 					</view>
 
@@ -116,6 +118,10 @@
 			listF: {
 				type: Array,
 				default: () => []
+			},
+			pageGoodsNumberObj: {
+				type: Object,
+				default: () => {}
 			}
 		},
 		data() {
@@ -123,7 +129,8 @@
 				addSuccess: '',
 				loadStatus: 'loadmore',
 				flowList: [],
-				list: [] // 初始化为空数组
+				list: [], // 初始化为空数组
+				goodsNumberObj: {}
 			}
 		},
 		watch: {
@@ -133,6 +140,13 @@
 				},
 				immediate: true, // 组件初始化时也赋值一次
 				deep: true // 如果 listF 里面的对象会变，建议加上
+			},
+			pageGoodsNumberObj: {
+				handler(newVal) {
+					this.goodsNumberObj = newVal
+				},
+				immediate: true,
+				deep: true
 			}
 		},
 		onLoad() {
@@ -144,6 +158,7 @@
 			} = useI18n()
 			console.log(t('tips.addSuccess'), 1111111111)
 			this.addSuccess = t('tips.addSuccess')
+			console.log(this.pageGoodsNumberObj)
 		},
 		onReachBottom() {
 			this.loadStatus = 'loading';
@@ -172,7 +187,8 @@
 				})
 			},
 			addGoodsInfo(goodsInfo) {
-				goodsInfo._showGoodsNumber=false
+				console.log(this.pageGoodsNumberObj)
+				// goodsInfo.number = 1
 				const _goodsInfo = {
 					...goodsInfo,
 					number: 1,
@@ -189,7 +205,7 @@
 				}
 				this.setBadge(goodsInfoStorage)
 				uni.setStorageSync('goodsInfo', goodsInfoStorage)
-				let goodsNumberObj={}
+				let goodsNumberObj=this.pageGoodsNumberObj
 				for (let item of goodsInfoStorage) {
 					goodsNumberObj[item.id]=item.number
 				}
@@ -199,17 +215,17 @@
 					title: this.addSuccess,
 					icon: 'none'
 				})
-				
-				let time = setTimeout(()=>{
-					goodsInfo._showGoodsNumber=true
-					clearTimeout(time)
-				})
 			},
-			getSelectGoodsNumber(id){
-				let obj = uni.getStorageSync('goodsNumberObj')||{}
-				let num = obj[id]||0
-				return num>99?99:num
-			},
+			// getSelectGoodsNumber(id){
+			// 	let arr = uni.getStorageSync('goodsInfo')||[]
+			// 	let num = arr.filter((item)=>item.id===id)
+			// 	console.log(num)
+			// 	if(num.length){
+			// 		return num[0].number
+			// 	}else{
+			// 		return 0
+			// 	}
+			// },
 			findIndexById(array, id) {
 				return array.findIndex(item => item.id === id);
 			},

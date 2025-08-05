@@ -159,7 +159,7 @@
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
-		<image-flow v-if="likeList.length > 0" :listF="likeList" @updataGoodsCart="getGoodsInfoArray"></image-flow>
+		<image-flow v-if="likeList.length > 0" :listF="likeList" :pageGoodsNumberObj="pageGoodsNumberObj" @updataGoodsCart="getGoodsInfoArray"></image-flow>
 
 		<view class="" style="height: 100rpx;"></view>
 		<view class=" flex flex-ac flex-jc pos-f  bg-f w-100- z-10 left-0 bottom box-s8 bor-box"
@@ -188,6 +188,7 @@
 </template>
 
 <script setup>
+import { goodsNumberObjReactive } from '@/utils/stor'
 import statusHeight from '@/components/statusHeight.vue'
 import imageFlow from "@/components/imageFlow.vue"
 import nullMsg from "@/components/nullMsg.vue"
@@ -349,7 +350,16 @@ function setgoodsInfoObj(newGoodsInfo) {
 	goodsInfoObj.value.toatalPrice = trueItems.reduce((sum, item) => sum + (item.price * item.number), 0);
 	// 计算总数量
 	goodsInfoObj.value.number = trueItems.reduce((sum, item) => sum + item.number, 0);
+	
+	let goodsNumberObj = {}
+	for (let item of goodsInfoArray.value) {
+		goodsNumberObj[item.id] = item.number
+	}
+	uni.setStorageSync('goodsNumberObj', goodsNumberObj)
+	pageGoodsNumberObj.value = goodsNumberObj
 }
+
+
 
 function changeAllStatus() {
 	goodsInfoObj.value.status = goodsInfoObj.value.status ? 0 : 1
@@ -397,12 +407,14 @@ function setBadge(arr) {
 	}
 
 }
-
+let pageGoodsNumberObj = ref({})
 onShow(() => {
 	getLikeList()
 	getGoodsInfoArray()
 	const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 	setBadge(goodsInfoStorage)
+	pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
+
 })
 </script>
 

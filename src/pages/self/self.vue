@@ -57,7 +57,7 @@
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
 		
-		<imageFlow v-if="likeList.length>0" :listF="likeList"></imageFlow>
+		<imageFlow v-if="likeList.length>0" :listF="likeList" :pageGoodsNumberObj="pageGoodsNumberObj"></imageFlow>
 		
 		<up-modal :show="modalShow" :content='t("tips.loginOut")' @confirm="loginOut" @cancel="modalShow=false" showCancelButton :confirmText="t('tips.confirm')" :cancelText="t('tips.cancel')"></up-modal>
 		<up-picker :show="pickerShow" keyName="title" :columns="languageArr" @confirm="confirmPicker" @cancel="pickerShow=false"></up-picker>
@@ -229,7 +229,7 @@
 			text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
 		})
 	}
-	
+	const pageGoodsNumberObj = ref({})
 	onShow(() => {
 		getLikeList()
 		let _userInfo = uni.getStorageSync('userInfo')
@@ -238,6 +238,7 @@
 		setBadge(goodsInfoStorage)
 		updateSetList()
 		console.log(setList.value)
+		pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
 	})
 	function goSite(){
 		uni.navigateTo({

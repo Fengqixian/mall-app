@@ -8,6 +8,7 @@
 				<view class="" style="margin-left: 10rpx; width: 200rpx;height: 64rpx;">
 					<swiper :current='searchCearchIndex' @change="searchCearchChange" style="height: 64rpx;" class=""
 						autoplay circular vertical interval="2000" duration="1000">
+						
 						<swiper-item v-for="(item, index) in searchList" :key="index">
 							<text style="width: 200rpx;height: 64rpx;color: #999;" class="font-26 flex flex-ac">{{ item
 								}}</text>
@@ -90,8 +91,8 @@
 									<view @tap.stop="addGoodsInfo(item.goodsInfo)" class="pos-r bor-50- flex flex-ac flex-jc"
 										style="width: 56rpx;height: 56rpx;background: linear-gradient(160deg, rgba(33, 204, 91, 0.5), rgb(33, 204, 91));">
 										<up-icon class="" name="shopping-cart" color="#fff" size="50rpx"></up-icon>
-										<view v-if="item.goodsInfo._showGoodsNumber||getSelectGoodsNumber(item.goodsInfo.id)" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
-											{{getSelectGoodsNumber(item.goodsInfo.id)}}
+										<view v-if="item.goodsInfo._showGoodsNumber||pageGoodsNumberObj[item.goodsInfo.id]" class="aaa pos-a font-24 cor-f flex flex-ac flex-jc" style="background: #f43530; border-radius: 17rpx; right: -10rpx;top: -10rpx; width: 34rpx;height: 34rpx;">
+											{{pageGoodsNumberObj[item.goodsInfo.id]}}
 										</view>
 									</view>
 
@@ -291,15 +292,23 @@
 	}
 	const searchList = ref([])
 
-	function getSearchList() {
-		let {
-			value: searchJSON
-		} = uni.getStorageSync('appConfig')['SEARCH_RECOMMEND_GOODS_NAME_LIST']
-		try {
-			searchList.value = JSON.parse(searchJSON)
-		} catch (err) {
-			console.log(err)
+
+		async function getSearchList() {
+	try {
+		let res = await post('/goods/search/words')
+		if (res.code === 200) {
+			searchList.value = res.data
 		}
+		let {value: noticeJSON} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION']
+		textSwiper.noticeArr = JSON.parse(noticeJSON)
+	} catch (err) {
+		console.log(err)
+		// let time = setTimeout(()=>{
+		// 	getSearchWords()
+		// 	clearTimeout(time)
+		// },1000)
+	}
+
 	}
 
 	function navSearch(name) {
@@ -353,6 +362,7 @@
 		getSearchList()
 	})
 	const classIndexRef = ref(-1)
+	const pageGoodsNumberObj = ref({})
 	onShow(() => {
 		let classIndex = uni.getStorageSync('classIndex')
 		if (classIndex) {
@@ -361,7 +371,7 @@
 		}
 		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 		setBadge(goodsInfoStorage)
-		
+		pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
 	})
 	onHide(() => {
 		uni.removeStorageSync('classIndex')

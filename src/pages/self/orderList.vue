@@ -15,9 +15,9 @@
 			</up-tabs>
 		</view>
 		<swiper class=" pos-r z-1" @change="changeSwiper" :current='tabsCurrent' :acceleration="false"
-			style="width: 100%;height: calc(100svh - 88rpx);" :duration="500">
-			<swiper-item>
-				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
+			style="width: 100%;height: calc(100vh - 88rpx);" :duration="500">
+			<swiper-item class="" style="height: calc(100vh - 88rpx);">
+				<scroll-view class="" scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100vh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.all.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.all" :key="item.orderId+'0'" :itemMsg="item" style="margin-top: 20rpx;" @tableHide="tableHide" @tableShow="tableShow"></orderListCom>
 					
@@ -29,7 +29,7 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
+				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100vh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.waitPay.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.waitPay" :key="item.orderId+'1'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 					<no-more-data v-if="tabsList[1].isMoreMsg&&orderList.waitPay.length"></no-more-data>
@@ -37,7 +37,7 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
+				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100vh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.endPay.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.endPay" :key="item.orderId+'2'" :itemMsg="item" style="margin-top: 20rpx;" @tableHide="tableHide" @tableShow="tableShow"></orderListCom>
 					
@@ -48,7 +48,7 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100svh - 88rpx);">
+				<scroll-view scroll-y="true"  @scrolltolower="getAllMoerOrderList" style="height: calc(100vh - 88rpx);">
 					<nullMsg style="margin-top: 200rpx;" v-if="orderList.after.length===0"></nullMsg>
 					<orderListCom v-for="(item, index) in orderList.after" :key="item.orderId+'3'" :itemMsg="item" style="margin-top: 20rpx;"></orderListCom>
 					

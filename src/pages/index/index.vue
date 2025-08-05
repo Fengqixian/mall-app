@@ -23,7 +23,7 @@
 				style="margin-top: 20rpx; height: 88rpx;width: 100%;background-color: #fff;border-radius: 44rpx;">
 				<view class="flex flex-ac" style="padding-left: 20rpx;">
 					<up-icon name="search" color="#ccc" size="50rpx"></up-icon>
-					<view class="" style="margin-left: 10rpx; width: 400rpx;height: 80rpx;">
+					<view class="aaa" style="margin-left: 10rpx; width: 400rpx;height: 80rpx;">
 						<swiper style="height: 80rpx;" :current='swiperSearchIndex' class="" autoplay circular vertical
 							interval="2000" duration="1000" @change="swiperSearchChange">
 							<swiper-item v-for="(item, index) in textSwiper.searchArr" :key="index">
@@ -179,7 +179,7 @@
 				</view>
 			</view>
 		</view>
-		<image-flow v-if="goodsList.length > 0" :listF="goodsList"></image-flow>
+		<image-flow v-if="goodsList.length > 0" :listF="goodsList" :pageGoodsNumberObj="pageGoodsNumberObj"></image-flow>
 		<up-loadmore v-if="goodsList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')" 
         :loadmore-text="t('tips.loadmoreText')" 
         :nomore-text="t('tips.nomoreText')"/>
@@ -386,9 +386,11 @@ function setBadge(arr) {
 		text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
 	})
 }
+const pageGoodsNumberObj = ref({})
 onShow(() => {
 	const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
 	setBadge(goodsInfoStorage)
+	pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
 })
 onPullDownRefresh(() => {
 	console.log("下拉刷新")

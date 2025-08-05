@@ -54,7 +54,7 @@
 			<text style="color: #999;font-weight: 500;">—</text> {{ t('guessLike') }} <text
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
-		<image-flow v-if="searchList.length > 0" :listF="searchList"></image-flow>
+		<image-flow v-if="searchList.length > 0" :listF="searchList" :pageGoodsNumberObj="pageGoodsNumberObj"></image-flow>
 		<null-msg v-else style="margin-top: 300rpx;"></null-msg>
 		<up-loadmore v-if="isNullMsg && searchList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')"
 		:loadmore-text="t('tips.loadmoreText')" 
@@ -196,11 +196,13 @@
 		}
 	}
 	const searchInputEl = ref(null)
+	const pageGoodsNumberObj = ref({})
 	onShow(() => {
 		// nextTick(() => {
 		// 	console.log(searchInputEl.value)
 		// 	// searchInputEl?.value?.focus()
 		// })
+		pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
 	})
 	onLoad((options) => {
 		searchHistory.value = uni.getStorageSync('searchHistory') || []

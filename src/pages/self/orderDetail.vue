@@ -1,14 +1,15 @@
 <template>
 	<view class="flex flex-dc flex-ac cor-4">
 		<view class=" bg-f bor-20 ov-h flex flex-dc flex-ac mar-t24" style="width: 700rpx;min-height: 240rpx;">
-			<view class=" bg-g" style="  height: 20rpx; width: 700rpx;"></view>
+			<!-- <view class=" bg-g" style="  height: 20rpx; width: 700rpx;"></view> -->
 			<view class="bor-b2sf0 flex flex-dc flex-jc" style="width: 650rpx;min-height: 120rpx;">
 				<view class=" font-32 font-B" style="margin-top: 20rpx;">
-					{{ orderStateArr[orderInfo.orderState] }}
+					<!-- {{ orderStateArr[orderInfo.orderState] }} -->
+					  {{ orderInfo.orderStateDes }}
 				</view>
-				<view class=" font-26" style="margin-top: 18rpx;">
+				<!-- <view class=" font-26" style="margin-top: 18rpx;">
 					{{ orderInfo.orderStateDes }}
-				</view>
+				</view> -->
 
 				<view v-if="showSuccess||orderInfo.orderState===0" class="" style="width: 650rpx;height: 920rpx;">
 					<view v-if="showSuccess" class="flex flex-jc flex-ac pos-a z-5 tst-3" style="background: rgba(255, 255, 255, 0); width: 650rpx;height: 920rpx;"
@@ -184,10 +185,34 @@
 						{{ orderInfo.createTime }}
 					</view>
 				</view>
+				<view v-if="orderInfo.refundInfo?.refundCause" class=" flex flex-jb mar-t30" style="margin-bottom: 30rpx;">
+					<view class="cor-8" style="min-width: 140rpx;">
+						{{ t("orderDetail.refundCause") }}
+					</view>
+					<view class="" style="text-align: right;">
+						{{ orderInfo.refundInfo?.refundCause}}
+					</view>
+				</view>
+				<view v-if="orderInfo.refundInfo?.refundAmount" class=" flex flex-jb mar-t30" style="margin-bottom: 30rpx;">
+					<view class="cor-8" style="min-width: 140rpx;">
+						{{ t("orderDetail.refundAmount") }}
+					</view>
+					<view class="cor-g font-w6 font-32" style="text-align: right;">
+						{{ t("money") }}{{ ((orderInfo.refundInfo?.refundAmount||0)/100).toFixed(2)}}
+					</view>
+				</view>
+				<view v-if="orderInfo.refundInfo?.refundRefuse" class=" flex flex-jb mar-t30" style="margin-bottom: 30rpx;">
+					<view class="cor-8" style="min-width: 140rpx;">
+						{{ t("orderDetail.refundRefuse") }}
+					</view>
+					<view class="" style="text-align: right;">
+						{{ orderInfo.refundInfo?.refundRefuse}}
+					</view>
+				</view>
 			</view>
 		</view>
 
-		<view class="" style="height: 40rpx;">
+		<view class="" style="height: 100rpx;">
 
 		</view>
 
@@ -414,19 +439,26 @@
 	})
 
 	onBackPress(() => {
-		clearTimeout(postTimer)
-		baseInfoNumber.value=60
-		console.log(baseInfoNumber.value)
+		console.log(orderListStatus.value,'111111111111111111111111111111')
 		
+		// return true
+		// 清理定时器
+		clearTimeout(postTimer)
+		baseInfoNumber.value = 60
+		
+		// 根据状态决定是否阻止返回
 		if (orderListStatus.value) {
-			// uni.navigateBack()
+			// 如果orderListStatus为true，阻止返回
+			console.log('阻止返回操作')
+			return false // 返回true表示阻止默认的返回行为
 		} else {
+			// 如果orderListStatus为false，执行自定义跳转
+			console.log('执行自定义跳转')
 			uni.switchTab({
 				url: '/pages/cart/cart'
 			})
-			// uni.navigateBack()
+			return true // 返回true阻止默认的返回行为，因为我们已经执行了自定义跳转
 		}
-		return false
 	})
 </script>
 

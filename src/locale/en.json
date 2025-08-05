@@ -274,6 +274,9 @@
     "orderMessage": "e订单信息",
     "orderID": "e订单ID",
     "orderTime": "e下单时间",
-    "orderNumber": "e订单编号"
+    "orderNumber": "e订单编号",
+    "refundCause": "e退款原因",
+    "refundAmount": "e退款金额",
+    "refundRefuse": "e退款拒绝原因"
   }
 }

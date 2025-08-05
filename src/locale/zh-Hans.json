@@ -274,6 +274,9 @@
     "orderMessage": "订单信息",
     "orderID": "订单ID",
     "orderTime": "下单时间",
-    "orderNumber": "订单编号"
+    "orderNumber": "订单编号",
+    "refundCause": "退款原因",
+    "refundAmount": "退款金额",
+    "refundRefuse": "退款拒绝原因"
   }
 }

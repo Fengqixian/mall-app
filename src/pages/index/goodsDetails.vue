@@ -137,6 +137,7 @@
 			</view>
 
 		</view>
+		
 	</view>
 </template>
 

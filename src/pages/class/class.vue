@@ -342,6 +342,8 @@
 				}
 				uni.setStorageSync('goodsNumberObj', goodsNumberObj)
 				
+				pageGoodsNumberObj.value = goodsNumberObj
+
 				uni.showToast({
 					title: t('tips.addSuccess'),
 					icon: 'none'

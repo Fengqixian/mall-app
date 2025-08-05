@@ -449,14 +449,14 @@ onShow(() => {
 	align-items: center;
 }
 
-// #ifdef H5
+// #ifdef H5 
 .bottom {
 	bottom: 100rpx;
 }
 
 // #endif
 
-// #ifdef APP-PLUS
+// #ifdef APP-PLUS || MP
 .bottom {
 	bottom: 0;
 }

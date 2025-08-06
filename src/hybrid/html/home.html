@@ -239,7 +239,8 @@
             console.log('h5')
             // window.postMessage(data, '*')
             localStorage.setItem('location',JSON.stringify({data,type:'object'}))
-            uni.navigateBack();
+            // uni.navigateBack();
+            history.back()
         }
 
 

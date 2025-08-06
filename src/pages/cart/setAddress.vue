@@ -189,7 +189,7 @@
 	}
 	// ---------------------------------------
 	function initAddress(){
-		let componentsLen = addressInfo.value?.address_components.length||0
+		let componentsLen = addressInfo.value?.address_components?.length||0
 		//最后一位是邮编
 		if((addressInfo.value.address_components[componentsLen-1].long_name)-0!=NaN){
 			addressInfo.value.address_components.pop()

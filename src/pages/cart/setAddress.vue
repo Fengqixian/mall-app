@@ -251,6 +251,7 @@
 		console.log(getApp().globalData.addressInfo);
 		addressInfo.value = getApp().globalData.addressInfo
 		initAddress()
+		console.log(uni.getStorageSync('location'),109109000000000000000)
 	})
 	onHide(() => {
 		getApp().globalData.addressInfo = null

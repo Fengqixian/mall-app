@@ -227,7 +227,7 @@
 		console.log(data)
 		if(data.code===200){
 			uni.showToast({
-				title:t('tips.success'),
+				title:t('tips.addSuccess'),
 				icon:'none',
 				mask:true
 			})

@@ -170,15 +170,16 @@
 
     // 向原生应用发送消息并返回
     function onBack(data) {
-        // var timer = setInterval(function () {
+        var timer = setInterval(function () {
             if (window.uni) { // 检查uni对象是否存在
                 console.log('onBack',data)
-                // clearInterval(timer); // 清除定时器
+                clearInterval(timer); // 清除定时器
                 uni.postMessage({ data: data }); // 向原生应用发送消息
-                localStorage.setItem('location',JSON.stringify(data))
+                localStorage.setItem('location',JSON.stringify({data,type:'object'}))
                 uni.navigateBack(); // 返回上一页
+                history.back()
             }
-        // }, 10); // 每10毫秒检查一次
+        }, 10); // 每10毫秒检查一次
     }
 
     // 初始化Vue应用

@@ -106,6 +106,7 @@
 	onShow(() => {
 		addressListArray.value = []
 		getAddressList()
+		console.log(uni.getStorageSync('location'),109109000000000000000)
 	})
 </script>
 

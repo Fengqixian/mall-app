@@ -174,7 +174,7 @@
             if (window.uni) { // 检查uni对象是否存在
                 clearInterval(timer); // 清除定时器
                 uni.postMessage({ data: data }); // 向原生应用发送消息
-                uni.navigateBack(); // 返回上一页
+                // uni.navigateBack(); // 返回上一页
             }
         }, 10); // 每10毫秒检查一次
     }

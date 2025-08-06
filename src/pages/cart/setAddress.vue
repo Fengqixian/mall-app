@@ -94,10 +94,10 @@
 			style="width: 700rpx; margin-top: 100rpx;height: 88rpx;border-radius: 12rpx;">
 			{{ t('setAddress.save') }}
 		</view>
-		<view class=" cor-f flex flex-ac flex-jc"
+		<!-- <view class=" cor-f flex flex-ac flex-jc"
 			style="background: #dfdfdf; width: 700rpx; margin-top: 30rpx;height: 88rpx;border-radius: 12rpx;">
 			{{ t('setAddress.delete') }}
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -226,17 +226,26 @@
 		let data = await post('/user/address/create',_pushParams)
 		console.log(data)
 		if(data.code===200){
-			uni.showModal({
-				title:t('tips.prompt'),
-				content:t('tips.clickBack'),
-				showCancel:false,
-				success: (res) => {
-					console.log(res)
-				}
+			uni.showToast({
+				title:t('tips.success'),
+				icon:'none',
+				mask:true
 			})
+			setTimeout(()=>{
+				uni.navigateBack()
+			},1000)
+			// uni.showModal({
+			// 	title:t('tips.prompt'),
+			// 	content:t('tips.clickBack'),
+			// 	showCancel:false,
+			// 	success: (res) => {
+			// 		console.log(res)
+			// 	}
+			// })
 		}else{
 			uni.showToast({
-				title:data.message
+				title:data.message,
+				icon:'none'
 			})
 		}
 	}

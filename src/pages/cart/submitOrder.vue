@@ -172,7 +172,8 @@
 <script setup>
 	import {
 		onLoad,
-		onShow
+		onShow,
+		onBackPress
 	} from '@dcloudio/uni-app'
 	import {
 		post
@@ -251,7 +252,7 @@
 	async function getAddressList() {
 		const res = await post('/user/address/default')
 		if (res.code == 200) {
-			addressListObj.value = res.data
+			addressListObj.value = res.data||{}
 		} else {
 			uni.showToast({
 				title: res.message,
@@ -280,6 +281,10 @@
 			getAddressList()	
 		}
 	})
+
+	// onBackPress(()=>{
+	// 	uni.removeStorageSync('address')
+	// })
 
 	async function submitOrder() {
 		let params = {

@@ -247,8 +247,8 @@ const options1 = reactive([{
 async function deleteGoods(id) {
 	console.log(id)
 	uni.showModal({
-		title: '提示',
-		content: '确定要删除选中商品吗？',
+		title: t('tips.prompt'),
+		content: t('tips.deleteGoods'),
 		success: (res) => {
 			if (res.confirm) {
 				goodsInfoArray.value = goodsInfoArray.value.filter(item => item.id !== id.name)

@@ -12,7 +12,9 @@
     "refundSuccess": "t退款申请成功",
 	"loadingText":"t正在加载",
 	"loadmoreText":"t加载更多",
-	"nomoreText":"t没有更多了"
+	"nomoreText":"t没有更多了",
+	"deleteAddress":"t确定要删除该地址吗？",
+	"deleteGoods":"t确定要删除该商品吗？"
   },
   "uni.showModal.cancel": "t取消",
   "uni.showModal.confirm": "t确定",

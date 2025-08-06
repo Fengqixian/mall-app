@@ -170,13 +170,15 @@
 
     // 向原生应用发送消息并返回
     function onBack(data) {
-        var timer = setInterval(function () {
+        // var timer = setInterval(function () {
             if (window.uni) { // 检查uni对象是否存在
-                clearInterval(timer); // 清除定时器
+                console.log('onBack',data)
+                // clearInterval(timer); // 清除定时器
                 uni.postMessage({ data: data }); // 向原生应用发送消息
-                // uni.navigateBack(); // 返回上一页
+                localStorage.setItem('location',JSON.stringify(data))
+                uni.navigateBack(); // 返回上一页
             }
-        }, 10); // 每10毫秒检查一次
+        // }, 10); // 每10毫秒检查一次
     }
 
     // 初始化Vue应用
@@ -336,7 +338,7 @@
                     });
                 },
                 // 使用反向地理编码获取详细地址信息
-                get_formatted_address(lat, lng) {
+                get_formatted_address(lat, lng,isReturn) {
                     // 使用反向地理编码获取详细地址信息
                     const geocoder = new google.maps.Geocoder(); // 创建地理编码器实例
                     const latLng = new google.maps.LatLng(lat, lng); // 创建经纬度对象
@@ -353,8 +355,9 @@
                                     address_components:results[0].address_components // 地址组件
                                 }
                                 console.log('paramsObj',paramsObj)
-                                    // return
-                                    // onBack(paramsObj) // 返回数据到原生应用
+                                if(isReturn){
+                                    onBack(paramsObj) // 返回数据到原生应用
+                                }
                             } else {
                                 alert('未找到对应的地址信息');
                             }
@@ -365,12 +368,13 @@
                 },
                 // 完成选择地址
                 completeSelection() {
+                    console.log('completeSelection',this.selectedPlace)
                     if (this.selectedPlace) {
                         // 如果有选中的地点，获取其经纬度
                         const lat = this.selectedPlace.geometry.location.lat();
                         const lng = this.selectedPlace.geometry.location.lng();
                         // 获取格式化地址
-                        this.get_formatted_address(lat, lng)
+                        this.get_formatted_address(lat, lng,true)
                     } else if (this.addressValue) {
                         // 如果没有选中备选地址但输入框有内容，尝试获取该地址信息
                         console.log('this.addressValue',277)
@@ -454,7 +458,7 @@
                         this.center.lng = event.latLng.lng();
                         this.map.setCenter(this.center);
                         //获取地址信息
-                        this.get_formatted_address(this.center.lat, this.center.lng);
+                        this.get_formatted_address(this.center.lat, this.center.lng,false);
 
                         //修改标记点
                         if (this.mapMarker) {

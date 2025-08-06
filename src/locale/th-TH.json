@@ -36,6 +36,7 @@
   "pages.orderDetail": "t订单详情",
   "pages.search": "t搜索",
   "pages.goodsDetails":"t商品详情",
+  "pages.webview": "t地址选择",
   "home": {
     "title": "t首页",
     "getSite": "t获取当前地址",

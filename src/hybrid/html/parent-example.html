@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>父页面示例 - 接收地图选择结果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .map-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .button-group {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #3367d6;
+        }
+        
+        .result-container {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 3px;
+            border-left: 3px solid #4285f4;
+        }
+        
+        .result-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .result-value {
+            color: #666;
+            margin-left: 10px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>地图位置选择器</h1>
+            <p>点击下方按钮打开地图选择器，选择位置后会自动返回结果</p>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn" onclick="openMapSelector()">打开地图选择器</button>
+            <button class="btn" onclick="clearResults()">清空结果</button>
+            <button class="btn" onclick="checkLocalStorage()">检查本地存储</button>
+        </div>
+        
+        <div id="mapContainer" class="map-container hidden">
+            <iframe id="mapIframe" class="map-iframe" src="./index.html?lang=zh"></iframe>
+        </div>
+        
+        <div id="resultContainer" class="result-container hidden">
+            <h3>选择结果：</h3>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // 存储接收到的数据
+        let receivedData = null;
+        
+        // 监听来自iframe的消息
+        window.addEventListener('message', function(event) {
+            console.log('收到iframe消息:', event.data);
+            
+            // 验证消息来源（可选）
+            // if (event.origin !== 'http://your-domain.com') return;
+            
+            const { type, data, timestamp } = event.data;
+            
+            switch(type) {
+                case 'MAP_LOCATION_SELECTED':
+                    // 接收到地图选择结果
+                    receivedData = data;
+                    displayResults(data);
+                    hideMapContainer();
+                    break;
+                    
+                case 'CLOSE_MAP_IFRAME':
+                    // 接收到关闭iframe的请求
+                    hideMapContainer();
+                    break;
+                    
+                default:
+                    console.log('未知消息类型:', type);
+            }
+        });
+        
+        // 打开地图选择器
+        function openMapSelector() {
+            const mapContainer = document.getElementById('mapContainer');
+            const mapIframe = document.getElementById('mapIframe');
+            
+            // 设置iframe的src（可以传递初始参数）
+            const params = new URLSearchParams({
+                lang: 'zh',
+                lat: '39.9042',  // 北京坐标
+                lng: '116.4074'
+            });
+            
+            mapIframe.src = `./index.html?${params.toString()}`;
+            mapContainer.classList.remove('hidden');
+            
+            // 隐藏结果容器
+            document.getElementById('resultContainer').classList.add('hidden');
+        }
+        
+        // 隐藏地图容器
+        function hideMapContainer() {
+            document.getElementById('mapContainer').classList.add('hidden');
+        }
+        
+        // 显示选择结果
+        function displayResults(data) {
+            const resultContainer = document.getElementById('resultContainer');
+            const resultContent = document.getElementById('resultContent');
+            
+            resultContent.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">地址：</span>
+                    <span class="result-value">${data.formatted_address}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">纬度：</span>
+                    <span class="result-value">${data.lat}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">经度：</span>
+                    <span class="result-value">${data.lng}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">地址组件：</span>
+                    <span class="result-value">${JSON.stringify(data.address_components, null, 2)}</span>
+                </div>
+            `;
+            
+            resultContainer.classList.remove('hidden');
+            
+            // 可以在这里处理数据，比如发送到服务器
+            console.log('处理选择结果:', data);
+        }
+        
+        // 清空结果
+        function clearResults() {
+            receivedData = null;
+            document.getElementById('resultContainer').classList.add('hidden');
+            document.getElementById('resultContent').innerHTML = '';
+        }
+        
+        // 检查本地存储
+        function checkLocalStorage() {
+            const storedData = localStorage.getItem('selectedLocation');
+            if (storedData) {
+                try {
+                    const data = JSON.parse(storedData);
+                    console.log('本地存储的数据:', data);
+                    displayResults(data);
+                } catch (error) {
+                    console.error('解析本地存储数据失败:', error);
+                }
+            } else {
+                console.log('本地存储中没有数据');
+                alert('本地存储中没有数据');
+            }
+        }
+        
+        // 页面加载时检查URL参数
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lat = urlParams.get('lat');
+            const lng = urlParams.get('lng');
+            const address = urlParams.get('address');
+            
+            if (lat && lng && address) {
+                // 如果URL中有参数，说明是从地图页面返回的
+                const data = {
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng),
+                    formatted_address: decodeURIComponent(address),
+                    address_components: []
+                };
+                
+                displayResults(data);
+                console.log('从URL参数获取的数据:', data);
+            }
+        });
+    </script>
+</body>
+</html> 

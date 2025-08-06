@@ -168,8 +168,27 @@
         });
     }
 
+    // 判断是否是UniApp环境
+function isUniApp() {
+    return typeof uni !== 'undefined';
+}
+
+// 判断是否是原生App环境
+function isNativeApp() {
+    if (!isUniApp()) return false;
+    const ua = navigator.userAgent.toLowerCase();
+    return ua.indexOf('uni-app') > -1 && ua.indexOf('html5plus') > -1;
+}
+
+
     // 向原生应用发送消息并返回
     function onBack(data) {
+        if(isNativeApp()){
+            alert("原生")
+        }else{
+            alert("h5")
+        }
+        return
         var timer = setInterval(function () {
             if (window.uni) { // 检查uni对象是否存在
                 console.log('onBack',data)

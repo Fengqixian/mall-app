@@ -168,15 +168,148 @@
         });
     }
 
+    // 环境检测函数 - 判断当前运行环境
+    function detectEnvironment() {
+        const env = {
+            isUniApp: false,           // 是否在uni-app环境中
+            isInIframe: false,         // 是否在iframe中
+            isInWebView: false,        // 是否在WebView中
+            isInBrowser: false,        // 是否在普通浏览器中
+            isInApp: false,            // 是否在原生App中
+            userAgent: navigator.userAgent,
+            platform: 'unknown'
+        };
+
+        // 检测uni-app环境
+        if (typeof window.uni !== 'undefined') {
+            env.isUniApp = true;
+            env.isInApp = true;
+            env.platform = 'uni-app';
+        }
+
+        // 检测是否在iframe中
+        if (window.self !== window.top) {
+            env.isInIframe = true;
+            env.isInBrowser = true;
+            env.platform = 'iframe';
+        }
+
+        // 检测WebView环境
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isWebView = (
+            userAgent.includes('wv') || // Android WebView
+            userAgent.includes('webview') || // iOS WebView
+            userAgent.includes('mobile') && userAgent.includes('safari') && !userAgent.includes('chrome') || // iOS Safari
+            userAgent.includes('android') && userAgent.includes('chrome') && userAgent.includes('mobile') // Android Chrome
+        );
+
+        if (isWebView && !env.isUniApp) {
+            env.isInWebView = true;
+            env.isInApp = true;
+            env.platform = 'webview';
+        }
+
+        // 检测普通浏览器环境
+        if (!env.isInIframe && !env.isInWebView && !env.isUniApp) {
+            env.isInBrowser = true;
+            env.platform = 'browser';
+        }
+
+        // 特殊检测：uni-app的WebView
+        if (env.isUniApp && env.isInWebView) {
+            env.platform = 'uni-app-webview';
+        }
+
+        console.log('环境检测结果:', env);
+        return env;
+    }
+
     // 向原生应用发送消息并返回
     function onBack(data) {
-        var timer = setInterval(function () {
-            if (window.uni) { // 检查uni对象是否存在
-                clearInterval(timer); // 清除定时器
-                uni.postMessage({ data: data }); // 向原生应用发送消息
-                uni.navigateBack(); // 返回上一页
+        // 检测当前环境
+        const env = detectEnvironment();
+        
+        console.log('当前环境:', env.platform, '数据:', data);
+
+        if (env.isUniApp) {
+            // uni-app原生应用环境
+            var timer = setInterval(function () {
+                if (window.uni) {
+                    clearInterval(timer);
+                    uni.postMessage({ data: data });
+                    uni.navigateBack();
+                }
+            }, 10);
+        } else if (env.isInIframe) {
+            // H5内嵌在iframe中的场景
+            try {
+                // 方式1: 使用postMessage向父窗口发送消息
+                window.parent.postMessage({
+                    type: 'MAP_LOCATION_SELECTED',
+                    data: data,
+                    timestamp: Date.now(),
+                    platform: env.platform
+                }, '*');
+                
+                // 方式2: 同时通过URL参数传递（适用于简单数据）
+                const urlParams = new URLSearchParams();
+                urlParams.set('lat', data.lat);
+                urlParams.set('lng', data.lng);
+                urlParams.set('address', encodeURIComponent(data.formatted_address));
+                
+                // 方式3: 存储到localStorage供父页面读取
+                localStorage.setItem('selectedLocation', JSON.stringify({
+                    ...data,
+                    timestamp: Date.now(),
+                    platform: env.platform
+                }));
+                
+                console.log('已向父页面发送数据:', data);
+                
+                // 通知父页面关闭iframe
+                window.parent.postMessage({
+                    type: 'CLOSE_MAP_IFRAME',
+                    timestamp: Date.now()
+                }, '*');
+                
+            } catch (error) {
+                console.error('向父页面发送数据失败:', error);
+                alert('数据传递失败，请重试');
             }
-        }, 10); // 每10毫秒检查一次
+        } else if (env.isInWebView) {
+            // 在WebView中（非uni-app）
+            try {
+                // 尝试使用postMessage
+                window.parent.postMessage({
+                    type: 'MAP_LOCATION_SELECTED',
+                    data: data,
+                    timestamp: Date.now(),
+                    platform: env.platform
+                }, '*');
+                
+                // 同时存储到localStorage
+                localStorage.setItem('selectedLocation', JSON.stringify({
+                    ...data,
+                    timestamp: Date.now(),
+                    platform: env.platform
+                }));
+                
+                console.log('WebView环境，已发送数据:', data);
+                
+            } catch (error) {
+                console.error('WebView数据发送失败:', error);
+                // 降级到localStorage
+                localStorage.setItem('selectedLocation', JSON.stringify({
+                    ...data,
+                    timestamp: Date.now(),
+                    platform: env.platform
+                }));
+            }
+        } else {
+            // 独立H5页面环境
+            console.log('独立H5页面，选中数据:', data);
+            alert(`已选择地址: ${data.formatted_address}\n纬度: ${data.lat}\n经度: ${data.lng}`);
+        }
     }
 
     // 初始化Vue应用

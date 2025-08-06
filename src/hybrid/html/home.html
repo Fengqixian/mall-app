@@ -175,9 +175,9 @@
                 console.log('onBack',data)
                 clearInterval(timer); // 清除定时器
                 uni.postMessage({ data: data }); // 向原生应用发送消息
+                window.postMessage(data,'*')
                 localStorage.setItem('location',JSON.stringify({data,type:'object'}))
                 uni.navigateBack(); // 返回上一页
-                history.back()
             }
         }, 10); // 每10毫秒检查一次
     }

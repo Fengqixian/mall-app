@@ -291,7 +291,7 @@
 			"userId": uni.getStorageSync('userInfo').userId
 		}
 		if(params.deliveryType===1){
-			delete params.deliveryTime
+			params.deliveryTime = sendColumns[0][sendindex.value].label
 		}
 		for (const item of orderArr.value.goodsList) {
 			params.goodsList.push({
@@ -299,8 +299,6 @@
 				"goodsNum": item.orderQuantity
 			})
 		}
-
-
 		let res = await post('/order/place',params)
 		if(res.code===200){
 			let uniStorage = uni.getStorageSync('goodsInfo')

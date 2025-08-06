@@ -1,10 +1,10 @@
 <template>
 	<view class=" flex flex-dc flex-ac">
 		<view class=" flex flex-dc flex-ac bg-f" style="width: 750rpx;margin-top: 20rpx;">
-			<view v-for="item in addressListArray" class=" flex flex-ac flex-jb bor-b2sf0"
+			<view v-for="item in addressListArray" @tap="checkAddress(item)" class=" flex flex-ac flex-jb bor-b2sf0"
 				style="height: 160rpx;width: 700rpx; ">
 				<radio style="display: inline-block; transform:scale(0.7)" borderColor="#d1d1d1"
-					activeBorderColor='#21cc5b' :checked="item.status" @tap="checkAddress(item)" color='#21cc5b'>
+					activeBorderColor='#21cc5b' :checked="item.status" @tap.stop="checkAddress(item)" color='#21cc5b'>
 				</radio>
 				<view class=" flex flex-dc flex-jc" style="width: calc(650rpx - 33rpx - 64rpx);height: 130rpx;">
 					<view class="flex font-26 cor-4 text-2d" style="line-height: 36rpx;">
@@ -15,7 +15,7 @@
 						{{ item.country + item.province + item.city + item.district + item.detailed_address }}
 					</view>
 					<view class=" font-26 cor-8" style="margin-top: 12rpx;">
-						 {{ item.receiver_name }} {{ item.receiver_phone }}
+						{{ item.receiver_name }} {{ item.receiver_phone }}
 					</view>
 				</view>
 				<up-icon style=" opacity: 0; display: inline-block;border: 2rpx solid #999;border-radius: 10rpx;"
@@ -42,62 +42,71 @@
 </template>
 
 <script setup>
-import nullMsg from "@/components/nullMsg.vue"
-import { ref, computed } from 'vue'
-import { post } from "@/utils/request.js"
-import { onShow } from "@dcloudio/uni-app"
-import {
-	useI18n
-} from 'vue-i18n'
-const {
-	t
-} = useI18n()
-const radioStatus = false
-function goSetAddress() {
-	if (isSelectAddress.value) {
-		console.log(addressListArray.value.filter(item=>item.status))
-		uni.setStorageSync('address',addressListArray.value.filter(item=>item.status)[0])
-		uni.navigateBack()
-	} else {
-		uni.navigateTo({
-			url: '/pages/cart/setAddress'
-		})
-	}
+	import nullMsg from "@/components/nullMsg.vue"
+	import {
+		ref,
+		computed
+	} from 'vue'
+	import {
+		post
+	} from "@/utils/request.js"
+	import {
+		onShow
+	} from "@dcloudio/uni-app"
+	import {
+		useI18n
+	} from 'vue-i18n'
+	const {
+		t
+	} = useI18n()
+	const radioStatus = false
 
-}
-const isSelectAddress = computed(() => {
-	return addressListArray.value.some(item => item.status)
-})
-function checkAddress(item) {
+	function goSetAddress() {
+		if (isSelectAddress.value) {
+			console.log(addressListArray.value.filter(item => item.status))
+			uni.setStorageSync('address', addressListArray.value.filter(item => item.status)[0])
+			uni.navigateBack()
+		} else {
+			uni.navigateTo({
+				url: '/pages/cart/setAddress'
+			})
+		}
 
-	if (item.status) {
-		item.status = false
-	} else {
-		for (const element of addressListArray.value) {
-			element.status = false
-		}
-		item.status = true
 	}
-}
-const addressListArray = ref([])
-async function getAddressList() {
-	const res = await post('/user/address/list')
-	if (res.code == 200) {
-		for (const element of res.data) {
-			element.status = false
-			addressListArray.value.push(element)
+	const isSelectAddress = computed(() => {
+		return addressListArray.value.some(item => item.status)
+	})
+
+	function checkAddress(item) {
+
+		if (item.status) {
+			item.status = false
+		} else {
+			for (const element of addressListArray.value) {
+				element.status = false
+			}
+			item.status = true
 		}
-	} else {
-		uni.showToast({
-			title: res.message,
-			icon: 'none'
-		})
 	}
-}
-onShow(() => {
-	addressListArray.value = []
-	getAddressList()
-})
+	const addressListArray = ref([])
+	async function getAddressList() {
+		const res = await post('/user/address/list')
+		if (res.code == 200) {
+			for (const element of res.data) {
+				element.status = false
+				addressListArray.value.push(element)
+			}
+		} else {
+			uni.showToast({
+				title: res.message,
+				icon: 'none'
+			})
+		}
+	}
+	onShow(() => {
+		addressListArray.value = []
+		getAddressList()
+	})
 </script>
 
 <style></style>

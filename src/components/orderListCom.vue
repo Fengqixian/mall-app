@@ -8,11 +8,13 @@
 						{{ itemMsg.payExpiredTime }}
 						<view class="font-16 box-border"
 							style=" border-radius: 6rpx; border: 2rpx solid #ffaa00; color: #ffaa00; margin-left: 10rpx;padding: 4rpx 6rpx;">
-							{{ t('orderList.orderListCom.storeDelivery') }}
+							<!-- {{ t('orderList.orderListCom.storeDelivery') }} -->
+							{{ sendColumns[0][itemMsg.deliveryType]?.label }}
 						</view>
 					</view>
 
 					<view class="">
+						
 						{{ orderStateArr[itemMsg.orderState] }}
 					</view>
 				</view>
@@ -79,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { post } from '@/utils/request'
 const { t, tm } = useI18n()
@@ -90,6 +92,9 @@ const props = defineProps({
 		default: {}
 	}
 })
+const sendColumns = reactive([
+		tm('submitOrder.sendArr')
+	]);
 const orderStateArr = ref(tm('orderDetail.status'))
 console.log(orderStateArr)
 function navOrderDetail() {

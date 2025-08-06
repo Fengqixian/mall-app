@@ -121,7 +121,7 @@
 				<up-icon style="display: inline-block;" name="home" color="#666" size="20"></up-icon>
 				<text style="margin-top: 8rpx;">{{ t('goodsDetails.home') }}</text>
 			</view>
-			<view class=" flex flex-dc flex-ac flex-jc font-20 cor-6" style="width: 94rpx;height: 72rpx;">
+			<view @tap="callPhone" class=" flex flex-dc flex-ac flex-jc font-20 cor-6" style="width: 94rpx;height: 72rpx;">
 				<up-icon style="display: inline-block;" name="phone" color="#666" size="20"></up-icon>
 				<text style="margin-top: 8rpx;">{{ t('goodsDetails.customerService') }}</text>
 			</view>
@@ -256,6 +256,28 @@
 		if (res.code == 200) {
 			goodsProtocol.value = res.data
 		}
+	}
+	
+	
+	function callPhone(){
+		let appConfig = uni.getStorageSync('appConfig')
+		let phone = appConfig?.SERVICE_TELL?.value||null
+		if(!phone){
+			uni.showToast({
+				title:'error',
+				mask:true
+			})
+			return
+		}
+	   uni.makePhoneCall({
+		  phoneNumber: phone,
+		  success() {
+			console.log('拨打成功了');
+		  },
+		  fail() {
+			console.log('拨打失败了');
+		  }
+		})
 	}
 	onLoad((e) => {
 		idValue.value = e.id

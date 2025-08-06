@@ -1,332 +1,446 @@
 <!DOCTYPE html>
-<html style="width: 100vw;height: 100vh;">
+<html lang="en">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>maps</title>
-	<!-- 添加 places 库 -->
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7n-APGM4DbGl9ezhWoz2mf0kxfdGL9Do&sensor=false&libraries=places"></script>
-	<script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-		}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>maps</title>
+    <style>
+        * {
+            margin: 0; /* 重置所有元素的外边距 */
+            padding: 0; /* 重置所有元素的内边距 */
+        }
 
-		.aaa {
-			border: 1px solid red;
-			box-sizing: border-box;
-		}
+        /* 添加 v-cloak 样式，防止Vue模板闪烁 */
+        [v-cloak] {
+            display: none; /* 在Vue加载完成前隐藏元素 */
+        }
 
-		#top-bar {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100vw;
-			z-index: 10;
-			background: #fff;
-			display: flex;
-			align-items: center;
-			padding: 10px;
-			box-sizing: border-box;
-			border-bottom: 1px solid #eee;
-			height: 12vw;
-		}
+        .aaa {
+            border: 1px solid red; /* 红色边框，用于调试 */
+            box-sizing: border-box; /* 盒模型包含边框和内边距 */
+        }
 
-		#search-input {
-			flex: 1;
-			padding: 10px;
-			font-size: 3.4vw;
-			border: 1px solid #eee;
-			/* border: 1px solid red; */
-			border-radius: 4px;
-			height: 5vw;
-			width: 300px;
-		}
+        /* 搜索容器样式 */
+        .search-container {
+            padding: 0 10px; /* 左右内边距10px */
+            box-sizing: border-box; /* 盒模型包含边框和内边距 */
+            display: flex; /* 弹性布局 */
+            align-items: center; /* 垂直居中对齐 */
+        }
 
-		#search-input:focus {
-			border-color: #9cccfe;
-			outline: none;
-			/* 去除默认高亮 */
-			box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
-			/* 可选：增加轻微阴影高亮 */
-		}
+        /* 搜索输入框样式 */
+        .search-input {
+            box-sizing: border-box; /* 盒模型包含边框和内边距 */
+            width: 80%; /* 宽度占容器的80% */
+            height: 36px; /* 高度36px */
+            padding: 0 15px; /* 左右内边距15px */
+            border: 1px solid #ddd; /* 浅灰色边框 */
+            border-radius: 8px 0 0 8px; /* 左上和左下圆角 */
+            font-size: 14px; /* 字体大小14px */
+            outline: none; /* 移除焦点轮廓 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+            transition: border-color 0.3s; /* 边框颜色过渡动画 */
+            color: #444; /* 文字颜色 */
+        }
 
-		#done-btn {
-			margin-left: 10px;
-			color: #007aff;
-			background: none;
-			border: none;
-			font-size: 3.4vw;
-			cursor: pointer;
-		}
+        /* 搜索输入框焦点状态 */
+        .search-input:focus {
+            border-color: #4285f4; /* 焦点时边框变为蓝色 */
+        }
 
-		#results-list {
-			position: absolute;
-			top: 12vw;
-			left: 0;
-			width: 100vw;
-			max-height: 250px;
-			overflow-y: auto;
-			background: #fff;
-			z-index: 9;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-		}
+        /* 搜索按钮样式 */
+        .search-button {
+            width: 20%; /* 宽度占容器的20% */
+            height: 36px; /* 高度36px */
+            text-align: center; /* 文字居中对齐 */
+            line-height: 36px; /* 行高等于高度，实现垂直居中 */
+            background-color: #4285f4; /* 蓝色背景 */
+            color: white; /* 白色文字 */
+            border: none; /* 无边框 */
+            border-radius: 0 8px 8px 0; /* 右上和右下圆角 */
+            font-size: 14px; /* 字体大小14px */
+            cursor: pointer; /* 鼠标指针样式 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+            transition: background-color 0.3s; /* 背景色过渡动画 */
+        }
 
-		.result-item {
-			padding: 12px 16px;
-			border-bottom: 1px solid #f0f0f0;
-			cursor: pointer;
-			font-size: 3.4vw;
-		}
+        /* 搜索按钮悬停状态 */
+        .search-button:hover {
+            background-color: #3367d6; /* 悬停时背景色变深 */
+        }
 
-		.result-item:last-child {
-			border-bottom: none;
-		}
+        /* 预测结果项样式 */
+        .prediction-item {
+            border-bottom: 1px solid #f0f0f0; /* 底部浅灰色边框 */
+            color: #666; /* 灰色文字 */
+            font-size: 14px; /* 字体大小14px */
+            /* min-height: 36px; */
+            line-height: 18px; /* 行高18px */
+            padding: 6px 0; /* 上下内边距6px */
+            cursor: pointer; /* 鼠标指针样式 */
+            display: flex; /* 弹性布局 */
+            align-items: center; /* 垂直居中对齐 */
+        }
 
-		.result-item:hover {
-			background: #f5f5f5;
-		}
-
-		#googleMap {
-			position: absolute;
-			top: 12vw;
-			left: 0;
-			width: 100vw;
-			bottom: 0;
-			height: calc(100vh - 12vw);
-			z-index: 1;
-		}
-	</style>
+        /* 预测结果项悬停状态 */
+        .prediction-item:hover {
+            background-color: #f5f5f5; /* 悬停时背景色变浅 */
+        }
+    </style>
 </head>
 
 <body>
-	<div id="top-bar" class="">
-		<input type="text" id="search-input" placeholder="搜索位置" autocomplete="off" />
-		<button id="done-btn">完成</button>
-	</div>
-	<div id="results-list" style="display:none;"></div>
-	<div id="googleMap"></div>
-	<!-- <img id="center-marker" src="./dw.svg" style=" opacity: .8; color: #21cc5b; position:absolute;left:50%;top:calc(12vw + 50%);transform:translate(-50%,-100%);z-index:11;width:50px;height:50px;pointer-events:none;" /> -->
-	<script>
-		let map, marker, placesService, geocoder;
-		let resultsList = document.getElementById('results-list');
-		let searchInput = document.getElementById('search-input');
-		let doneBtn = document.getElementById('done-btn');
-		let selectedPlace = null; // 记录选中的地点
-		let centerLatLng = null;
-		let centerAddress = '';
-
-		const i18n = {
-			zh: {
-				placeholder: '搜索位置',
-				done: '完成'
-			},
-			en: {
-				placeholder: 'Search location',
-				done: 'Done'
-			},
-			th: {
-				placeholder: 'ค้นหาตำแหน่ง',
-				done: 'สำเร็จ'
-			},
-			// 可继续扩展更多语言
-		};
-
-		function getLang() {
-			const lang = getQueryParam('lang');
-			return (lang && i18n[lang]) ? lang : 'zh';
-		}
-		const currentLang = getLang();
-
-		function onBack(data) {
-			var timer = setInterval(function () {
-				if (window.uni) {
-					clearInterval(timer);
-					uni.postMessage({ data: data });
-					uni.navigateBack();
-				}
-			}, 10);
-		}
-
-		function getQueryParam(name) {
-			const url = window.location.search;
-			const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
-			const r = url.substr(1).match(reg);
-			if (r != null) return decodeURIComponent(r[2]);
-			return null;
-		}
-
-		function initialize() {
-			geocoder = new google.maps.Geocoder();
-
-			// 1. 获取URL参数
-			let lat = parseFloat(getQueryParam('lat'));
-			let lng = parseFloat(getQueryParam('lng'));
-			let defaultLocation = { lat: 39.9042, lng: 116.4074 }; // 默认北京
-
-			let centerLocation = defaultLocation;
-			if (!isNaN(lat) && !isNaN(lng)) {
-				centerLocation = { lat: lat, lng: lng };
-			}
-
-			map = new google.maps.Map(document.getElementById("googleMap"), {
-				center: centerLocation,
-				zoom: 12,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			});
-			marker = new google.maps.Marker({ map: map });
-			placesService = new google.maps.places.PlacesService(map);
-
-			// 2. 如果有URL参数，设置marker并逆地理编码
-			if (!isNaN(lat) && !isNaN(lng)) {
-				marker.setPosition(centerLocation);
-				geocoder.geocode({ location: centerLocation }, function (results, status) {
-					if (status === 'OK' && results && results[0]) {
-						searchInput.value = results[0].formatted_address;
-					}
-				});
-			} else {
-				// 3. 否则尝试定位到当前位置
-				if ("geolocation" in navigator) {
-					navigator.geolocation.getCurrentPosition(function (position) {
-						let latlng = {
-							lat: position.coords.latitude,
-							lng: position.coords.longitude
-						};
-						map.setCenter(latlng);
-						marker.setPosition(latlng);
-					});
-				}
-			}
-
-			searchInput.placeholder = i18n[currentLang].placeholder;
-			doneBtn.textContent = i18n[currentLang].done;
-
-			google.maps.event.addListener(map, 'click', function(event) {
-				const latlng = event.latLng;
-				geocoder.geocode({ location: latlng }, function(results, status) {
-					if (status === 'OK' && results && results[0]) {
-						const address = results[0].formatted_address;
-						searchInput.value = address;
-						selectedPlace = {
-							address: address,
-							lat: latlng.lat(),
-							lng: latlng.lng()
-						};
-						marker.setPosition(latlng);
-						map.setCenter(latlng);
-					}
-				});
-			});
-		}
-
-		// 搜索地点
-		function searchPlaces(query) {
-			if (!query) {
-				resultsList.style.display = 'none';
-				resultsList.innerHTML = '';
-				return;
-			}
-			let request = {
-				input: query,
-				location: map.getCenter(),
-				radius: 50000
-			};
-			let autocompleteService = new google.maps.places.AutocompleteService();
-			autocompleteService.getPlacePredictions(request, function (predictions, status) {
-				if (status !== google.maps.places.PlacesServiceStatus.OK || !predictions) {
-					resultsList.style.display = 'none';
-					resultsList.innerHTML = '';
-					return;
-				}
-				resultsList.innerHTML = '';
-				predictions.forEach(function (pred) {
-					let div = document.createElement('div');
-					div.className = 'result-item';
-					div.textContent = pred.description;
-					console.log(pred);
-					div.onclick = function () {
-						selectPlace(pred.place_id, pred.description);
-					};
-					resultsList.appendChild(div);
-				});
-				resultsList.style.display = 'block';
-			});
-		}
-
-		// 选中某个地点
-		function selectPlace(placeId, description) {
-			placesService.getDetails({ placeId: placeId }, function (place, status) {
-				if (status === google.maps.places.PlacesServiceStatus.OK) {
-					let location = place.geometry.location;
-					map.setCenter(location);
-					map.setZoom(17);
-					marker.setPosition(location);
-					resultsList.style.display = 'none';
-					resultsList.innerHTML = '';
-					// 保存选中信息
-					selectedPlace = {
-						address: description,
-						lat: location.lat(),
-						lng: location.lng()
-					};
-					searchInput.value = description; // 让输入框显示选中的地址
-				}
-			});
-		}
-
-		// 完成按钮逻辑
-		doneBtn.onclick = function () {
-			if (selectedPlace) {
-				console.log('选中地点信息:', selectedPlace); // 打印选中地点信息
-				onBack(selectedPlace);
-			} else {
-				// 没选则用输入框内容和当前地图中心，并逆地理编码获取详细地址
-				let center = map.getCenter();
-				geocoder.geocode({ location: center }, function (results, status) {
-					let address = searchInput.value.trim();
-					if (status === 'OK' && results && results[0]) {
-						address = results[0].formatted_address;
-					}
-					const info = {
-						address: address,
-						lat: center.lat(),
-						lng: center.lng()
-					};
-					console.log('地图中心点信息:', info); // 打印地图中心点信息
-					onBack(info);
-				});
-			}
-		};
-
-		// 输入监听
-		let searchTimer = null;
-		searchInput.oninput = function () {
-			clearTimeout(searchTimer);
-			let val = searchInput.value.trim();
-			searchTimer = setTimeout(function () {
-				searchPlaces(val);
-			}, 300);
-		};
-
-		// 初始化地图
-		google.maps.event.addDomListener(window, 'load', initialize);
-
-		function updateCenterInfo() {
-			centerLatLng = map.getCenter();
-			geocoder.geocode({ location: centerLatLng }, function (results, status) {
-				if (status === 'OK' && results && results[0]) {
-					centerAddress = removePostalCode(results[0].formatted_address);
-					searchInput.value = centerAddress;
-				}
-			});
-		}
-
-		google.maps.event.addListener(map, 'idle', updateCenterInfo);
-		updateCenterInfo(); // 初始化时也执行一次
-	</script>
+    <!-- Vue应用根容器 -->
+    <div id="app">
+        <!-- Google地图容器，占屏幕60%高度 -->
+        <div id="map" style="width: 100svw;height: 60svh;"></div>
+        <!-- 搜索和预测结果容器，占屏幕40%高度 -->
+        <div style="width: 100svw;height: 40svh;">
+            <!-- 搜索框和按钮容器 -->
+            <div class="search-container" style="height: 44px;display: flex;">
+                <!-- 搜索输入框，支持防抖搜索 -->
+                <input @input="debounceSearch" v-model="addressValue" type="text" class="search-input"
+                    :placeholder="i18nText.placeholder">
+                <!-- 完成按钮，点击后返回选中的地址信息 -->
+                <div @click="completeSelection" class="search-button">{{ i18nText.done }}</div>
+            </div>
+            <!-- 预测结果列表，当有预测结果时显示 -->
+            <div v-cloak v-if="predictions.length" id="predictions" style="height: calc(100% - 44px);overflow-y: scroll;padding: 0 10px;">
+                <!-- 预测结果项，点击可选择该地址 -->
+                <div v-for="(prediction, index) in predictions" :key="index" class="prediction-item"
+                    @click="selectPrediction(prediction)">
+                    {{ prediction.description }}
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
+<!-- 引入Vue.js框架 -->
+<script src="./vue.js"></script>
+<!-- 引入Google Maps API（含places库），语言参数将通过JS动态设置 -->
+<script id="google-maps-script"></script>
+<!-- 引入uni-app的webview桥接脚本，用于与原生应用通信 -->
+<script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
+
+<script>
+    // 获取URL参数的函数
+    function getQueryParam(name) {
+        const url = window.location.search; // 获取URL查询字符串
+        const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)'); // 创建正则表达式匹配参数
+        const r = url.substr(1).match(reg); // 匹配参数值
+        if (r != null) return decodeURIComponent(r[2]); // 如果匹配成功，返回解码后的参数值
+        return null; // 如果没有匹配到，返回null
+    }
+    
+    // 多语言配置对象
+    const i18n = {
+        zh: {
+            placeholder: '搜索位置', // 中文搜索框占位符
+            done: '完成' // 中文完成按钮文本
+        },
+        en: {
+            placeholder: 'Search location', // 英文搜索框占位符
+            done: 'Done' // 英文完成按钮文本
+        },
+        th: {
+            placeholder: 'ค้นหาตำแหน่ง', // 泰文搜索框占位符
+            done: 'สำเร็จ' // 泰文完成按钮文本
+        },
+        // 可继续扩展更多语言
+    };
+
+    // 获取当前语言设置
+    function getLang() {
+        const lang = getQueryParam('lang'); // 从URL参数获取语言设置
+        return (lang && i18n[lang]) ? lang : 'zh'; // 如果参数存在且支持该语言，返回该语言，否则默认中文
+    }
+    
+    // 动态加载Google Maps API
+    function loadGoogleMapsAPI() {
+        const lang = getQueryParam('lang') || 'zh-CN'; // 获取语言参数，默认中文
+        const script = document.getElementById('google-maps-script'); // 获取脚本元素
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyD7n-APGM4DbGl9ezhWoz2mf0kxfdGL9Do&libraries=places&sensor=false&language=${lang}`; // 设置API脚本源
+        return new Promise((resolve) => {
+            script.onload = resolve; // 脚本加载完成后解析Promise
+        });
+    }
+
+    // 向原生应用发送消息并返回
+    function onBack(data) {
+        var timer = setInterval(function () {
+            if (window.uni) { // 检查uni对象是否存在
+                clearInterval(timer); // 清除定时器
+                uni.postMessage({ data: data }); // 向原生应用发送消息
+                uni.navigateBack(); // 返回上一页
+            }
+        }, 10); // 每10毫秒检查一次
+    }
+
+    // 初始化Vue应用
+    loadGoogleMapsAPI().then(() => {
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    addressValue: "", // 地址输入框的值
+                    center: {
+                        lat: parseFloat(getQueryParam('lat')) || 35.86166, // 地图中心纬度，默认中国中心
+                        lng: parseFloat(getQueryParam('lng')) || 104.195397 // 地图中心经度，默认中国中心
+                    },
+                    zoom: 16, // 地图缩放级别
+                    map: null, // Google地图实例
+                    autocompleteService: null, // 自动完成服务实例
+                    predictions: [], // 搜索预测结果数组
+                    placesService: null, // 地点服务实例
+                    selectedPlace: null, // 当前选中的地点信息
+                    mapMarker: null, // 地图标记实例
+                    currentLang: getLang() // 获取当前语言设置
+                }
+            },
+            computed: {
+                // 根据当前语言返回对应的文本
+                i18nText() {
+                    return i18n[this.currentLang] || i18n.zh;
+                }
+            },
+            mounted() {
+                this.initMap(); // 初始化地图
+                this.autocompleteService = new google.maps.places.AutocompleteService(); // 初始化自动完成服务
+                this.placesService = new google.maps.places.PlacesService(this.map); // 初始化地点服务
+                // 初始化时获取当前位置信息
+                this.getCurrentLocationInfo();
+                this.clickMap();
+            },
+            methods: {
+                // 初始化Google地图
+                initMap() {
+                    this.map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: this.zoom, // 设置缩放级别
+                        center: this.center, // 设置地图中心
+                        disableDefaultUI: true, // 禁用默认UI控件
+                        mapTypeId: google.maps.MapTypeId.ROADMAP, // 设置地图类型为道路地图
+                        language: this.currentLang // 设置地图语言
+                    });
+
+                    // 创建初始标记
+                    this.mapMarker = new google.maps.Marker({
+                        position: this.center, // 标记位置
+                        map: this.map // 显示在地图上
+                    });
+                },
+                // 防抖函数，用于优化搜索性能
+                debounce(fn, delay) {
+                    let timer;
+                    return (...args) => {
+                        clearTimeout(timer);
+                        timer = setTimeout(() => {
+                            fn.apply(this, args);
+                        }, delay);
+                    };
+                },
+                // 防抖搜索方法
+                debounceSearch: function () {
+                    this.getPlacePredictions();
+                },
+                // 获取地点预测结果
+                getPlacePredictions() {
+                    if (!this.addressValue) {
+                        this.predictions = []; // 如果输入为空，清空预测结果
+                        return;
+                    }
+                    const request = {
+                        input: this.addressValue, // 搜索输入
+                        fields: ['name', 'geometry'] // 请求的字段
+                    };
+                    // 调用自动完成服务获取预测结果
+                    this.autocompleteService.getPlacePredictions(request, (predictions, status) => {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            console.log(predictions,205)
+                            this.predictions = predictions; // 更新预测结果
+                        } else {
+                            this.predictions = []; // 失败时清空结果
+                        }
+                    });
+                },
+                // 选择预测结果
+                selectPrediction(prediction) {
+                    console.log(prediction, 162)
+                    this.addressValue = prediction.description // 更新输入框为选中的描述
+                    const request = {
+                        placeId: prediction.place_id, // 地点ID
+                        fields: ['name', 'geometry'] // 请求的字段
+                    };
+                    // 获取地点详情
+                    this.placesService.getDetails(request, (place, status) => {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            this.map.setCenter(place.geometry.location); // 设置地图中心到选中位置
+                            this.map.setZoom(16); // 设置缩放级别
+                            // 移除旧的标记
+                            if (this.mapMarker) {
+                                this.mapMarker.setMap(null);
+                            }
+                            // 创建新的标记
+                            this.mapMarker = new google.maps.Marker({
+                                position: place.geometry.location, // 标记位置
+                                map: this.map, // 显示在地图上
+                                title: place.name // 标记标题
+                            });
+                            // 更新选中的地点
+                            this.selectedPlace = place;
+                            // 清空预测列表
+                            this.predictions = [];
+                        }
+                    });
+                },
+                // 获取详细地址信息
+                getDetailsMap(prediction){
+                    const request = {
+                        placeId: prediction.place_id, // 地点ID
+                        fields: ['name', 'geometry'] // 请求的字段
+                    };
+                    // 获取地点详情
+                    this.placesService.getDetails(request, (place, status) => {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            this.map.setCenter(place.geometry.location); // 设置地图中心
+                            this.map.setZoom(16); // 设置缩放级别
+                        }
+                    });
+                },
+                // 使用反向地理编码获取详细地址信息
+                get_formatted_address(lat, lng) {
+                    // 使用反向地理编码获取详细地址信息
+                    const geocoder = new google.maps.Geocoder(); // 创建地理编码器实例
+                    const latLng = new google.maps.LatLng(lat, lng); // 创建经纬度对象
+                    const request = { location: latLng }; // 反向地理编码请求
+                    // 反向地理编码
+                    geocoder.geocode(request, (results, status) => {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            if (results[0]) {
+                                this.addressValue = results[0].formatted_address // 更新地址输入框
+                                let paramsObj ={
+                                    lat:lat, // 纬度
+                                    lng:lng, // 经度
+                                    formatted_address:results[0].formatted_address, // 格式化地址
+                                    address_components:results[0].address_components // 地址组件
+                                }
+                                console.log('paramsObj',paramsObj)
+                                return
+                                onBack(paramsObj) // 返回数据到原生应用
+                            } else {
+                                alert('未找到对应的地址信息');
+                            }
+                        } else {
+                            alert(`反向地理编码失败: ${status}`);
+                        }
+                    });
+                },
+                // 完成选择地址
+                completeSelection() {
+                    if (this.selectedPlace) {
+                        // 如果有选中的地点，获取其经纬度
+                        const lat = this.selectedPlace.geometry.location.lat();
+                        const lng = this.selectedPlace.geometry.location.lng();
+                        // 获取格式化地址
+                        this.get_formatted_address(lat, lng)
+                    } else if (this.addressValue) {
+                        // 如果没有选中备选地址但输入框有内容，尝试获取该地址信息
+                        console.log('this.addressValue',277)
+                        const request = { address: this.addressValue }; // 地理编码请求
+                        const geocoder = new google.maps.Geocoder(); // 创建地理编码器
+                        geocoder.geocode(request, (results, status) => {
+                            if (status === google.maps.GeocoderStatus.OK) {
+                                const place = results[0]; // 获取第一个结果
+                                const lat = place.geometry.location.lat(); // 获取纬度
+                                const lng = place.geometry.location.lng(); // 获取经度
+                                this.addressValue = place.formatted_address // 更新地址输入框
+                                console.log('获取的地址信息:', place);
+                                console.log('获取地址的经纬度:', { lat, lng });
+                                let paramsObj ={
+                                    lat:lat, // 纬度
+                                    lng:lng, // 经度
+                                    formatted_address:place.formatted_address, // 格式化地址
+                                    address_components:place.address_components // 地址组件
+                                }
+                                console.log('paramsObjBack',paramsObj)
+                                onBack(paramsObj) // 返回数据到原生应用
+                            } else {
+                                alert('无法获取该地址信息，请重新输入或选择备选地址');
+                            }
+                        });
+                    } else {
+                        alert('请输入或选择地址');
+                    }
+                },
+                // 获取当前位置信息
+                getCurrentLocationInfo() {
+                    const geocoder = new google.maps.Geocoder(); // 创建地理编码器实例
+                    const latLng = new google.maps.LatLng(this.center.lat, this.center.lng); // 创建经纬度对象
+                    geocoder.geocode({ location: latLng }, (results, status) => {
+                        if (status === google.maps.GeocoderStatus.OK && results[0]) {
+                            const address = results[0]; // 获取地址结果
+                            this.addressValue = address.formatted_address; // 更新地址输入框
+
+                            // 解析地址组件
+                            const components = address.address_components; // 地址组件数组
+                            let addressInfo = {
+                                country: '', // 国家
+                                province: '', // 省份
+                                city: '', // 城市
+                                district: '', // 区县
+                                street: '' // 街道
+                            };
+
+                            // 遍历地址组件，提取不同级别的地址信息
+
+                            // components.forEach(component => {
+                            //     if (component.types.includes('country')) {
+                            //         addressInfo.country = component.long_name; // 国家名称
+                            //     } else if (component.types.includes('administrative_area_level_1')) {
+                            //         addressInfo.province = component.long_name; // 省级行政区
+                            //     } else if (component.types.includes('administrative_area_level_2')) {
+                            //         addressInfo.city = component.long_name; // 市级行政区
+                            //     } else if (component.types.includes('administrative_area_level_3')) {
+                            //         addressInfo.district = component.long_name; // 区县级行政区
+                            //     } else if (component.types.includes('route')) {
+                            //         addressInfo.street = component.long_name; // 街道名称
+                            //     }
+                            // });
+
+                            console.log('当前位置信息:', {
+                                formatted_address: address.formatted_address, // 格式化地址
+                                ...addressInfo, // 解析的地址信息
+                                location: {
+                                    lat: this.center.lat, // 纬度
+                                    lng: this.center.lng // 经度
+                                }
+                            });
+                        }
+                    });
+                },
+                //点击地图获取地址
+                clickMap(){
+                    this.map.addListener('click', (event) => {
+                        console.log('点击地图获取地址', event.latLng.lat(),event.latLng.lng());
+                        this.center.lat = event.latLng.lat();
+                        this.center.lng = event.latLng.lng();
+                        this.map.setCenter(this.center);
+                        //获取地址信息
+                        this.get_formatted_address(this.center.lat, this.center.lng);
+
+                        //修改标记点
+                        if (this.mapMarker) {
+                            this.mapMarker.setMap(null);
+                        }
+                        this.mapMarker = new google.maps.Marker({
+                            position: this.center, // 标记位置
+                            map: this.map // 显示在地图上
+                        });
+                    });
+                }
+            }
+        });
+    });
+</script>

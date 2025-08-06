@@ -24,7 +24,7 @@
 		</view>
 		
 		<view class="bg-f flex flex-dc flex-ac font-28" style="width: 700rpx;border-radius: 10rpx;padding: 20rpx 0;">
-			<view @tap="goSite" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1; height: 80rpx;width: 650rpx;">
+			<view @tap="goSite" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1; height: 80rpx;width: 600rpx;">
 				<view class="flex flex-ac flex-jc" style="">
 					<image style="width: 50rpx;height: 50rpx;" src="/src/static/address.svg" mode=""></image>
 					<view class="" style="margin-left: 16rpx;">
@@ -33,7 +33,7 @@
 				</view>
 				<image style="width: 40rpx;height: 40rpx;" src="/src/static/you.png" mode=""></image>
 			</view>
-			<view @tap="pickerShow=true" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 650rpx;">
+			<view @tap="pickerShow=true" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 600rpx;">
 				<view class="flex flex-ac flex-jc" style="">
 					<image style="width: 50rpx;height: 50rpx;" src="/src/static/language.svg" mode=""></image>
 					<view class="" style="margin-left: 16rpx;">
@@ -42,7 +42,16 @@
 				</view>
 				<image style="width: 40rpx;height: 40rpx;" src="/src/static/you.png" mode=""></image>
 			</view>
-			<view v-if="userInfo"  @tap="goLogin" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 650rpx;">
+			<view @tap="callPhone" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 600rpx;">
+				<view class="flex flex-ac flex-jc" style="">
+					<image style="width: 50rpx;height: 50rpx;" src="/src/static/phone_service.svg" mode=""></image>
+					<view class="" style="margin-left: 16rpx;">
+						{{setList[3].title}}
+					</view>
+				</view>
+				<image style="width: 40rpx;height: 40rpx;" src="/src/static/you.png" mode=""></image>
+			</view>
+			<view v-if="userInfo"  @tap="goLogin" class=" flex flex-ac cor-4 flex-jb" style="border-bottom: 1rpx solid #f1f1f1;height: 80rpx;width: 600rpx;">
 				<view class="flex flex-ac flex-jc" style="">
 					<image style="width: 50rpx;height: 50rpx;" src="/src/static/out.svg" mode=""></image>
 					<view class="" style="margin-left: 16rpx;">
@@ -114,6 +123,11 @@
 		},
 		{
 			title:'退出登录',
+			imgSrc:'/static/out.svg',
+			url:'/pages/login/login'
+		},
+		{
+			title:'联系客服',
 			imgSrc:'/static/out.svg',
 			url:'/pages/login/login'
 		}
@@ -243,6 +257,26 @@
 	function goSite(){
 		uni.navigateTo({
 			url:"/pages/cart/addressList"
+		})
+	}
+	function callPhone(){
+		let appConfig = uni.getStorageSync('appConfig')
+		let phone = appConfig?.SERVICE_TELL?.value||null
+		if(!phone){
+			uni.showToast({
+				title:'error',
+				mask:true
+			})
+			return
+		}
+	   uni.makePhoneCall({
+		  phoneNumber: phone,
+		  success() {
+			console.log('拨打成功了');
+		  },
+		  fail() {
+			console.log('拨打失败了');
+		  }
 		})
 	}
 </script>

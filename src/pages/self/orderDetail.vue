@@ -73,7 +73,7 @@
 						{{ t("orderDetail.time") }}
 					</view>
 					<view class="" style="text-align: right;">
-						{{ orderInfo.deliveryTime }}
+						{{ orderInfo.deliveryTime || sendColumns[0][orderInfo.deliveryType]?.label }}
 					</view>
 				</view>
 			</view>

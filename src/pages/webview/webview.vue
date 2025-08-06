@@ -11,7 +11,9 @@
 	const lang = ref('th');
 	 lang.value =uni.getStorageSync('appLanguage').split('-')[0]
 	 console.log(lang.value,'lang.value')
-	const url = ref(`https://freshdala-555.com/h5/hybrid/html/home.html?lat=${lat.value}&lng=${lng.value}&lang=${lang.value}`);
+	 const address = uni.getStorageSync('appConfig').MERCHANT_ADDRESS.value
+	 const url = ref(`https://freshdala-555.com/h5/hybrid/html/home.html?address=${address}&lang=${lang.value}`);
+	// const url = ref(`https://freshdala-555.com/h5/hybrid/html/home.html?lat=${lat.value}&lng=${lng.value}&lang=${lang.value}`);
 	// const url = ref(`http://127.0.0.1:5501/src/hybrid/html/index.html?lat=${lat.value}&lng=${lng.value}&lang=${lang.value}`);
 
 	const onWebViewMessage = (e) => {

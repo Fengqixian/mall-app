@@ -248,14 +248,18 @@
 	}
 	
 	onShow(() => {
-		console.log(uni.getStorageSync('location'),109109)
-		console.log(getApp().globalData.addressInfo);
-		addressInfo.value = getApp().globalData.addressInfo
+		// console.log(uni.getStorageSync('location'),109109)
+		// console.log(getApp().globalData.addressInfo);
+		if(getApp().globalData.addressInfo){
+			addressInfo.value = getApp().globalData.addressInfo
+		}else{
+			addressInfo.value = uni.getStorageSync('location')
+		}
 		initAddress()
-		
 	})
 	onHide(() => {
 		getApp().globalData.addressInfo = null
+		uni.removeStorageSync('location')
 	})
 </script>
 

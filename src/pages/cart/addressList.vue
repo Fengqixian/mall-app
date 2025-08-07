@@ -83,6 +83,12 @@ const options1 = reactive([{
 	}
 }]);
 function goSetAddress() {
+	// #ifdef MP-WEIXIN
+	uni.navigateTo({ url: 'plugin://address-form/index' });
+	// #endif
+
+
+	// #ifdef WEB || APP
 	if (isSelectAddress.value) {
 		console.log(addressListArray.value.filter(item => item.status))
 		uni.setStorageSync('address', addressListArray.value.filter(item => item.status)[0])
@@ -92,7 +98,7 @@ function goSetAddress() {
 			url: '/pages/cart/setAddress'
 		})
 	}
-
+	// #endif
 }
 function deleteAddress(id){
 	console.log(id)

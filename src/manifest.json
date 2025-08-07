@@ -1,6 +1,6 @@
 {
     "name" : "Delivery",
-    "appid" : "__UNI__342D105",
+    "appid" : "__UNI__948C9D0",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -67,11 +67,24 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wxa989f082a8f94570",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于小程序定位"
+            }
+        },
+        "plugins" : {
+            "address-form" : {
+                "version" : "1.0.2", // 插件版本
+                "provider" : "wx57d7ae552cbb3084",
+                "export" : "config.js" // 引入步骤3.1的配置文件
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -90,5 +103,6 @@
         "router" : {
             "base" : "/h5/"
         }
-    }
+    },
+    "locale" : "auto"
 }

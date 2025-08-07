@@ -1,288 +1,215 @@
 {
   "tips": {
-    "addSuccess": "t添加成功",
-    "loginOut": "t已登录，是否退出登录",
-    "confirm": "t确认",
-    "cancel": "t取消",
-    "prompt": "t提示",
-    "clickBack": "t保存成功，点击返回！！！",
-    "sureClearSearch": "t确定要清空搜索历史吗？",
-    "cancelOrder": "t确定取消订单吗？",
-    "cancelSuccess": "t订单已取消",
-    "refundSuccess": "t退款申请成功",
-	"loadingText":"t正在加载",
-	"loadmoreText":"t加载更多",
-	"nomoreText":"t没有更多了",
-	"deleteAddress":"t确定要删除该地址吗？",
-	"deleteGoods":"t确定要删除该商品吗？"
+    "addSuccess": "เพิ่มสำเร็จ",
+    "loginOut": "ออกจากระบบ?",
+    "confirm": "ตกลง",
+    "cancel": "ยกเลิก",
+    "prompt": "แจ้งเตือน",
+    "clickBack": "บันทึกสำเร็จ กลับหน้าเดิม",
+    "sureClearSearch": "ลบประวัติค้นหา?",
+    "cancelOrder": "ยกเลิกคำสั่ง?",
+    "cancelSuccess": "ยกเลิกแล้ว",
+    "refundSuccess": "คืนเงินสำเร็จ",
+    "loadingText":"กำลังโหลด",
+    "loadmoreText":"โหลดเพิ่ม",
+    "nomoreText":"ไม่มีเพิ่ม",
+    "deleteAddress":"ลบที่อยู่?",
+    "deleteGoods":"ลบสินค้า?"
   },
-  "uni.showModal.cancel": "t取消",
-  "uni.showModal.confirm": "t确定",
-  "toSeckill": "t今日秒杀",
-  "toSeckillDesc": "t今日低价秒杀超划算",
-  "toSelect": "t优选菜场",
-  "toSelectDesc": "t网红小吃样样平价",
-  "copy": "t复制",
-  "nullMsg": "t暂无数据~",
-  "guessLike": "t猜你喜欢",
+  "uni.showModal.cancel": "ยกเลิก",
+  "uni.showModal.confirm": "ตกลง",
+  "toSeckill": "สินค้าลดราคา",
+  "toSeckillDesc": "ลดราคาพิเศษวันนี้",
+  "toSelect": "สินค้าแนะนำ",
+  "toSelectDesc": "อาหารว่างยอดนิยม",
+  "copy": "คัดลอก",
+  "nullMsg": "ไม่มีข้อมูล",
+  "guessLike": "แนะนำสำหรับคุณ",
   "money": "฿",
-  "tabBar.home": "t首页",
-  "tabBar.class": "t分类",
-  "tabBar.cart": "t购物车",
-  "tabBar.self": "t我的",
-  "pages.login": "t登录",
-  "pages.submitOrder": "t提交订单",
-  "pages.addressList": "t选择地址",
-  "pages.setAddress": "t收货地址",
-  "pages.orderList": "t我的订单",
-  "pages.orderDetail": "t订单详情",
-  "pages.search": "t搜索",
-  "pages.goodsDetails":"t商品详情",
-  "pages.webview": "t地址选择",
+  "tabBar.home": "หน้าหลัก",
+  "tabBar.class": "หมวดหมู่",
+  "tabBar.cart": "ตะกร้า",
+  "tabBar.self": "ฉัน",
+  "pages.login": "เข้าสู่ระบบ",
+  "pages.submitOrder": "สั่งซื้อ",
+  "pages.addressList": "เลือกที่อยู่",
+  "pages.setAddress": "ที่อยู่",
+  "pages.orderList": "คำสั่งซื้อ",
+  "pages.orderDetail": "รายละเอียด",
+  "pages.search": "ค้นหา",
+  "pages.goodsDetails":"รายละเอียด",
+  "pages.webview": "เลือกที่อยู่",
   "home": {
-    "title": "t首页",
-    "getSite": "t获取当前地址",
-    "search": "t搜索",
+    "title": "หน้าหลัก",
+    "getSite": "ตำแหน่งปัจจุบัน",
+    "search": "ค้นหา",
     "tabbleLength": "6",
     "tabble": [
-      {
-        "title": "t全部",
-        "text": "t精选好物"
-      },
-      {
-        "title": "t收藏",
-        "text": "t收藏"
-      },
-      {
-        "title": "t新鲜蔬菜",
-        "text": "t时时新鲜"
-      },
-      {
-        "title": "t调味料",
-        "text": "t调味料"
-      },
-      {
-        "title": "t干货",
-        "text": "t精选好物"
-      },
-      {
-        "title": "t直播",
-        "text": "t直播"
-      }
+      {"title": "ทั้งหมด", "text": "สินค้าแนะนำ"},
+      {"title": "โปรด", "text": "โปรด"},
+      {"title": "ผักสด", "text": "สดใหม่"},
+      {"title": "เครื่องปรุง", "text": "เครื่องปรุง"},
+      {"title": "ของแห้ง", "text": "สินค้าแนะนำ"},
+      {"title": "ไลฟ์", "text": "ไลฟ์"}
     ]
   },
   "search": {
-    "button": "t搜索",
-    "history": "t历史搜索",
-    "hot": "t热门搜索",
-    "placeholder": "t搜索商品"
+    "button": "ค้นหา",
+    "history": "ประวัติ",
+    "hot": "ยอดนิยม",
+    "placeholder": "ค้นหาสินค้า"
   },
   "class": {
-    "all": "t综合",
-    "sales": "t销量",
-    "price": "t价格",
-    "stock": "t库存",
-    "self": "t自营",
-    "select": "t选规格"
+    "all": "ทั้งหมด",
+    "sales": "ขายดี",
+    "price": "ราคา",
+    "stock": "สต็อก",
+    "self": "ของเรา",
+    "select": "เลือกรุ่น"
   },
   "goodsDetails": {
-    "self": "t自营",
-    "select": "t选规格",
-    "price": "t￥",
-    "sales": "t销量",
-    "stock": "t库存",
-    "delivery": "t配送",
-    "service": "t服务",
-    "goodsDetail": "t商品详情",
-    "buyRecord": "t购买记录",
-    "home": "t首页",
-    "customerService": "t客服",
-    "shoppingCart": "t购物车",
-    "addToCart": "t加入购物车"
+    "self": "ของเรา",
+    "select": "เลือกรุ่น",
+    "price": "฿",
+    "sales": "ขายแล้ว",
+    "stock": "เหลือ",
+    "delivery": "จัดส่ง",
+    "service": "บริการ",
+    "goodsDetail": "รายละเอียด",
+    "buyRecord": "ประวัติซื้อ",
+    "home": "หน้าหลัก",
+    "customerService": "ช่วยเหลือ",
+    "shoppingCart": "ตะกร้า",
+    "addToCart": "ใส่ตะกร้า"
   },
   "cart": {
-    "goodsCart": "t购物车",
-    "delete": "t删除",
-    "empty": "t购物车空空如也",
-    "goLogin": "t去登陆",
-    "goSettle": "t去结算",
-    "settle": "t结算",
-    "notes": "t填写商品备注",
-    "allSelect": "t全选",
-    "amountTo": "t不含运费 合计:"
+    "goodsCart": "ตะกร้า",
+    "delete": "ลบ",
+    "empty": "ว่างเปล่า",
+    "goLogin": "เข้าสู่ระบบ",
+    "goSettle": "ชำระเงิน",
+    "settle": "ชำระเงิน",
+    "notes": "หมายเหตุ",
+    "allSelect": "เลือกทั้งหมด",
+    "amountTo": "รวม:"
   },
   "submitOrder": {
-    "submitOrder": "t提交订单",
-    "address": "t选择地址",
-    "delivery": "t配送方式",
-    "time": "t选择时间",
-    "goodsNotes": "t填写商品备注",
-    "notes": "t填写订单备注",
-    "goodsAmount": "t商品金额",
-    "discountAmount": "t折扣减免",
-    "deliveryAmount": "t配送费",
-    "waitPay": "t待支付",
+    "submitOrder": "สั่งซื้อ",
+    "address": "ที่อยู่",
+    "delivery": "การจัดส่ง",
+    "time": "เวลา",
+    "goodsNotes": "หมายเหตุ",
+    "notes": "หมายเหตุ",
+    "goodsAmount": "รวมสินค้า",
+    "discountAmount": "ส่วนลด",
+    "deliveryAmount": "ค่าส่ง",
+    "waitPay": "รอชำระ",
     "sendArr": [
-      {
-        "label": "t平台配送",
-        "value": 0
-      },
-      {
-        "label": "t自提",
-        "value": 1
-      }
+      {"label": "ส่งถึงบ้าน", "value": 0},
+      {"label": "รับเอง", "value": 1}
     ],
     "sendTimeArr": [
-      {
-        "label": "t尽快送达",
-        "value": 0
-      },
-      {
-        "label": "t次日送达",
-        "value": 1
-      }
+      {"label": "ด่วน", "value": 0},
+      {"label": "พรุ่งนี้", "value": 1}
     ]
   },
   "addressList": {
-    "botton": "t新增地址",
-    "sure": "t确认地址"
+    "botton": "เพิ่มที่อยู่",
+    "sure": "ยืนยัน"
   },
   "setAddress": {
-    "name": "t收货人",
-    "namePlaceholder": "t请输入收货人",
-    "man": "t先生",
-    "woman": "t女士",
-    "phone": "t手机号",
-    "phonePlaceholder": "t请输入手机号",
-    "address": "t收货地址",
-    "addressPlaceholder": "t点击选择收货地址",
-    "label": "t标签",
-    "addressDetail": "t详细地址",
-    "addressDetailPlaceholder": "t请输入详细地址和门牌号",
-    "default": "t设为默认地址",
-    "defaultDesc": "t每次购物时会优先定位该地址，方便您轻松购物",
-    "delete": "t删除收货地址",
-    "save": "t保存收货地址"
+    "name": "ชื่อผู้รับ",
+    "namePlaceholder": "ชื่อผู้รับ",
+    "man": "นาย",
+    "woman": "นางสาว",
+    "phone": "โทรศัพท์",
+    "phonePlaceholder": "เบอร์โทร",
+    "address": "ที่อยู่",
+    "addressPlaceholder": "เลือกที่อยู่",
+    "label": "ป้าย",
+    "addressDetail": "ที่อยู่เต็ม",
+    "addressDetailPlaceholder": "กรอกที่อยู่เต็ม",
+    "default": "ตั้งเป็นหลัก",
+    "defaultDesc": "ใช้ที่อยู่นี้เป็นหลัก",
+    "delete": "ลบที่อยู่",
+    "save": "บันทึก"
   },
   "login": {
-    "phonePlaceholder": "t请输入手机号",
-    "codePlaceholder": "t请输入验证码",
-    "getCode": "t获取验证码",
-    "againGet": "t重新获取",
-    "login": "t登录"
+    "phonePlaceholder": "เบอร์โทร",
+    "codePlaceholder": "รหัส OTP",
+    "getCode": "รับรหัส",
+    "againGet": "ขอใหม่",
+    "login": "เข้าสู่ระบบ"
   },
   "self": {
-    "title": "t点击登录用户",
-    "myOrder": "t我的订单",
+    "title": "เข้าสู่ระบบ",
+    "myOrder": "คำสั่งซื้อ",
     "orderList": [
-      {
-        "title": "t全部订单"
-      },
-      {
-        "title": "t待支付"
-      },
-      {
-        "title": "t已支付"
-      },
-      {
-        "title": "t售后处理"
-      }
+      {"title": "ทั้งหมด"},
+      {"title": "รอชำระ"},
+      {"title": "ชำระแล้ว"},
+      {"title": "คืนสินค้า"}
     ],
     "setList":[
-      {
-        "title":"t地址管理"
-      },
-      {
-        "title":"t语言设置"
-      },
-      {
-        "title":"t退出登录"
-      },
-      {
-        "title":"t联系客服"
-      }
+      {"title":"ที่อยู่"},
+      {"title":"ภาษา"},
+      {"title":"ออกระบบ"},
+      {"title":"ติดต่อเรา"}
     ]
   },
   "orderList": {
-    "tabble": [
-      "t全部订单",
-      "t待支付",
-      "t已支付",
-      "t售后处理"
-    ],
+    "tabble": ["ทั้งหมด", "รอชำระ", "ชำระแล้ว", "คืนสินค้า"],
     "orderListCom": {
-      "status": [
-        "t已取消",
-        "t待付款",
-        "t进行中",
-        "t待评价",
-        "t已完成"
-      ],
-      "storeDelivery": "t商家配送",
-      "orderID": "t订单ID",
-      "deliveryTime": "t配送时间",
-      "number": "t数量",
-      "realPay": "t实付",
+      "status": ["ยกเลิก", "รอชำระ", "กำลังทำ", "รอรีวิว", "สำเร็จ"],
+      "storeDelivery": "ส่งโดยร้าน",
+      "orderID": "เลขที่",
+      "deliveryTime": "เวลาส่ง",
+      "number": "จำนวน",
+      "realPay": "รวม",
       "button": {
-        "cancelOrder": "t取消订单",
-        "comeAgain": "t申请退款",
-        "goPay": "t去付款"
+        "cancelOrder": "ยกเลิก",
+        "comeAgain": "คืนเงิน",
+        "goPay": "ชำระ"
       }
     }
   },
   "orderDetail": {
     "refund": [
-      "t不喜欢/不想要了",
-      "t商品与描述不符",
-      "t发货延迟",
-      "t重复下单",
-      "t价格变动/发现更低价",
-      "t商品过期/临期",
-      "t功能不符合预期",
-      "t操作复杂/不会使用",
-      "t与已有商品重复",
-      "t商品缺货/无法等待",
-      "t服务态度问题",
-      "t其他原因"
+      "ไม่ต้องการ",
+      "ไม่ตรงตาม",
+      "ส่งช้า",
+      "ซ้ำ",
+      "ราคาเปลี่ยน",
+      "หมดอายุ",
+      "ไม่ตรง预期",
+      "ใช้ยาก",
+      "ซ้ำของเก่า",
+      "ไม่มีสต็อก",
+      "บริการไม่ดี",
+      "อื่นๆ"
     ],
-    "status": [
-      "t待支付",
-      "t已支付",
-      "t已发货",
-      "t已送达",
-      "t已取消",
-      "t已退款",
-      "t已过期",
-      "t支付失败",
-      "t退款中",
-      "t拒绝退款"
-    ],
-    "headStatus": [
-      {
-        "title": "t已取消",
-        "desc": "t订单超时未支付"
-      }
-    ],
+    "status": ["รอชำระ","ชำระแล้ว","ส่งแล้ว","ถึงแล้ว","ยกเลิก","คืนแล้ว","หมดอายุ","ล้มเหลว","กำลังคืน","ถูกปฏิเสธ"],
+    "headStatus": [{"title": "ยกเลิก", "desc": "เกินเวลาชำระ"}],
     "button": {
-      "cancelOrder": "t取消订单",
-      "comeAgain": "t申请退款",
-      "goPay": "t去付款"
+      "cancelOrder": "ยกเลิก",
+      "comeAgain": "คืนเงิน",
+      "goPay": "ชำระ"
     },
-    "address": "t收货地址",
-    "delivery": "t配送方式",
-    "time": "t预约时间",
-    "goodsList": "t购物清单",
-    "unitPrice": "t单价",
-    "number": "t数量",
-    "goodsPrice": "t商品价格",
-    "deliveryPrice": "t配送费",
-    "payAmount": "t支付金额",
-    "orderMessage": "t订单信息",
-    "orderID": "t订单ID",
-    "orderTime": "t下单时间",
-    "orderNumber": "t订单编号",
-    "refundCause": "t退款原因",
-    "refundAmount": "t退款金额",
-    "refundRefuse": "t退款拒绝原因"
+    "address": "ที่อยู่",
+    "delivery": "การส่ง",
+    "time": "เวลา",
+    "goodsList": "สินค้า",
+    "unitPrice": "ราคา",
+    "number": "จำนวน",
+    "goodsPrice": "รวม",
+    "deliveryPrice": "ค่าส่ง",
+    "payAmount": "รวมทั้งหมด",
+    "orderMessage": "ข้อมูล",
+    "orderID": "เลขที่",
+    "orderTime": "เวลาสั่ง",
+    "orderNumber": "หมายเลข",
+    "refundCause": "เหตุผล",
+    "refundAmount": "จำนวนคืน",
+    "refundRefuse": "เหตุผลปฏิเสธ"
   }
 }

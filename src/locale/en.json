@@ -14,7 +14,9 @@
     "loadmoreText": "More",
     "nomoreText": "No more",
     "deleteAddress": "Delete address?",
-    "deleteGoods": "Delete item?"
+    "deleteGoods": "Delete item?",
+    "seckill": "Flash Sale",
+    "niceselect": "Featured"
   },
   "uni.showModal.cancel": "Cancel",
   "uni.showModal.confirm": "OK",

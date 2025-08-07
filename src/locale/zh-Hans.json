@@ -10,11 +10,13 @@
     "cancelOrder": "确定取消订单吗？",
     "cancelSuccess": "订单已取消",
     "refundSuccess": "退款申请成功",
-	"loadingText":"正在加载",
-	"loadmoreText":"加载更多",
-	"nomoreText":"没有更多了",
-	"deleteAddress":"确定要删除该地址吗？",
-	"deleteGoods":"确定要删除该商品吗？"
+    "loadingText": "正在加载",
+    "loadmoreText": "加载更多",
+    "nomoreText": "没有更多了",
+    "deleteAddress": "确定要删除该地址吗？",
+    "deleteGoods": "确定要删除该商品吗？",
+    "seckill": "秒杀",
+    "niceSelect": "优选"
   },
   "uni.showModal.cancel": "取消",
   "uni.showModal.confirm": "确定",
@@ -37,7 +39,7 @@
   "pages.orderList": "我的订单",
   "pages.orderDetail": "订单详情",
   "pages.search": "搜索",
-  "pages.goodsDetails":"商品详情",
+  "pages.goodsDetails": "商品详情",
   "pages.webview": "地址选择",
   "home": {
     "title": "首页",
@@ -188,18 +190,18 @@
         "title": "售后处理"
       }
     ],
-    "setList":[
+    "setList": [
       {
-        "title":"地址管理"
+        "title": "地址管理"
       },
       {
-        "title":"语言设置"
+        "title": "语言设置"
       },
       {
-        "title":"退出登录"
+        "title": "退出登录"
       },
       {
-        "title":"联系客服"
+        "title": "联系客服"
       }
     ]
   },

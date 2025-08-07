@@ -14,7 +14,9 @@
     "loadmoreText":"โหลดเพิ่ม",
     "nomoreText":"ไม่มีเพิ่ม",
     "deleteAddress":"ลบที่อยู่?",
-    "deleteGoods":"ลบสินค้า?"
+    "deleteGoods":"ลบสินค้า?",
+    "seckill":"ลดราคา",
+    "niceselect":"สินค้าแนะนำ"
   },
   "uni.showModal.cancel": "ยกเลิก",
   "uni.showModal.confirm": "ตกลง",

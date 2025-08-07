@@ -16,7 +16,9 @@
 							<u-loading-icon color="#999"></u-loading-icon>
 						</template>
 					</u-image>
-					<view class="demo-title text-2d font-B">
+					<view class="demo-title text-2d font-B " style="">
+						<text v-if="item.goodsInfo.seckill" class=" font-24 font-w4 " style=" color: #fff; height: 32rpx; margin-right: 10rpx; border-radius: 6rpx; line-height: 24rpx; padding: 0 6rpx 1rpx 6rpx;  background: linear-gradient(135deg, #eb3c39 0%, #f93f3c 100%);  display: inline-flex; align-items: center; justify-content: center; min-height: 24rpx;">{{ seckill }}</text> 
+						<text v-if="item.goodsInfo.qualityed" class=" font-24 font-w4 " style=" color: #fff; height: 32rpx; border-radius: 6rpx; line-height: 32rpx; padding: 0 6rpx 1rpx 6rpx;  background: linear-gradient(135deg, #6ccc4e 0%, #76dd54 100%);  display: inline-flex; align-items: center; justify-content: center; min-height: 24rpx;">{{ niceselect }}</text>
 						{{ item.goodsInfo.name }}
 					</view>
 					<view class="demo-title text-d" style="font-size: 22rpx; color: #888;">
@@ -65,7 +67,9 @@
 						</template>
 					</u-image>
 
-					<view class="demo-title text-2d font-B">
+					<view class="demo-title text-2d font-B " style="">
+						<text v-if="item.goodsInfo.purchased" class=" font-24 font-w4 " style=" color: #fff; height: 32rpx; margin-right: 10rpx; border-radius: 6rpx; line-height: 24rpx; padding: 0 6rpx 1rpx 6rpx;  background: linear-gradient(135deg, #eb3c39 0%, #f93f3c 100%);  display: inline-flex; align-items: center; justify-content: center; min-height: 24rpx;">{{ seckill }}</text> 
+						<text v-if="item.goodsInfo.qualityed" class=" font-24 font-w4 " style=" color: #fff; height: 32rpx; border-radius: 6rpx; line-height: 32rpx; padding: 0 6rpx 1rpx 6rpx;  background: linear-gradient(135deg, #6ccc4e 0%, #76dd54 100%);  display: inline-flex; align-items: center; justify-content: center; min-height: 24rpx;">{{ niceselect }}</text>
 						{{ item.goodsInfo.name }}
 					</view>
 					<view class="demo-title text-d" style="font-size: 22rpx; color: #888;">
@@ -130,7 +134,9 @@
 				loadStatus: 'loadmore',
 				flowList: [],
 				list: [], // 初始化为空数组
-				goodsNumberObj: {}
+				goodsNumberObj: {},
+				seckill: '',
+				niceselect: ''
 			}
 		},
 		watch: {
@@ -158,6 +164,8 @@
 			} = useI18n()
 			console.log(t('tips.addSuccess'), 1111111111)
 			this.addSuccess = t('tips.addSuccess')
+			this.seckill = t('tips.seckill')
+			this.niceselect = t('tips.niceSelect')
 			console.log(this.pageGoodsNumberObj)
 		},
 		onReachBottom() {

@@ -66,8 +66,8 @@
 			<view class=" font-26 cor-4 flex" style="margin-top: 40rpx;">
 				<text class="cor-9" style="margin-right: 20rpx;">{{ t('goodsDetails.service') }}</text>
 				<text class="flex" style="margin-right: 20rpx;">
-					称重退补差价<up-icon style="display: inline-block;" name="question-circle" color="#999"
-						size="14"></up-icon>
+					称重退补差价
+					<!-- <up-icon style="display: inline-block;" name="question-circle" color="#999" size="14"></up-icon> -->
 				</text>
 				<text>筐押金</text>
 			</view>

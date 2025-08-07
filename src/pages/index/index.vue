@@ -1,7 +1,7 @@
 <template>
 	<statusHeight></statusHeight>
 	<view class=" pos-r flex flex-dc flex-ac ov-h" style="width: 750rpx;">
-		<view class="pos-a top-0 left-0 z-0" style="height: 470rpx;width: 750rpx;">
+		<view class="pos-a top-0 left-0 z-0" style="height: 470rpx;width: 750rpx;background: linear-gradient(180deg,#e5fcbd,#fff);">
 			<image v-for="(item, index) in bannerList" :key='item.id' class="pos-a trt-5" :src="item.url"
 				:class="swiperIndex === index ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;"
 				mode="aspectFill"></image>

@@ -16,7 +16,7 @@
     "deleteAddress":"ลบที่อยู่?",
     "deleteGoods":"ลบสินค้า?",
     "seckill":"ลดราคา",
-    "niceselect":"สินค้าแนะนำ"
+    "niceSelect":"สินค้าแนะนำ"
   },
   "uni.showModal.cancel": "ยกเลิก",
   "uni.showModal.confirm": "ตกลง",

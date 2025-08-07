@@ -16,7 +16,7 @@
     "deleteAddress": "Delete address?",
     "deleteGoods": "Delete item?",
     "seckill": "Flash Sale",
-    "niceselect": "Featured"
+    "niceSelect": "Featured"
   },
   "uni.showModal.cancel": "Cancel",
   "uni.showModal.confirm": "OK",

@@ -186,15 +186,19 @@
 			uni.setLocale(locale.value);
 			uni.setStorageSync('appLanguage', locale.value)
 			// 重新加载页面
-			// uni.reLaunch({
-			// 	url: '/' 
-			// });
+			//#ifdef H5
+			uni.reLaunch({
+				url: '/pages/self/self' 
+			});
+			//#endif
 		// 语言切换后，重新更新orderButtonArr的文本
 		orderButtonArr.value.forEach((item, index) => {
 			item.text = tm('self.orderList')[index].title
 		})
 		updateSetList()
 		pickerShow.value =false
+
+
 	}
 
 	function goLogin() {

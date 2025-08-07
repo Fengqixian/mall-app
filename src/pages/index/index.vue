@@ -79,28 +79,14 @@
 								<u-notice-bar :text="item" icon="" fontSize="12"></u-notice-bar>
 							</view>
 						</swiper-item>
-						<!-- <swiper-item>
-							<view style="width: 560rpx;height: 100%; color: rgb(54, 14, 14);line-height: 60rpx;"
-								class="text-d font-B  font-24">
-								正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版正版
-							</view>
-						</swiper-item> -->
 					</swiper>
 				</view>
 			</view>
 
-			<!-- <view style="width: 700rpx;" class="aaa">
-				<u-scroll-list :indicator="true" indicatorColor="#fff0f0" indicatorActiveColor="#f56c6c">
-					<view v-for="(item, index) in state.classList" :key="index">
-						<image :src="item.coverImage"></image>
-					</view>
-				</u-scroll-list>
-			</view> -->
-
-			<u-scroll-list style="width: 700rpx;height: 400rpx;" indicatorActiveColor="#09bd04" :indicatorBarWidth="50/state.classList.length*8"  class="">
+			<u-scroll-list style="width: 700rpx;height: 400rpx;" indicatorActiveColor="#09bd04" :indicatorBarWidth="50/state.classList.length*10"  class="">
 				<view style="min-width: 700rpx;" class="grid-container bg-f ">
 					<view @tap="navClass(index)" v-for="(item, index) in state.classList" :key="item.id"
-						style="width: 175rpx;min-height: 174rpx;margin: 4rpx 0;" class=" flex flex-dc flex-jc flex-ac">
+						style="width: 140rpx;min-height: 174rpx;margin: 4rpx 0;" class=" flex flex-dc flex-jc flex-ac">
 						<image class="" style="width: 112rpx;min-height: 112rpx;max-height: 112rpx;"
 							:src="item.coverImage" mode="scaleToFill" />
 						<view class=" text-d"

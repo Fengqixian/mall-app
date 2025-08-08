@@ -19,8 +19,8 @@
 				lang.value =uni.getStorageSync('appLanguage').split('-')[0]
 				lat.value = res.latitude
 				lng.value = res.longitude
-				// url.value = `https://freshdala-555.com/h5/hybrid/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
-				url.value = `http://127.0.0.1/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
+				url.value = `https://freshdala-555.com/h5/hybrid/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
+				// url.value = `http://127.0.0.1/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
 			}
 		});
 		

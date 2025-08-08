@@ -21,6 +21,10 @@
 				lng.value = res.longitude
 				url.value = `https://freshdala-555.com/h5/hybrid/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
 				// url.value = `http://127.0.0.1/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
+			},
+			fail: function(err) {
+				console.log('获取位置失败', err)
+				url.value = `https://freshdala-555.com/h5/hybrid/html/home.html?address=${address}&lang=${lang.value}`
 			}
 		});
 		

@@ -42,13 +42,6 @@
 			}
 		},
 		{
-			"path" : "pages/index/getWarehouse",
-			"style" : 
-			{
-				"navigationStyle":"custom"
-			}
-		},
-		{
 			"path" : "pages/self/address/address",
 			"style" : 
 			{

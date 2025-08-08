@@ -1,3 +1,5 @@
+import {post} from "@/utils/request.js"
+
 module.exports = async () => ({
   /** 地图的key */
   key: 'FDLBZ-XWGRH-3ASDO-WD7WG-RY5R7-LJBFN',
@@ -7,7 +9,20 @@ module.exports = async () => ({
   aiInput: false,
   /** 跳转的链接 */
   navigateUrl: '/pages/cart/addressList',
-  onClose: function(data) {
+  onClose: async function(data) {
 	  console.log(data)
+	  console.log(uni.getStorageSync('userInfo').userId)
+	  let _pushParams = {
+	  	  "city": data.area[1].name,
+		  "country": "中国",
+	  	  "detailedAddress": data.address,
+	  	  "district": data.area[2].name,
+	  	  "isDefault": data.default?1:0,
+	  	  "province": data.area[0].name,
+	  	  "receiverName": data.receiver,
+	  	  "receiverPhone": data.phone
+	  	}
+	  let res = await post('/user/address/create',_pushParams)
+	  console.log('res:', res)
   }
 });

@@ -72,6 +72,7 @@
             "urlCheck" : false,
             "minified" : true
         },
+        "lazyCodeLoading" : "requiredComponents", // 启用懒加载
         "usingComponents" : true,
         "permission" : {
             "scope.userLocation" : {

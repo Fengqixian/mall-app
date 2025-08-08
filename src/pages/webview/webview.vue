@@ -5,19 +5,28 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue';
+	import { onMounted, ref } from 'vue';
+	
 	const lat = ref(30.5722599);
 	const lng = ref(104.0665099);
 	const lang = ref('th');
-	 lang.value =uni.getStorageSync('appLanguage').split('-')[0]
-	 console.log(lang.value,'lang.value')
-	 const address = uni.getStorageSync('appConfig').MERCHANT_ADDRESS.value
-	 const url = ref(`https://freshdala-555.com/h5/hybrid/html/home.html?address=${address}&lang=${lang.value}`);
-	// const url = ref(`https://freshdala-555.com/h5/hybrid/html/home.html?lat=${lat.value}&lng=${lng.value}&lang=${lang.value}`);
-	// const url = ref(`http://127.0.0.1:5501/src/hybrid/html/index.html?lat=${lat.value}&lng=${lng.value}&lang=${lang.value}`);
-
+	const url = ref('');
+	const address = uni.getStorageSync('appConfig').MERCHANT_ADDRESS.value
+	onMounted(() => {
+		uni.getLocation({
+			type: 'wgs84',
+			success: function (res) {
+				lang.value =uni.getStorageSync('appLanguage').split('-')[0]
+				lat.value = res.latitude
+				lng.value = res.longitude
+				// url.value = `https://freshdala-555.com/h5/hybrid/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
+				url.value = `http://127.0.0.1/html/home.html?address=${address}&lang=${lang.value}&lat=${lat.value}&lng=${lng.value}`
+			}
+		});
+		
+	})
 	const onWebViewMessage = (e) => {
-		console.log(e.detail.data[0]);
+		console.log('view back', e);
 		getApp().globalData.addressInfo = e.detail.data[0]
 	}
 </script>

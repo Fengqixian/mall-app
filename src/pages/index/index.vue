@@ -243,9 +243,6 @@ function navSearch(name) {
 }
 
 function navWarehouse() {
-	uni.navigateTo({
-		url: '/pages/index/getWarehouse'
-	})
 }
 
 function navClass(index) {

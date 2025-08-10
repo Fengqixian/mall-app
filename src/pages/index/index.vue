@@ -1,5 +1,5 @@
 <template>
-	<statusHeight></statusHeight>
+	<!-- <statusHeight></statusHeight> -->
 	<view class=" pos-r flex flex-dc flex-ac ov-h" style="width: 750rpx;">
 		<view class="pos-a top-0 left-0 z-0" style="height: 470rpx;width: 750rpx;background: linear-gradient(180deg,#e5fcbd,#fff);">
 			<image v-for="(item, index) in bannerList" :key='item.id' class="pos-a trt-5" :src="item.url"
@@ -10,8 +10,11 @@
 				:class="swiperIndex === 1 ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;" mode=""></image> -->
 		</view>
 		<view class="pos-r z-1 " style="height: 470rpx;width: 700rpx;">
+			<view class="" :style="'height: '+statusBarHeight+'px;'">
+				
+			</view>
 			<view class="flex flex-jc flex-ac font-32 cor-f" style="font-weight: 700; height: 88rpx;">
-				{{ t('home.title') }}
+				<!-- {{ t('home.title') }} -->
 			</view>
 			<!-- <view @tap="navWarehouse" class="flex flex-ac cor-f" style="">
 				<up-icon name="map-fill" color="#fff" size="34rpx"></up-icon>
@@ -206,6 +209,8 @@ console.log(tm('home.tabble'))
 const swiperIndex = ref(0)
 const swiperSearchIndex = ref(0)
 const loadmoreStatus = ref('loadmore')
+	const systemInfo = uni.getSystemInfoSync();
+	const statusBarHeight =ref(systemInfo.statusBarHeight || 0); // 单位：px
 function swiperChange(e) {
 	swiperIndex.value = e.detail.current
 }

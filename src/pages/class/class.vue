@@ -5,12 +5,12 @@
 			<view class=" flex flex-ac" @tap="navSearch(searchList[searchCearchIndex])"
 				style=" box-sizing: border-box; padding: 0 16rpx; width: 700rpx;height: 64rpx;border-radius: 32rpx; background: #f5f5f5;">
 				<up-icon name="search" color="#ccc" size="50rpx"></up-icon>
-				<view class="" style="margin-left: 10rpx; width: 200rpx;height: 64rpx;">
+				<view class="" style="margin-left: 10rpx; width: 580rpx;height: 64rpx;">
 					<swiper :current='searchCearchIndex' @change="searchCearchChange" style="height: 64rpx;" class=""
 						autoplay circular vertical interval="2000" duration="1000">
 
 						<swiper-item v-for="(item, index) in searchList" :key="index">
-							<text style="width: 200rpx;height: 64rpx;color: #999;" class="font-26 flex flex-ac">{{ item
+							<text style="width: 580rpx;height: 64rpx;color: #999;" class="text-d font-26 flex flex-ac ">{{ item
 							}}</text>
 						</swiper-item>
 					</swiper>

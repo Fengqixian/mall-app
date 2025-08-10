@@ -1,6 +1,8 @@
 <template>
 	<view>
-		<web-view :src='url' @message="onWebViewMessage"></web-view>
+		<web-view  v-if="url !== ''" :src='url' @message="onWebViewMessage"></web-view>
+		<!-- 可添加加载状态提示 -->
+		<view v-else>Loading...</view>
 	</view>
 </template>
 
@@ -13,6 +15,7 @@
 	const url = ref('');
 	const address = uni.getStorageSync('appConfig').MERCHANT_ADDRESS.value
 	onMounted(() => {
+		debugger
 		uni.getLocation({
 			type: 'wgs84',
 			success: function (res) {

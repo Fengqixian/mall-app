@@ -82,9 +82,9 @@
 								<view class=" cor-9 font-22 text-d" style="margin-top: 8rpx;">
 									{{ item.goodsInfo.desc }}
 								</view>
-								<view class=" cor-8 font-22 text-d" style="margin-top: 8rpx;">
+								<!-- <view class=" cor-8 font-22 text-d" style="margin-top: 8rpx;">
 									{{ item.goodsInfo.purchasedEnd.split(' ')[0] }}
-								</view>
+								</view> -->
 								<view class=" cor-r font-36 text-d font-w7" style="margin-top: 8rpx;">
 									<text class="font-26">{{ item.goodsInfo.priceUnitName }}</text>
 									{{ (item.goodsInfo.price / 100).toFixed(2) }}

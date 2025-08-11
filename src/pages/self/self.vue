@@ -1,6 +1,6 @@
 <template>
 	<!-- <statusHeight></statusHeight> -->
-	<view style="" class="flex flex-dc flex-ac aaa">
+	<view style="" class="flex flex-dc flex-ac">
 		<view class="flex flex-ac" style="width: 750rpx;height: 300rpx;background: #21b5a6;padding-top: 100rpx;">
 			<view @tap="goLogin" class="flex flex-ac" style="">
 				<image class=" bor-50-" style="margin-left: 30rpx;margin-right: 20rpx; width: 125rpx;height: 125rpx;"

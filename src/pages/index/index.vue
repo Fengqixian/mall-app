@@ -1,7 +1,9 @@
 <template>
 	<!-- <statusHeight></statusHeight> -->
 	<view class=" pos-r flex flex-dc flex-ac ov-h" style="width: 750rpx;">
-		<view class="pos-a top-0 left-0 z-0" style="height: 470rpx;width: 750rpx;background: linear-gradient(180deg,#e5fcbd,#fff);">
+		<view class="" :style="'height: '+statusBarHeight+'px;'"></view>
+		<view class="pos-a top-0 left-0 z-0"
+			style="height: 470rpx;width: 750rpx;background: linear-gradient(180deg,#e5fcbd,#fff);">
 			<image v-for="(item, index) in bannerList" :key='item.id' class="pos-a trt-5" :src="item.url"
 				:class="swiperIndex === index ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;"
 				mode="aspectFill"></image>
@@ -10,9 +12,7 @@
 				:class="swiperIndex === 1 ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;" mode=""></image> -->
 		</view>
 		<view class="pos-r z-1 " style="height: 470rpx;width: 700rpx;">
-			<view class="" :style="'height: '+statusBarHeight+'px;'">
-				
-			</view>
+
 			<view class="flex flex-jc flex-ac font-32 cor-f" style="font-weight: 700; height: 88rpx;">
 				<!-- {{ t('home.title') }} -->
 			</view>
@@ -86,7 +86,8 @@
 				</view>
 			</view>
 
-			<u-scroll-list style="width: 700rpx;height: 400rpx;" indicatorActiveColor="#09bd04" :indicatorBarWidth="50/state.classList.length*10"  class="">
+			<u-scroll-list style="width: 700rpx;height: 400rpx;" indicatorActiveColor="#09bd04"
+				:indicatorBarWidth="50/state.classList.length*10" class="">
 				<view style="min-width: 700rpx;" class="grid-container bg-f ">
 					<view @tap="navClass(index)" v-for="(item, index) in state.classList" :key="item.id"
 						style="width: 140rpx;min-height: 174rpx;margin: 4rpx 0;" class=" flex flex-dc flex-jc flex-ac">
@@ -94,7 +95,8 @@
 							:src="item.coverImage" mode="scaleToFill" />
 						<view class=" text-d"
 							style="width: 120rpx; font-size: 26rpx;color: #444;margin-top: 10rpx;text-align: center;">
-							{{ item.name }}</view>
+							{{ item.name }}
+						</view>
 					</view>
 				</view>
 			</u-scroll-list>
@@ -168,10 +170,10 @@
 				</view>
 			</view>
 		</view>
-		<image-flow v-if="goodsList.length > 0" :listF="goodsList" :pageGoodsNumberObj="pageGoodsNumberObj"></image-flow>
-		<up-loadmore v-if="goodsList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')" 
-        :loadmore-text="t('tips.loadmoreText')" 
-        :nomore-text="t('tips.nomoreText')"/>
+		<image-flow v-if="goodsList.length > 0" :listF="goodsList"
+			:pageGoodsNumberObj="pageGoodsNumberObj"></image-flow>
+		<up-loadmore v-if="goodsList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')"
+			:loadmore-text="t('tips.loadmoreText')" :nomore-text="t('tips.nomoreText')" />
 		<!-- <no-more-data v-if="goodsPage.isNullMsg"></no-more-data> -->
 		<!-- <tabbar></tabbar> -->
 
@@ -179,271 +181,292 @@
 </template>
 
 <script setup>
-import {
-	ref,
-	reactive
-} from 'vue'
-import tabbar from "@/components/tabbar.vue"
+	import {
+		ref,
+		reactive
+	} from 'vue'
+	import tabbar from "@/components/tabbar.vue"
 
 
-import noMoreData from "@/components/noMoreData.vue"
-import imageFlow from "@/components/imageFlow.vue"
-import statusHeight from '@/components/statusHeight.vue'
-import {
-	useI18n
-} from 'vue-i18n'
-import {
-	post
-} from '../../utils/request'
-import {
-	onLoad,
-	onShow,
-	onPullDownRefresh,
-	onReachBottom
-} from '@dcloudio/uni-app'
-const {
-	t,
-	tm
-} = useI18n()
-console.log(tm('home.tabble'))
-const swiperIndex = ref(0)
-const swiperSearchIndex = ref(0)
-const loadmoreStatus = ref('loadmore')
+	import noMoreData from "@/components/noMoreData.vue"
+	import imageFlow from "@/components/imageFlow.vue"
+	import statusHeight from '@/components/statusHeight.vue'
+	import {
+		useI18n
+	} from 'vue-i18n'
+	import {
+		post
+	} from '../../utils/request'
+	import {
+		onLoad,
+		onShow,
+		onPullDownRefresh,
+		onReachBottom
+	} from '@dcloudio/uni-app'
+	const {
+		t,
+		tm
+	} = useI18n()
+	console.log(tm('home.tabble'))
+	const swiperIndex = ref(0)
+	const swiperSearchIndex = ref(0)
+	const loadmoreStatus = ref('loadmore')
 	const systemInfo = uni.getSystemInfoSync();
-	const statusBarHeight =ref(systemInfo.statusBarHeight || 0); // 单位：px
-function swiperChange(e) {
-	swiperIndex.value = e.detail.current
-}
+	const statusBarHeight = ref(systemInfo.statusBarHeight || 0); // 单位：px
+	function swiperChange(e) {
+		swiperIndex.value = e.detail.current
+	}
 
-function swiperSearchChange(e) {
-	swiperSearchIndex.value = e.detail.current
-}
-
-
-const state = reactive({
-	hometabble: [],
-	homeIndex: 0,
-	classList: []
-})
-setTimeout(() => {
-	state.hometabble = tm('home.tabble')
-	// for (let index = 0; index < t('home.tabbleLength')-0; index++) {
-	// 	let obj = {
-	// 		title: t('home.tabble.' + index + '.title'),
-	// 		text: t('home.tabble.' + index + '.text'),
-	// 	}
-	// 	state.hometabble.push(obj)
-	// }
-})
+	function swiperSearchChange(e) {
+		swiperSearchIndex.value = e.detail.current
+	}
 
 
-function changetabble(index) {
-	state.homeIndex = index
-}
-
-function navSearch(name) {
-	uni.navigateTo({
-		url: '/pages/index/search?name=' + name
+	const state = reactive({
+		hometabble: [],
+		homeIndex: 0,
+		classList: []
 	})
-}
-
-function navWarehouse() {
-}
-
-function navClass(index) {
-	uni.setStorageSync('classIndex', index + 1)
-	uni.switchTab({
-		url: '/pages/class/class'
+	setTimeout(() => {
+		state.hometabble = tm('home.tabble')
+		// for (let index = 0; index < t('home.tabbleLength')-0; index++) {
+		// 	let obj = {
+		// 		title: t('home.tabble.' + index + '.title'),
+		// 		text: t('home.tabble.' + index + '.text'),
+		// 	}
+		// 	state.hometabble.push(obj)
+		// }
 	})
-}
+
+
+	function changetabble(index) {
+		state.homeIndex = index
+	}
+
+	function navSearch(name) {
+		uni.navigateTo({
+			url: '/pages/index/search?name=' + name
+		})
+	}
+
+	function navWarehouse() {}
+
+	function navClass(index) {
+		uni.setStorageSync('classIndex', index + 1)
+		uni.switchTab({
+			url: '/pages/class/class'
+		})
+	}
 
 
 
-const bannerList = ref([])
-async function getBannerList() {
-	const res = await post('/banner/list')
-	bannerList.value = res.data
-	console.log(res)
-}
-const textSwiper = reactive({
-	searchArr: [],
-	noticeArr: [],
-})
+	const bannerList = ref([])
+	async function getBannerList() {
+		const res = await post('/banner/list')
+		bannerList.value = res.data
+		console.log(res)
+	}
+	const textSwiper = reactive({
+		searchArr: [],
+		noticeArr: [],
+	})
 
-async function getSearchWords() {
-	try {
-		let res = await post('/goods/search/words')
+	async function getSearchWords() {
+		try {
+			let res = await post('/goods/search/words')
+			if (res.code === 200) {
+				textSwiper.searchArr = res.data
+			}
+			let {
+				value: noticeJSON
+			} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION']
+			textSwiper.noticeArr = JSON.parse(noticeJSON)
+		} catch (err) {
+			console.log(err)
+			// let time = setTimeout(()=>{
+			// 	getSearchWords()
+			// 	clearTimeout(time)
+			// },1000)
+		}
+	}
+	async function getClassList() {
+		let res = await post('/goods/class/list')
 		if (res.code === 200) {
-			textSwiper.searchArr = res.data
+			state.classList = transformArray(res.data||[])
 		}
-		let {value: noticeJSON} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION']
-		textSwiper.noticeArr = JSON.parse(noticeJSON)
-	} catch (err) {
-		console.log(err)
-		// let time = setTimeout(()=>{
-		// 	getSearchWords()
-		// 	clearTimeout(time)
-		// },1000)
+		console.log(res)
 	}
-}
-async function getClassList() {
-	let res = await post('/goods/class/list')
-	if (res.code === 200) {
-		state.classList = res.data
-	}
-	console.log(res)
+
+function transformArray(arr) {
+    const n = arr.length;
+    const half = Math.ceil(n / 2);
+    const firstHalf = arr.slice(0, half);
+    const secondHalf = arr.slice(half);
+    const result = [];
+    for (let i = 0; i < half; i++) {
+        result
+.push(firstHalf[i]);
+        if (i < secondHalf.length) {
+            result
+.push(secondHalf[i]);
+        }
+    }
+    return result;
 }
 
-const goodsList = ref([])
-const goodsPage = reactive({
-	page: 1,
-	pageSize: 10,
-	isNullMsg: false
-})
-async function getGoodsList() {
-	let params = {
-		page: goodsPage.page,
-		pageSize: goodsPage.pageSize,
-		name: null,
-		classId: null
-	}
-	loadmoreStatus.value ='loading'
-	let res = await post('/goods/list', params)
-	loadmoreStatus.value ='loadmore'
-	console.log(res)
-	if (res.code == 200) {
-		if (res.data.length) {
-			goodsList.value = [...goodsList.value, ...res.data]
-			
-		} else {
-			goodsPage.isNullMsg = true
-			loadmoreStatus.value ='nomore'
+	const goodsList = ref([])
+	const goodsPage = reactive({
+		page: 1,
+		pageSize: 10,
+		isNullMsg: false
+	})
+	async function getGoodsList() {
+		let params = {
+			page: goodsPage.page,
+			pageSize: goodsPage.pageSize,
+			name: null,
+			classId: null
 		}
+		loadmoreStatus.value = 'loading'
+		let res = await post('/goods/list', params)
+		loadmoreStatus.value = 'loadmore'
+		console.log(res)
+		if (res.code == 200) {
+			if (res.data.length) {
+				goodsList.value = [...goodsList.value, ...res.data]
 
-	}
-}
-//秒杀列表
-const seckillList = ref([])
-async function getSeckillList() {
-	let params = {
-		classId: null,
-		name: null,
-		page: 1,
-		pageSize: 2
-	}
-	let res = await post('/goods/purchased/list', params)
-	console.log(res)
-	if (res.code == 200) {
-		seckillList.value = res.data
-	}
-}
+			} else {
+				goodsPage.isNullMsg = true
+				loadmoreStatus.value = 'nomore'
+			}
 
-function goSeckillList() {
-	uni.navigateTo({
-		url: '/pages/index/seckillList'
+		}
+	}
+	//秒杀列表
+	const seckillList = ref([])
+	async function getSeckillList() {
+		let params = {
+			classId: null,
+			name: null,
+			page: 1,
+			pageSize: 2
+		}
+		let res = await post('/goods/purchased/list', params)
+		console.log(res)
+		if (res.code == 200) {
+			seckillList.value = res.data
+		}
+	}
+
+	function goSeckillList() {
+		uni.navigateTo({
+			url: '/pages/index/seckillList'
+		})
+	}
+	//优选列表
+	const selectList = ref([])
+	async function getSelectList() {
+		let params = {
+			classId: null,
+			name: null,
+			page: 1,
+			pageSize: 2
+		}
+		let res = await post('/goods/qualityed/list', params)
+		console.log(res)
+		if (res.code == 200) {
+			selectList.value = res.data
+		}
+	}
+
+	function goSelectList() {
+		uni.navigateTo({
+			url: '/pages/index/selectList'
+		})
+	}
+
+	function setBadge(arr) {
+		// 设置角标
+		let text = arr.reduce((sum, item) => sum + item.number, 0)
+		console.log(text)
+		if (text == 0) {
+			return
+		}
+		uni.setTabBarBadge({
+			index: 2, // tabBar 的哪一项，从左边算起，索引从0开始
+			text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
+		})
+	}
+	const pageGoodsNumberObj = ref({})
+	onShow(() => {
+		const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
+		setBadge(goodsInfoStorage)
+		pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
 	})
-}
-//优选列表
-const selectList = ref([])
-async function getSelectList() {
-	let params = {
-		classId: null,
-		name: null,
-		page: 1,
-		pageSize: 2
-	}
-	let res = await post('/goods/qualityed/list', params)
-	console.log(res)
-	if (res.code == 200) {
-		selectList.value = res.data
-	}
-}
-
-function goSelectList() {
-	uni.navigateTo({
-		url: '/pages/index/selectList'
-	})
-}
-function setBadge(arr) {
-	// 设置角标
-	let text = arr.reduce((sum, item) => sum + item.number, 0)
-	console.log(text)
-	if(text==0){return}
-	uni.setTabBarBadge({
-		index: 2, // tabBar 的哪一项，从左边算起，索引从0开始
-		text: text.toString() // 显示的文本，超过 3 个字符则显示成 "..."
-	})
-}
-const pageGoodsNumberObj = ref({})
-onShow(() => {
-	const goodsInfoStorage = uni.getStorageSync('goodsInfo') || []
-	setBadge(goodsInfoStorage)
-	pageGoodsNumberObj.value = uni.getStorageSync('goodsNumberObj') || {}
-})
-onPullDownRefresh(() => {
-	console.log("下拉刷新")
-	getBannerList()
-	getSearchWords()
-	getClassList()
-	getGoodsList()
-	getSeckillList()
-	getSelectList()
-	uni.stopPullDownRefresh()
-
-})
-
-onReachBottom(() => {
-	if (!goodsPage.isNullMsg) {
-		goodsPage.page++
+	onPullDownRefresh(() => {
+		console.log("下拉刷新")
+		getBannerList()
+		getSearchWords()
+		getClassList()
 		getGoodsList()
-	}
-	console.log("上拉加载更多")
-})
-onLoad(() => {
-	getBannerList()
-	getSearchWords()
-	getClassList()
-	getGoodsList()
-	getSeckillList()
-	getSelectList()
-})
+		getSeckillList()
+		getSelectList()
+		uni.stopPullDownRefresh()
+
+	})
+
+	onReachBottom(() => {
+		if (!goodsPage.isNullMsg) {
+			goodsPage.page++
+			getGoodsList()
+		}
+		console.log("上拉加载更多")
+	})
+	onLoad(() => {
+		getBannerList()
+		getSearchWords()
+		getClassList()
+		getGoodsList()
+		getSeckillList()
+		getSelectList()
+	})
 </script>
 
 <style>
-/* 针对 Webkit 内核浏览器（Chrome、Edge、Safari） */
-::-webkit-scrollbar {
-	display: none;
-}
+	/* 针对 Webkit 内核浏览器（Chrome、Edge、Safari） */
+	::-webkit-scrollbar {
+		display: none;
+	}
 
-.active {
-	opacity: 1;
-}
+	.active {
+		opacity: 1;
+	}
 
-.trt-5 {
-	transition: opacity 0.5s;
-}
+	.trt-5 {
+		transition: opacity 0.5s;
+	}
 
-.text-d {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
+	.text-d {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 
 
 
-.tabbleNoActive {}
+	.tabbleNoActive {}
 
-.tabbleActive {
-	background-color: #21cc5b;
-	color: #fff !important;
-}
+	.tabbleActive {
+		background-color: #21cc5b;
+		color: #fff !important;
+	}
 
-.grid-container {
-	display: grid;
-	grid-template-rows: repeat(2, 1fr);
-	/* 创建3行 */
-	grid-auto-flow: column;
-	/* 先填充列 */
-	/* gap: 10px;  */
-}
+	.grid-container {
+		display: grid;
+		grid-template-rows: repeat(2, 1fr);
+		/* 创建3行 */
+		grid-auto-flow: column;
+		/* 先填充列 */
+		/* gap: 10px;  */
+	}
 </style>

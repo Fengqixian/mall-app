@@ -1,17 +1,17 @@
 <template>
 	<!-- <statusHeight></statusHeight> -->
 	<view class=" pos-r flex flex-dc flex-ac ov-h" style="width: 750rpx;">
-		<view class="" :style="'height: '+statusBarHeight+'px;'"></view>
-		<view class="pos-a top-0 left-0 z-0"
-			style="height: 470rpx;width: 750rpx;background: linear-gradient(180deg,#e5fcbd,#fff);">
+		<!-- <view class="" :style="'height: '+statusBarHeight+'px;'"></view> -->
+		<view class="pos-a top-0 left-0 z-0 "
+			style="height: 570rpx;width: 750rpx;background: linear-gradient(180deg,#e5fcbd,#fff);">
 			<image v-for="(item, index) in bannerList" :key='item.id' class="pos-a trt-5" :src="item.url"
-				:class="swiperIndex === index ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;"
+				:class="swiperIndex === index ? 'active' : 'op-0'" style="height: 570rpx;width: 750rpx;"
 				mode="aspectFill"></image>
 
 			<!-- 			<image class="pos-a trt-5" src="/src/static/img/DM_20250619214345_003.png"
 				:class="swiperIndex === 1 ? 'active' : 'op-0'" style="height: 470rpx;width: 750rpx;" mode=""></image> -->
 		</view>
-		<view class="pos-r z-1 " style="height: 470rpx;width: 700rpx;">
+		<view class="pos-r z-1 " style="height: 570rpx;width: 700rpx;">
 
 			<view class="flex flex-jc flex-ac font-32 cor-f" style="font-weight: 700; height: 88rpx;">
 				<!-- {{ t('home.title') }} -->
@@ -23,7 +23,7 @@
 					size="22rpx"></up-icon>
 			</view> -->
 			<view @tap="navSearch(textSwiper.searchArr[swiperSearchIndex])" class="flex flex-ac flex-jb"
-				style="margin-top: 20rpx; height: 88rpx;width: 100%;background-color: #fff;border-radius: 44rpx;">
+				style="margin-top: 120rpx; height: 88rpx;width: 100%;background-color: #fff;border-radius: 44rpx;">
 				<view class="flex flex-ac" style="padding-left: 20rpx;">
 					<up-icon name="search" color="#ccc" size="50rpx"></up-icon>
 					<view class="" style="margin-left: 10rpx; width: 400rpx;height: 80rpx;">
@@ -51,8 +51,8 @@
 				<swiper @change="swiperChange" :current='swiperIndex' style="height: 158rpx;width: 700rpx;" class=""
 					autoplay circular interval="3000" duration="1000">
 					<swiper-item v-for="(item, index) in bannerList">
-						<view style="height: 158rpx;width: 700rpx;" class="pos-r ov-h ">
-							<image class="pos-a" style="left: -24rpx;bottom: -60rpx;width: 750rpx;height: 470rpx;"
+						<view style="height: 158rpx;width: 700rpx;" class="pos-r ov-h">
+							<image class="pos-a" style="left: -24rpx;bottom: -60rpx;width: 750rpx;height: 570rpx;"
 								:src="item.url" mode="aspectFill" />
 						</view>
 					</swiper-item>
@@ -90,11 +90,11 @@
 				:indicatorBarWidth="50/state.classList.length*10" class="">
 				<view style="min-width: 700rpx;" class="grid-container bg-f ">
 					<view @tap="navClass(index)" v-for="(item, index) in state.classList" :key="item.id"
-						style="width: 140rpx;min-height: 174rpx;margin: 4rpx 0;" class=" flex flex-dc flex-jc flex-ac">
-						<image class="" style="width: 112rpx;min-height: 112rpx;max-height: 112rpx;"
+						style="width: 120rpx;min-height: 174rpx;margin: 4rpx 0;" class=" flex flex-dc flex-jc flex-ac">
+						<image class="" style="width: 100rpx;min-height: 100rpx;max-height: 100rpx;"
 							:src="item.coverImage" mode="scaleToFill" />
 						<view class=" text-d"
-							style="width: 120rpx; font-size: 26rpx;color: #444;margin-top: 10rpx;text-align: center;">
+							style="width: 100rpx; font-size: 24rpx;color: #444;margin-top: 10rpx;text-align: center;">
 							{{ item.name }}
 						</view>
 					</view>
@@ -292,7 +292,7 @@
 	async function getClassList() {
 		let res = await post('/goods/class/list')
 		if (res.code === 200) {
-			state.classList = transformArray(res.data||[])
+			state.classList = res.data||[]
 		}
 		console.log(res)
 	}
@@ -463,10 +463,8 @@ function transformArray(arr) {
 
 	.grid-container {
 		display: grid;
-		grid-template-rows: repeat(2, 1fr);
-		/* 创建3行 */
-		grid-auto-flow: column;
-		/* 先填充列 */
-		/* gap: 10px;  */
+		grid-template-columns: repeat(5, 1fr); /* 每行5列 */
+		grid-auto-flow: row; /* 先填充行 */
+		gap: 10rpx; /* 添加间距 */
 	}
 </style>

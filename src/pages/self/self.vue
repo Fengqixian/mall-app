@@ -98,15 +98,15 @@
 	const userInfo = ref()
 	const modalShow = ref(false)
 	let languageArr=ref([[{
-		title:'ภาษาของฉันคือภาษาไทย',
+		title:'ภาษาไทย',
 		key:'th-TH',
 		status:false,
 	},{
-		title:'my language is english',
+		title:'English',
 		key:'en',
 		status:false,
 	},{
-		title:'我的语言是汉语',
+		title:'简体中文',
 		key:'zh-Hans',
 		status:false,
 	}]])

@@ -335,7 +335,6 @@ function transformArray(arr) {
 		if (res.code == 200) {
 			if (res.data.length) {
 				goodsList.value = [...goodsList.value, ...res.data]
-
 			} else {
 				goodsPage.isNullMsg = true
 				loadmoreStatus.value = 'nomore'
@@ -406,6 +405,8 @@ function transformArray(arr) {
 	})
 	onPullDownRefresh(() => {
 		console.log("下拉刷新")
+		goodsPage.page = 1
+		goodsList.value =[]
 		getBannerList()
 		getSearchWords()
 		getClassList()

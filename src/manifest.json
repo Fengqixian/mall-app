@@ -61,7 +61,15 @@
                         "APIKey_android" : "AIzaSyD7n-APGM4DbGl9ezhWoz2mf0kxfdGL9Do"
                     }
                 }
+            },
+            "splashscreen" : {
+                "iosStyle" : "common",
+                "androidStyle" : "common",
+                "useOriginalMsgbox" : false
             }
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     /* 快应用特有相关 */
@@ -86,25 +94,86 @@
                 "provider" : "wx57d7ae552cbb3084",
                 "export" : "config.js" // 引入步骤3.1的配置文件
             }
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     "mp-alipay" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-baidu" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-toutiao" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "uniStatistics" : {
-        "enable" : false
+        "enable" : true,
+        "version" : "2"
     },
     "vueVersion" : "3",
     "h5" : {
         "router" : {
             "base" : "/h5/"
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
-    "locale" : "auto"
+    "locale" : "auto",
+    "app-harmony" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-harmony" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-jd" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-kuaishou" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-lark" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-qq" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-xhs" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "quickapp-webview-huawei" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "quickapp-webview-union" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    }
 }

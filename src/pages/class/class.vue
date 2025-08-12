@@ -143,9 +143,7 @@
 					</view>
 					<up-loadmore v-if="state.goodsList.length" :status="loadmoreStatus"
 						:loading-text="t('tips.loadingText')" :loadmore-text="t('tips.loadmoreText')"
-						:nomore-text="t('tips.nomoreText')" />
-					<!-- <no-more-data v-if="paramsPage.isMore&&state.goodsList.length"></no-more-data> -->
-					<view class="" style="height: 100rpx;"></view>
+						:nomore-text="t('tips.nomoreText')" style="padding-top: 50rpx;padding-bottom: 50rpx;" line />
 				</scroll-view>
 			</view>
 

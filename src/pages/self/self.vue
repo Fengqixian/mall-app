@@ -67,6 +67,8 @@
 		</view>
 		
 		<imageFlow v-if="likeList.length>0" :listF="likeList" :pageGoodsNumberObj="pageGoodsNumberObj"></imageFlow>
+		<up-loadmore status="nomore" :nomore-text="t('tips.nomoreText')"  style="padding-top: 50rpx;padding-bottom: 50rpx;" line />
+		
 		
 		<up-modal :show="modalShow" :content='t("tips.loginOut")' @confirm="loginOut" @cancel="modalShow=false" showCancelButton :confirmText="t('tips.confirm')" :cancelText="t('tips.cancel')"></up-modal>
 		<up-picker :show="pickerShow" keyName="title" :columns="languageArr" @confirm="confirmPicker" @cancel="pickerShow=false"></up-picker>
@@ -122,12 +124,12 @@
 			url:'/pages/self/language'
 		},
 		{
-			title:'退出登录',
+			title:'联系客服',
 			imgSrc:'/static/out.svg',
 			url:'/pages/login/login'
 		},
 		{
-			title:'联系客服',
+			title:'退出登录',
 			imgSrc:'/static/out.svg',
 			url:'/pages/login/login'
 		}
@@ -201,11 +203,11 @@
 
 	}
 
-	function goLogin() {
+	function goLogin() {/* 
 		if(userInfo.value){
 			modalShow.value = true
 			return
-		}
+		} */
 		uni.navigateTo({
 			url: '/pages/login/login'
 		})

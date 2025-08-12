@@ -160,7 +160,7 @@
 				style="color: #999;font-weight: 500;">—</text>
 		</view>
 		<image-flow v-if="likeList.length > 0" :listF="likeList" :pageGoodsNumberObj="pageGoodsNumberObj" @updataGoodsCart="getGoodsInfoArray"></image-flow>
-
+		<up-loadmore status="nomore" :nomore-text="t('tips.nomoreText')"  style="padding-top: 50rpx;padding-bottom: 50rpx;" line />
 		<view class="" style="height: 100rpx;"></view>
 		<view class=" flex flex-ac flex-jc pos-f  bg-f w-100- z-10 left-0 bottom box-s8 bor-box"
 			style="height: 100rpx;border-bottom: 2rpx solid #f5f5f5;">

@@ -173,7 +173,7 @@
 		<image-flow v-if="goodsList.length > 0" :listF="goodsList"
 			:pageGoodsNumberObj="pageGoodsNumberObj"></image-flow>
 		<up-loadmore v-if="goodsList.length" :status="loadmoreStatus" :loading-text="t('tips.loadingText')"
-			:loadmore-text="t('tips.loadmoreText')" :nomore-text="t('tips.nomoreText')" />
+			:loadmore-text="t('tips.loadmoreText')" :nomore-text="t('tips.nomoreText')"  style="padding-top: 50rpx;padding-bottom: 50rpx;" line />
 		<!-- <no-more-data v-if="goodsPage.isNullMsg"></no-more-data> -->
 		<!-- <tabbar></tabbar> -->
 
@@ -331,7 +331,6 @@ function transformArray(arr) {
 		loadmoreStatus.value = 'loading'
 		let res = await post('/goods/list', params)
 		loadmoreStatus.value = 'loadmore'
-		console.log(res)
 		if (res.code == 200) {
 			if (res.data.length) {
 				goodsList.value = [...goodsList.value, ...res.data]
@@ -432,8 +431,37 @@ function transformArray(arr) {
 		getSeckillList()
 		getSelectList()
 	})
+	
 	onReady(() => {
+		// #ifdef APP-PLUS
 		checkUpdate()
+		// #endif
+		
+		// #ifdef MP-WEIXIN
+		const updateManager = uni.getUpdateManager();
+		updateManager.onCheckForUpdate(function (res) {
+		  // 请求完新版本信息的回调
+		  console.log(res.hasUpdate);
+		});
+		
+		updateManager.onUpdateReady(function (res) {
+		  uni.showModal({
+		    title: '更新提示',
+		    content: '新版本已经准备好，是否重启应用？',
+		    success(res) {
+		      if (res.confirm) {
+		        // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+		        updateManager.applyUpdate();
+		      }
+		    }
+		  });
+		
+		});
+		
+		updateManager.onUpdateFailed(function (res) {
+		  // 新的版本下载失败
+		});
+		// #endif
 	})
 </script>
 

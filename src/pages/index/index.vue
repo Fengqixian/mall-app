@@ -186,7 +186,7 @@
 		reactive
 	} from 'vue'
 	import tabbar from "@/components/tabbar.vue"
-
+	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update'
 
 	import noMoreData from "@/components/noMoreData.vue"
 	import imageFlow from "@/components/imageFlow.vue"
@@ -201,7 +201,8 @@
 		onLoad,
 		onShow,
 		onPullDownRefresh,
-		onReachBottom
+		onReachBottom,
+		onReady
 	} from '@dcloudio/uni-app'
 	const {
 		t,
@@ -429,6 +430,9 @@ function transformArray(arr) {
 		getGoodsList()
 		getSeckillList()
 		getSelectList()
+	})
+	onReady(() => {
+		checkUpdate()
 	})
 </script>
 

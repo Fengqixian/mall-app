@@ -200,7 +200,7 @@ const leftTable = reactive({
 	scrollTop: 0
 })
 
-function changeLeftTabble(index) {
+async function changeLeftTabble(index) {
 	leftTable.current = index
 	setTimeout(() => {
 		leftTable.scrollTop = (index * 50) - (usableHeight / 4 - 44)
@@ -209,6 +209,10 @@ function changeLeftTabble(index) {
 	paramsPage.isMore = false
 	loadmoreStatus.value = 'loadmore'
 	state.goodsList = []
+	if (state.classList === undefined || state.classList === null || state.classList.length === 0) {
+		await getClassList()
+	}
+	
 	getGoodsList(state.classList[index].id)
 }
 const rightTable = reactive({
@@ -367,8 +371,8 @@ function findIndexById(array, id) {
 	return array.findIndex(item => item.id === id);
 }
 
-onLoad(() => {
-	getClassList()
+onLoad(async () => {
+	await getClassList()
 	getSearchList()
 })
 const classIndexRef = ref(-1)

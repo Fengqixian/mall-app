@@ -75,11 +75,11 @@
 				<view style="width: 560rpx;margin-left: 20rpx;height: 60rpx;" class="">
 					<swiper style="width: 560rpx;height: 100%;" class="" autoplay circular interval="2000"
 						duration="1000">
-						<swiper-item v-for="(item, index) in textSwiper.noticeArr" :key="index">
+						<swiper-item>
 
 							<view style="width: 560rpx;height: 100%; color: rgb(54, 14, 14);line-height: 60rpx;"
 								class="text-d font-B  font-24">
-								<u-notice-bar :text="item" icon="" fontSize="12"></u-notice-bar>
+								<u-notice-bar :text="notice" icon="" fontSize="12"></u-notice-bar>
 							</view>
 						</swiper-item>
 					</swiper>
@@ -269,9 +269,9 @@
 	}
 	const textSwiper = reactive({
 		searchArr: [],
-		noticeArr: [],
+		notice: {},
 	})
-
+	const notice = ref('')
 	async function getSearchWords() {
 		try {
 			let res = await post('/goods/search/words')
@@ -279,9 +279,23 @@
 				textSwiper.searchArr = res.data
 			}
 			let {
-				value: noticeJSON
-			} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION']
-			textSwiper.noticeArr = JSON.parse(noticeJSON)
+				value: noticeZH
+			} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION_ZH']
+			let {
+				value: noticeEN
+			} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION_EN']
+			let {
+				value: noticeTH
+			} = uni.getStorageSync('appConfig')['CAROUSEL_NOTIFICATION_TH']
+			
+			const lang = uni.getStorageSync('appLanguage')
+			if (lang === 'en') {
+				notice.value = noticeEN
+			} else if (lang === 'th-TH') {
+				notice.value = noticeTH
+			} else {
+				notice.value = noticeZH
+			}
 		} catch (err) {
 			console.log(err)
 			// let time = setTimeout(()=>{

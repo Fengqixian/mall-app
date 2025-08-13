@@ -2,8 +2,8 @@
     "name" : "Delivery",
     "appid" : "__UNI__948C9D0",
     "description" : "",
-    "versionName" : "1.0.5",
-    "versionCode" : 105,
+    "versionName" : "1.0.6",
+    "versionCode" : 106,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -76,7 +76,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx4e6fcce4593a69a7",
+        "appid" : "wxa989f082a8f94570",
         "setting" : {
             "urlCheck" : false,
             "minified" : true

@@ -71,7 +71,7 @@
 		
 		
 		<up-modal :show="modalShow" :content='t("tips.loginOut")' @confirm="loginOut" @cancel="modalShow=false" showCancelButton :confirmText="t('tips.confirm')" :cancelText="t('tips.cancel')"></up-modal>
-		<up-picker :show="pickerShow" keyName="title" :columns="languageArr" @confirm="confirmPicker" @cancel="pickerShow=false"></up-picker>
+		<up-picker :show="pickerShow" keyName="title" :columns="languageArr" @confirm="confirmPicker" @cancel="pickerShow=false" @close="pickerShow=false" closeOnClickOverlay ></up-picker>
 	</view>
 </template>
 
@@ -185,14 +185,14 @@
 	function confirmPicker(option){
 		console.log(option)
 		locale.value = option.value[0].key
-			uni.setLocale(locale.value);
-			uni.setStorageSync('appLanguage', locale.value)
-			// 重新加载页面
-			//#ifdef H5
-			uni.reLaunch({
-				url: '/pages/self/self' 
-			});
-			//#endif
+		uni.setLocale(locale.value);
+		uni.setStorageSync('appLanguage', locale.value)
+		// 重新加载页面
+		//#ifdef H5
+		uni.reLaunch({
+			url: '/pages/self/self' 
+		});
+		//#endif
 		// 语言切换后，重新更新orderButtonArr的文本
 		orderButtonArr.value.forEach((item, index) => {
 			item.text = tm('self.orderList')[index].title
